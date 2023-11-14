@@ -1,0 +1,85 @@
+openapi: 3.1.0
+info: 
+  title: Student Post API
+  description: REST API to fetch the student posts
+  version: 'v1.0'
+
+
+servers: 
+  - url: http://localhost:8080
+
+paths: 
+  /posts:
+    get: 
+      operationId: display-posts
+      description: display student posts
+      parameters: 
+        - name: studentId
+          in: query
+          required: false
+          example: sgdn-243n4-242fsf
+
+          schema: 
+            type: string 
+    
+      responses:
+        "200":
+          description: successful search
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/Feed"
+
+        "401":
+          description: Unauthenticated request
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/Error"
+
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Feed:
+      type: array
+      properties: 
+        
+       items:
+        $ref: "#/components/schemas/feedBody"
+
+    feedBody:
+      type: object
+      properties:
+        feed-id:
+          type: string
+          examples:
+            - skp-243n4-242fdk
+        author:
+          type: string
+          examples:
+            - skl-243m4-242fdm
+
+        Text:
+          type: string 
+          examples: 
+            - "Please help me with collges i can get for my GPA"
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+          examples:
+            - AuthenticationError
+        message:
+          tyepe: string
+          description: Error message
+          examples:
+            - User is not authenticated
