@@ -9,7 +9,7 @@ servers: [
       description: "Development server"
     }]
 paths:
-# api to fetch colleges
+# colleges api
   /colleges:  
     get:
       description: "Returns all colleges under the filter"
