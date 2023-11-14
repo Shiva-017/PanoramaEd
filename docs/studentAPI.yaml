@@ -1,0 +1,106 @@
+openapi: 3.0.3
+info:
+  title: Student Filter API
+  description: REST API to search students.
+  version: 'v1.0'
+servers: [
+    {
+      url: "https://localhost:8080",
+      description: "Development server"
+    }]
+paths:
+# students api
+  /students:  
+    get:
+      description: "Returns the students profile under the filter"
+      operationId: "search-student"
+      parameters: 
+        - name: "name"
+          in: "query"
+          required: false
+          example: "Anthony Kodirekka"
+          schema:
+            type: string
+        - name: "intake"
+          in: "query"
+          required: false
+          example: "Fall 2024"
+          schema:
+            type: string
+        - name: "course"
+          in: "query"
+          required: false
+          example: "ComputerScience"
+          schema: 
+            type: string
+        
+      responses: 
+        "200":
+          description:  "Successful search"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+
+        "401":
+          description: "Unauthenticated request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+# write rest of the apis from here
+
+# schema models
+components:
+  schemas:
+    Student:
+      type: object
+      properties:
+        id:
+          type: string
+          example: abcd-xyza-123asdf
+
+        name:
+          type: string
+          example: Anthony Kodirekka
+        degree:
+          type: string
+          example: Masters
+        intake:
+          type: string
+          example: Fall 2024
+        undergradcollege:
+          type: string
+          example: NIT Allahabad
+        undergradcourse:
+          type: string
+          example: Computer Science
+        collegeShorlisted:
+          type: array
+          items:
+            $ref: "#/components/schemas/CollegeShortlist"
+    CollegeShortlist:
+      type: object
+      properties:
+        id:
+          type: string
+          example: nbgh-123hy-123jkj
+        name:
+          type: string
+          example: Northeastern University
+        program:
+          type: string
+          example: Computer Science
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          example: "User not authenticated"
