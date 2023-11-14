@@ -1,0 +1,75 @@
+openapi: 3.0.3
+info:
+  title: Chat API
+  description: REST API to start conversation.
+  version: 'v1.0'
+servers: [
+    {
+      url: "https://localhost:8080",
+      description: "Development server"
+    }]
+paths:
+# api to fetch all messages in chat conversation
+  /chats:
+    get:
+      description: "Returns all the messages in the chat"
+      operationId: "fetch-chat"
+      parameters: 
+        - name: "student Id"
+          in: "query"
+          required: true
+          example: stdn-243n4-242fsf
+          schema:
+            type: string
+      responses: 
+        "200":
+          description:  "Successful search"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Chat"
+        
+        "401":
+          description: "Unauthenticated request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+# schema models
+components:
+  schemas:
+    Chat:
+      type: object
+      properties:
+        id:
+          type: string
+          example: sgdn-243n4-242fsf
+        name:
+          type: string
+          example: John Doe
+        messages:
+          type: array
+          items:
+            $ref: "#/components/schemas/Message"
+    Message:
+      type: object
+      properties:
+        authorId:
+          type: string
+          example: smsn-243n4-242fsf
+        authorName:
+          type: string
+          example: Software Engineering Systems
+        messageBody:
+          type: string
+          example: Hi, I have few queries regarding a university.
+        timeStamp:
+          type: string
+          example: 11/13/2023 07:52 PM
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          example: "User not authenticated"
