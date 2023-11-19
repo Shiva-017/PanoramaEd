@@ -55,6 +55,40 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    post:
+      description: "Adds a college data to the database"
+      operationId: "add-college"
+      requestBody:
+        description: "List of college objects"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/College"
+      responses: 
+        "200":
+          description:  "Successfully added college data"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/College"
+        "401":
+          description: "Unauthenticated request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          
   /colleges/{college}/{course}:
     put:
       description: "Updates the upcoming events under a program"
@@ -212,10 +246,15 @@ components:
         id:
           type: string
           example: sgdn-243n4-242fsf
-        
         name:
           type: string
           example: Northeastern University
+        admissionsLink:
+          type: string
+          example: "www.admissions.com"
+        address:
+          type: string
+          example: "360 Huntington Avenue"
         ranking:
           type: string
           example: 25
@@ -298,7 +337,7 @@ components:
           example: 90
         cgpa:
           type: string
-          example: 3.0
+          example: "3.0"
     Error:
       type: object
       properties:
