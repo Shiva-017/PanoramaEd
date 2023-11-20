@@ -21,11 +21,22 @@ export const post = async (req, res) => {
     }
 };
 
-export const update = async (req, res) => {
+export const updateEvents = async (req, res) => {
     try {
         const collegeId = req.params.id;
-        const upcomingEvents = { ...req.body };
+        const upcomingEvents = req.body;
         const college = await collegeService.updateCollegeEvents(upcomingEvents, collegeId);
+        setResponse(college, res);
+    } catch (e) {
+        setErrorResponse(e, res);
+    }
+}
+
+export const removeEvent = async (req, res) => {
+    try {
+        const collegeId = req.params.id;
+        const title = req.params.title;
+        const college = await collegeService.deleteCollegeEvents(title, collegeId);
         setResponse(college, res);
     } catch (e) {
         setErrorResponse(e, res);

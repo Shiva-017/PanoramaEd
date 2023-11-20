@@ -32,40 +32,40 @@ const CollegeSchema = new Schema({
     programs: {
         type: Array,
         required: true,
-        items:{
+        items: {
             type: mongoose.Schema.Types.ObjectId, ref: 'ProgramModel'
         }
     },
-    upcomingEvents:{
+    upcomingEvents: {
         type: Array,
         required: false,
-        items:{
-            link:{
+        items: {
+            link: {
                 type: String,
                 required: false
             },
-            videoUrl:{
+            videoUrl: {
                 type: String,
                 required: false
             },
-            title:{
+            title: {
                 type: String,
                 required: true
             },
-            time:{
+            time: {
                 type: String,
                 required: false
             },
-            duration:{
+            duration: {
                 type: String,
                 required: true
             }
         }
     },
-    shortListedStudents:{
+    shortListedStudents: {
         type: Array,
         required: false,
-        items:{
+        items: {
             studentId: Number
         }
     }

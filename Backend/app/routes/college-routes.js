@@ -7,8 +7,11 @@ router.route('/')
     .post(collegeController.post)
 
 router.route('/:id')
-    .put(collegeController.update)
+    .put(collegeController.updateEvents)
     .delete(collegeController.remove)
     .get(collegeController.findById)
+
+router.route('/:id/:title')
+    .put(collegeController.removeEvent)
 
 export default router;
