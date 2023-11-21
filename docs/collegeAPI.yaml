@@ -131,6 +131,36 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    get:
+      description: "Returns the college with searched id"
+      operationId: "search-college-by-id"
+      parameters: 
+        - name: "id"
+          in: "path"
+          required: true
+          example: "asansaj317298"
+          schema:
+            type: string
+      responses: 
+        "200":
+          description:  "Successful search"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/College"
+        
+        "401":
+          description: "Unauthenticated request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /colleges/{id}/{title}:
     delete:
       description: "deletes the event under a college"
@@ -229,8 +259,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-                
-  # programs api
   /programs:
     get:
       description: "Returns all programs under the filter"
