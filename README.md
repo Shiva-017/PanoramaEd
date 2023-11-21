@@ -46,7 +46,9 @@ Welcome to the Global Education Helper Platform! This platform is designed to em
   - `id`: Unique identifier for the program.
   - `fee`: Tuition fee for the program.
   - `ranking`: Ranking of the program.
-  - `university`: University offering the program.
+  - `college`: College offering the program.
+  - `collegeAddress`: College address.
+  - `collegeLogo`: College logo.
   - `course`: Associated course for the program.
   - `requirements`: Admission requirements for the program.
 
@@ -71,6 +73,21 @@ Welcome to the Global Education Helper Platform! This platform is designed to em
 - **Fields:**
   - `name`: Name of the course.
   - `details`: Additional details about the course.
+
+### 9. College
+
+- **Fields:**
+  - `name`: Name of the college.
+  - `address`: College address.
+  - `logo`: College logo.
+  - `admissionLink`: College link for admission.
+  - `ranking`: College ranking.
+  - `state`: state of the College.
+  - `yearEstd`: year of establistion of the college.
+  - `country`: coutry in which college located.
+  - `programs`: programs under the college.
+  - `upcomingEvents`: upcoming events by the college.
+  - `shortlistedStudents`: student ids who shortlisted the college.
 
 ## Features
  
