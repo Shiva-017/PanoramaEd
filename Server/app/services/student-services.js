@@ -18,17 +18,10 @@ export const findByStudentId = async (id) => {
     return student;
 }
 
-export const addStudents = async (studentList) => {
-    const studentDataList = [];
+export const save = async (newStudent) => {
 
-    for (const studentData of studentList) {
-        const programDataList = studentData.programs || [];
+    const student = new StudentModel(newStudent);
+    return await student.save();
 
-        const student = new StudentModel(studentData);
-
-        studentDataList.push(student);
-    }
-
-    const result = await StudentModel.insertMany(studentDataList);
-    return result;
+    
 };
