@@ -26,15 +26,6 @@ export const addStudents = async (studentList) => {
 
         const student = new StudentModel(studentData);
 
-        const programs = await Promise.all(
-            programDataList.map(async (programData) => {
-                const program = new ProgramModel(programData);
-                const savedProgram = await program.save();
-                return { id: savedProgram._id, ...programData };
-            })
-        );
-
-        student.programs = programs;
         studentDataList.push(student);
     }
 
