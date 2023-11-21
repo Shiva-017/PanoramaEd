@@ -13,6 +13,7 @@ const initialize = (app) => {
     app.use(express.urlencoded());
     mongoose.connect('mongodb+srv://konujulac:Challu@chalapati.tihup8y.mongodb.net/panoramadb?retryWrites=true&w=majority')
 	//mongoose.connect('mongodb+srv://ShivaTeja:mjwq19Z2a0xXcWHC@multiverse.nfd7nt6.mongodb.net/?retryWrites=true&w=majority')
+    //mongoose.connect('mongodb+srv://anthony@webdesign.ygxesjt.mongodb.net/?retryWrites=true&w=majority');
     registerRouter(app);
     
     
