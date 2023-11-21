@@ -14,7 +14,7 @@ export const find = async (req, res) => {
 export const post = async (req, res) => {
     try {
         const newStudent = req.body;
-        const students = await studentService.addStudents(newStudent);
+        const students = await studentService.save(newStudent);
         setResponse(students, res);
     } catch (e) {
         setErrorResponse(e, res);
