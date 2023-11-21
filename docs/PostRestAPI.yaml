@@ -13,23 +13,16 @@ paths:
     get: 
       operationId: display-posts
       description: display student posts
-      parameters: 
-        - name: studentId
-          in: query
-          required: false
-          example: sgdn-243n4-242fsf
 
-          schema: 
-            type: string 
-    
       responses:
         "200":
           description: successful search
           content:
             application/json:
               schema:
-                type: object
-                $ref: "#/components/schemas/Feed"
+                type: array 
+                items:
+                  $ref: "#/components/schemas/Post"
 
         "401":
           description: Unauthenticated request
@@ -47,17 +40,10 @@ paths:
                 $ref: "#/components/schemas/Error"
 components:
   schemas:
-    Feed:
-      type: array
-      properties: 
-        
-       items:
-        $ref: "#/components/schemas/feedBody"
-
-    feedBody:
+    Post:
       type: object
       properties:
-        feed-id:
+        feedId:
           type: string
           examples:
             - skp-243n4-242fdk
@@ -70,6 +56,11 @@ components:
           type: string 
           examples: 
             - "Please help me with collges i can get for my GPA"
+
+        upVote:
+          type: integer
+          examples: 
+            - 6
     Error:
       type: object
       properties:
