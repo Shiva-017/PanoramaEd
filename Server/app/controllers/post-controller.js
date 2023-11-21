@@ -1,6 +1,8 @@
 import * as postService from '../services/post-service.js';
 import {setResponse, setErrorResponse} from './response-handler.js'
 
+//controller for showing posts
+
 export const  show = async (request,response) =>{
 
     try {
@@ -18,7 +20,7 @@ export const  show = async (request,response) =>{
 
 
 }
-
+//controller for saving posts
 export const post = async (request, response) =>{
 
     try {
@@ -36,7 +38,7 @@ export const post = async (request, response) =>{
     }
 
 }
-
+//controller for deleting  posts
 export const remove = async (request, response) => {
 
     try{

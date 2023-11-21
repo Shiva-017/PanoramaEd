@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 
 import registerRouter from './routes/index.js'
 import models from './models/index.js'
-
+//initializing the app with middleware,route and mongoDB connection
 const initialize = (app) => {
 
 
@@ -15,7 +15,7 @@ const initialize = (app) => {
 
     registerRouter(app);
     
-    //TODO: Initialize routes
+    
 
 }
 

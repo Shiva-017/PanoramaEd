@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
+// Schema for Post model
+
 const PostSchema = new Schema({
   feedId: {
     type: String,

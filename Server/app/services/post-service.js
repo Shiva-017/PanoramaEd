@@ -1,5 +1,7 @@
 import Post from '../models/post.js';
 
+// function to fetch all the student posts
+
 export const fetch = async (params = {})=> {
 
     const posts = await Post.find({}).exec();
@@ -7,7 +9,7 @@ export const fetch = async (params = {})=> {
 
 }
 
-
+// function to save a student post
 export const save = async (newPost) => {
 
     const post = new Post(newPost);
@@ -15,7 +17,7 @@ export const save = async (newPost) => {
 
     
 }
-
+// function to remove a post
 export const remove = async (id) => {
 
     const post = await Post.findByIdAndDelete(id).exec();

@@ -2,6 +2,8 @@ import express from 'express';
 
 import initialize from './app/app.js';
 
+//created express app and added port to listen
+
 const app = express();
 const port = 3000;
 
