@@ -6,4 +6,5 @@ export default (app)=>{
     app.use('/colleges', collegeRouter);
     app.use('/programs', programRouter);
     app.use('/posts',postRouter);
+    app.use('/students',studentRouter);
 }
