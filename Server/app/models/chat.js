@@ -40,6 +40,6 @@ const ChatSchema = new Schema({
 
 
 
-const ChatModel = mongoose.model('post', PostSchema);
+const ChatModel = mongoose.model('chat', ChatSchema);
 
 export default ChatModel;
