@@ -97,4 +97,14 @@ Welcome to the Global Education Helper Platform! This platform is designed to em
 ### 6. University Admin Video Content
 - Access exclusive video content posted by university administrators.
 - Gain insights into programs, campus life, and more.
+
+## POST API:
+
+- implemented REST API calls for the following:
+
+- 1. Show all the posts of students
+- 2. Save new post of a student
+- 3. remove a post by ID
+
+
  

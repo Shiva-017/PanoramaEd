@@ -1,10 +1,16 @@
+export const setResponse = (data, response)=> {
 
-export const setResponse = (data, res) => {
-    res.status(200).json(data);
+    response.status(200)
+           .json(data);
 }
-export const setErrorResponse = (err, res) => {
-    res.status(500).json({
-        code: "Server Error",
-        message: err.message
-    })
+
+export const setErrorResponse = (err, response)=> {
+
+    response.status(500)
+    .json({
+
+
+        code: "ServiceError",
+        message: "Error Occured while procesing your request."
+     });
 }
