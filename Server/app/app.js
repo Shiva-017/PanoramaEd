@@ -11,7 +11,7 @@ const initialize = (app) => {
     app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded());
-    mongoose.connect('mongodb+srv://konujulac:Challu@chalapati.tihup8y.mongodb.net/coursedb?retryWrites=true&w=majority')
+    mongoose.connect('mongodb+srv://konujulac:Challu@chalapati.tihup8y.mongodb.net/panoramadb?retryWrites=true&w=majority')
 
     registerRouter(app);
     

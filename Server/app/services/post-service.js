@@ -6,3 +6,18 @@ export const fetch = async (params = {})=> {
     return posts;
 
 }
+
+
+export const save = async (newPost) => {
+
+    const post = new Post(newPost);
+    return await post.save();
+
+    
+}
+
+export const remove = async (id) => {
+
+    const post = await Post.findByIdAndDelete(id).exec();
+    return post;
+}
