@@ -13,7 +13,7 @@ export const findByProgramId = async (id) => {
 }
 
 export const suggestProgramsByStudentData = async (studentData) => {
-    const programs = await ProgramModel.find().exec();
+    const programs = await ProgramModel.find({'requirements.lorRequired': { $lte: studentData.lors },}).exec();
     const sortedPrograms = programs.sort((a, b) => admitClassifier(studentData, b.requirements) - admitClassifier(studentData, a.requirements));
     const ambitious = sortedPrograms.filter(
         (program) => admitClassifier(studentData, program.requirements) >= 1
