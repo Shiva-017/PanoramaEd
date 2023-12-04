@@ -23,12 +23,3 @@ export const remove = async (id) => {
     const post = await Post.findByIdAndDelete(id).exec();
     return post;
 }
-
-//function to upVote a post
-export const update = async (id,upVoteCount ) => {
-
-
-const post = await Post.findByIdAndUpdate(id,{$set: {upVote: upVoteCount}}).exec();
-return post;
-
-}
