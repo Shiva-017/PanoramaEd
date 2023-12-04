@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 // Schema for Post model
 
 const PostSchema = new Schema({
-  feedId: {
+  postId: {
     type: String,
     required: true,
   },
