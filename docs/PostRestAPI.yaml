@@ -38,47 +38,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-
-    post:
-      description: "Adds a new post to the database"
-      operationId: "add-post"
-      requestBody:
-        description: " post object"
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              $ref: "#/components/schemas/Post"
-      responses: 
-        "200":
-          description:  "Successfully added college data"
-          content:
-            application/json:
-              schema:
-                type: object
-                $ref: "#/components/schemas/Post"
-        "401":
-          description: "Unauthenticated request"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "404":
-          description: "Not found"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-
-                    
 components:
   schemas:
     Post:
       type: object
       properties:
-        postId:
+        feedId:
           type: string
           examples:
             - skp-243n4-242fdk

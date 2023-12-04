@@ -54,22 +54,3 @@ export const remove = async (request, response) => {
     }
     
 }
-
-//
-
-export const update = async (request, response) => {
-
-    try{
-
-        const id = request.params.id;
-        const  upVoteCount = request.query.upvote;
-        const post = await postService.update(id,upVoteCount);
-        setResponse(post,response);
-
-    } catch (err){
-        setErrorResponse(err, response);
-
-        
-    }
-    
-}

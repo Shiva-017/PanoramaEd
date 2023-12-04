@@ -9,7 +9,6 @@ router.route('/')
     .post(postController.post);
 
 router.route('/:id')
-    .delete(postController.remove)
-    .patch(postController.update);
+    .delete(postController.remove);
 
     export default router;
