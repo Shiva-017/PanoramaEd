@@ -5,6 +5,10 @@ const CollegeSchema = new Schema({
         type: String,
         required: true
     },
+    logo:{
+        type:String,
+        required: false
+    },
     admissionLink: {
         type: String,
         required: false

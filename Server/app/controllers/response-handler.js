@@ -11,6 +11,6 @@ export const setErrorResponse = (err, response)=> {
 
 
         code: "ServiceError",
-        message: "Error Occured while procesing your request."
+        message: err.message
      });
 }

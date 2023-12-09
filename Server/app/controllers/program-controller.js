@@ -22,3 +22,12 @@ export const findById = async (req, res) => {
     }
 }
 
+export const findByMetrics = async (req, res) =>{
+    try{
+        const studentMetrics = req.body;
+        const programs = await programService.suggestProgramsByStudentData(studentMetrics);
+        setResponse(programs,res);
+    } catch(e){
+        setErrorResponse(e, res);
+    }
+}

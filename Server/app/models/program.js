@@ -11,6 +11,14 @@ const ProgramSchema = new Schema({
     },
     university:{
         type: String,
+        required: true
+    },
+    universityAddress:{
+        type: String,
+        required: true
+    },
+    universityLogo:{
+        type: String,
         required: false
     },
     requirements:{
