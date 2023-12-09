@@ -28,6 +28,10 @@ const ChatSchema = new Schema({
     type: String,
     required: true
   },
+  consultantId: {
+    type: String,
+    required: true
+  },
   messages: {
     type: [MessageSchema],
     required: true
