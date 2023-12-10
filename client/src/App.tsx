@@ -1,7 +1,7 @@
 
 import React, {useState} from 'react';
 import logo from './logo.svg';
-import Post, {posts} from './models/post'
+import Post from './models/post'
 import StudentPosts from './home/StudentPost/StudentPosts';
 import StudentSearch from './home/StudentSearch/StudentSearch';
 import PostForm from './home/PostForm/PostForm'
@@ -15,12 +15,12 @@ type FormValues = {
 
 function App() {
 
-  const [postList, setPosts] = useState([...posts]);
+  // const [postList, setPosts] = useState([...posts]);
 
-  const searchHandler = (query: string) => {
-    const filteredPosts = [...posts].filter(c => c.author.startsWith(query));
-    setPosts(filteredPosts);
-  }
+  // const searchHandler = (query: string) => {
+  //   const filteredPosts = [...posts].filter(c => c.author.startsWith(query));
+  //   setPosts(filteredPosts);
+  // }
 
   // const handleFormSubmit = (formValues: FormValues) => {
   //   const newPost: Post = {
@@ -40,9 +40,9 @@ function App() {
 
   <div>
 
-    <StudentSearch onSearch={searchHandler}></StudentSearch>
+    {/* <StudentSearch onSearch={searchHandler}></StudentSearch> */}
 
-    <StudentPosts posts = {postList}></StudentPosts>
+    <StudentPosts posts = {[]}></StudentPosts>
 
     {/* <PostForm onSubmit={handleFormSubmit} posts={posts} setPosts={setPosts}></PostForm> */}
 

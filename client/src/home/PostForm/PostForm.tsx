@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from "react";
 import { Button, TextField, Typography, makeStyles, Container } from "@mui/material";
 import { withStyles } from "@mui/material/styles"
-import Post, {posts} from '../../models/post'
+import Post from '../../models/post'
 
   
   type FormValues = {
