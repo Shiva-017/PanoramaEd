@@ -71,11 +71,7 @@ const StudentPosts: React.FC<Props> = (props: Props): ReactElement => {
           {isFormVisible && <PostForm onSubmit={HandleFormSubmit} posts={props.posts} setPosts={setPosts}/>}
           </div>
          
-          </>
-
-
-
-    
+          </>    
         )
 
     }
