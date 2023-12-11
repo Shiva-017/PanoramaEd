@@ -1,9 +1,7 @@
-import { Avatar, AvatarTypeMap, CardMedia, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Typography } from "@mui/material";
+import {  FormControl, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import { ReactElement } from "react";
 
 import React from "react";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
-import { isTemplateSpan } from "typescript";
 
 type Props = {
     items?: MenuItem[];

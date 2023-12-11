@@ -1,70 +1,88 @@
-import { Avatar, Box, Button, CardMedia, FormControlLabel, Slide, Switch, Typography } from "@mui/material";
+import { Avatar, Box, Button, CardMedia, FormControlLabel, Slide, Switch, TextField, Typography } from "@mui/material";
 import React, { ReactElement, useEffect, useState } from "react";
+import getProgramDetails from "../../helpers/getProgramDetails";
 
 
-interface Detail {
+export interface Detail {
     title: string,
     value: string
 }
 type Props = {
-    slideDirection: any;
-    collegeName: string;
-    collegeDetails: Detail[];
-    logo: any;
-    background: any;
+    id: number;
+    program: string;
 }
+
 const CollegeCard: React.FC<Props> = (props: Props): ReactElement => {
     const [checked, setChecked] = useState(false);
-    const [contentIndexes, setContentIndexes] = useState<number[]>([]);
-    const [contentMounted, setContentMounted] = useState(false);
-
+    const [collegeData, setCollegeData] = useState<any>([]);
+    const [collegeName, setCollegeName] = useState("");
     const handleChange = () => {
         setChecked((prev) => !prev);
-        setContentMounted(true);
+    };
+    const fetchCollegeData = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/colleges/name/${collegeName}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            setCollegeData(data);
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
+
+    const fetchProgramDetails = async () => {
+        try {
+            const details = getProgramDetails(collegeData, "Philosophy");
+            // setProgramDetails(details);
+        } catch (error) {
+            console.error("Error:", error);
+        }
     };
 
     useEffect(() => {
-        let timerId: NodeJS.Timeout;
-
-        if (checked && contentIndexes.length < props.collegeDetails.length) {
-            timerId = setTimeout(() => {
-                setContentIndexes((prevIndexes) => [...prevIndexes, prevIndexes.length]);
-            }, 100);
-        }
-
-        return () => {
-            clearTimeout(timerId);
+        const fetchData = async () => {
+            if (checked) {
+                await fetchCollegeData();
+                await fetchProgramDetails();
+            }
         };
-    }, [checked, contentIndexes]);
+        fetchData();
+    }, [checked, collegeName]);
 
-    useEffect(() => {
-        if (!checked) {
-            setContentIndexes([]);
-            setContentMounted(false);
-        }
-    }, [checked]);
 
     return (
         <div>
+            <TextField id="outlined-basic" label={`Enter college ${props.id}`} variant="outlined" onChange={(e) => { setCollegeName(e.target.value) }} />
             <Button onClick={handleChange} variant="outlined">{checked ? "Hide" : "Show"}</Button>
             <Slide direction="up" in={checked} mountOnEnter unmountOnExit>
                 <Box width={500} sx={{ margin: 5, marginBottom: 0, backgroundColor: "#6699CC", borderRadius: 2 }}>
-                    <CardMedia image={props.background} sx={{ paddingTop: "20px", paddingLeft: "20px", paddingBottom: "10px", height: 80, borderTopLeftRadius: 5, borderTopRightRadius: 5 }}>
-                        <Avatar alt="name" src={props.logo} sx={{ width: 72, height: 72, border: 5, borderColor: "white" }} />
+                    <CardMedia image={collegeData.background} sx={{ paddingTop: "20px", paddingLeft: "20px", paddingBottom: "10px", height: 80, borderTopLeftRadius: 5, borderTopRightRadius: 5 }}>
+                        <Avatar alt="name" src={collegeData.logo} sx={{ width: 72, height: 72, border: 5, borderColor: "white" }} />
                     </CardMedia>
-                    <Typography variant="h4" sx={{ fontWeight: "bold", margin: 1, marginBottom: 0, color: "#002387" }}>{props.collegeName}</Typography>
+                    <Typography variant="h4" sx={{ fontWeight: "bold", margin: 1, marginBottom: 0, color: "#002387" }}>{collegeData.name}</Typography>
+                    {getProgramDetails(collegeData, props.program).length > 0 ? (
+                        getProgramDetails(collegeData, props.program).map((detail, index) => (
+                            <Box key={index} sx={{ backgroundColor: index % 2 === 0 ? "#B9D9EB" : "#B0C4DE", paddingLeft: 2, paddingRight: 2, paddingTop: 1, paddingBottom: 1, borderRadius: 1 }}>
+                                <Typography sx={{ fontSize: 16 }}>{detail.title}</Typography>
+                                <Typography variant="h6">{detail.value}</Typography>
+                            </Box>
+                        ))
+                    ) : (
+                        <Typography>Loading...</Typography>
+                    )}
                 </Box>
+
             </Slide>
-            <Box sx={{ padding: 5, paddingTop: 1 }}>
-                {contentMounted && contentIndexes.map((index) => (
-                    <Slide key={index} direction={props.slideDirection} in={contentMounted} mountOnEnter unmountOnExit>
-                        <Box sx={{ backgroundColor: index % 2 === 0 ? "#B9D9EB" : "#B0C4DE", paddingLeft: 2, paddingRight: 2, paddingTop: 1, paddingBottom: 1, borderRadius: 1 }}>
-                            <Typography sx={{ fontSize: 16 }}>{props.collegeDetails[index].title}</Typography>
-                            <Typography variant="h6">{props.collegeDetails[index].value}</Typography>
-                        </Box>
-                    </Slide>
-                ))}
-            </Box>
         </div>
     );
 };
