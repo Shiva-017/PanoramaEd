@@ -12,5 +12,7 @@ router.route('/suggest')
 router.route('/')
     .get(programController.find)
 
+router.route('/')
+
 
 export default router;

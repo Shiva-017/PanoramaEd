@@ -22,6 +22,18 @@ export const findById = async (req, res) => {
     }
 }
 
+export const findByNameAndCollege = async (req, res) => {
+    try {
+        const programName = req.query.program;
+        const collegeName = req.query.college;
+        const program = await programService.findByProgramNameAndCollege(programName, collegeName);
+        setResponse(program, res);
+    } catch (e) {
+        setErrorResponse(e, res);
+    }
+}
+
+
 export const findByMetrics = async (req, res) =>{
     try{
         const studentMetrics = req.body;

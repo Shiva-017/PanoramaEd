@@ -63,3 +63,12 @@ export const findById = async (req, res) => {
     }
 }
 
+export const findByName = async (req, res) => {
+    try {
+        const collegeName = req.params.name;
+        const college = await collegeService.findByCollegeName(collegeName);
+        setResponse(college, res);
+    } catch (e) {
+        setErrorResponse(e, res);
+    }
+}

@@ -19,6 +19,11 @@ export const findByCollegeId = async (id) => {
     return college;
 }
 
+export const findByCollegeName = async (collegeName) => {
+    const college = await CollegeModel.findOne({ name: { $regex: new RegExp(collegeName, 'i') } }).exec();
+    return college;
+}
+
 export const addColleges = async (collegeList) => {
     const collegeDataList = [];
 

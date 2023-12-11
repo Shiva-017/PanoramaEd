@@ -12,6 +12,12 @@ export const findByProgramId = async (id) => {
     return program;
 }
 
+export const findByProgramNameAndCollege = async (Pname, Cname) => {
+    const program = await ProgramModel.findOne({name:Pname, university: Cname}).exec();
+    return program;
+}
+
+
 export const suggestProgramsByStudentData = async (studentData) => {
     const programs = await ProgramModel.find({'requirements.lorRequired': { $lte: studentData.lors },}).exec();
     const sortedPrograms = programs.sort((a, b) => admitClassifier(studentData, b.requirements) - admitClassifier(studentData, a.requirements));

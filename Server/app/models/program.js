@@ -50,11 +50,6 @@ const ProgramSchema = new Schema({
     fee:{
         type: String,
         required: true
-    },
-    costOfStudy:{
-        type: String,
-        required: true,
-        enum: ['Premium', 'Moderate', 'Reasonable']
     }
 })
 
