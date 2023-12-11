@@ -1,0 +1,15 @@
+{
+    "About":"About",
+    "University-type":"University Type",
+    "Global-rank":"Global Rank",
+    "Average-living-expences":"Average Living Expenses",
+    "Courses":"Courses",
+    "Application-deadline":"Application deadline",
+    "Degree":"Degree",
+    "Duration":"Duration",
+    "Tuition-fee":"Tuition Fee",
+    "Rolling":"Rolling",
+    "ParagraphOne":"{{collegeName}} is a public research university in {{collegeAddress}}, {{state}}. It is one of the largest universities in {{state}} and the {{country}}, with over 60,000 students across 11 colleges.",
+    "ParagraphTwo":" {{collegeName}} was founded in 1876 as an all-male military college before becoming a coeducational institution in {{yearEstd}}. In 1976 it became one of four female-dominated schools to become coeducational",
+    "ParagraphThree":" The University's academic offerings include over 200 undergraduate majors, 300 graduate programs, and an honors program for highly talented students – known as 'Students Who Excel' (STEX)."
+}

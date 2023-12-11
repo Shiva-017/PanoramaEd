@@ -9,6 +9,10 @@ const CollegeSchema = new Schema({
         type:String,
         required: false
     },
+    background: {
+        type: String,
+        required: false,
+    },
     admissionLink: {
         type: String,
         required: false
@@ -32,6 +36,14 @@ const CollegeSchema = new Schema({
     country: {
         type: String,
         required: true
+    },
+    costOfStudy: {
+        type: String,
+        required: false,
+    },
+    collegeType:{
+        type: String,
+        required: false
     },
     programs: {
         type: Array,

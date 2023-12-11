@@ -11,6 +11,9 @@ router.route('/:id')
     .delete(collegeController.remove)
     .get(collegeController.findById)
 
+router.route('/name/:name')
+    .get(collegeController.findByName);
+
 router.route('/:id/:title')
     .put(collegeController.removeEvent)
 
