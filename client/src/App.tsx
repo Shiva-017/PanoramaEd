@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import logo from './logo.svg';
-import Post, { posts } from './models/post'
+import Post from './models/post'
 import StudentPosts from './home/StudentPost/StudentPosts';
 import StudentSearch from './home/StudentSearch/StudentSearch';
 import PostForm from './home/PostForm/PostForm'
