@@ -72,3 +72,25 @@ export const findByName = async (req, res) => {
         setErrorResponse(e, res);
     }
 }
+
+export const shortlistCollege = async (req, res) => {
+    try{
+        const studentId = req.query.studentId;
+        const collegeId = req.query.collegeId;
+        const college = await collegeService.shortlistCollege(studentId, collegeId);
+        setResponse(college, res);
+    }catch(e){
+        setErrorResponse(e, res);
+    }
+}
+
+export const removeShortlistCollege = async (req, res) => {
+    try{
+        const studentId = req.query.studentId;
+        const collegeId = req.query.collegeId;
+        const college = await collegeService.removeShortlistCollege(studentId, collegeId);
+        setResponse(college, res);
+    }catch(e){
+        setErrorResponse(e, res);
+    }
+}

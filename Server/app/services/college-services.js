@@ -1,5 +1,6 @@
 import CollegeModel from "../models/college.js";
 import ProgramModel from "../models/program.js";
+import StudentModel from "../models/student.js";
 
 export const searchColleges = async (params = {}) => {
     const colleges = await CollegeModel.find(params).exec();
@@ -55,5 +56,22 @@ export const updateCollegeEvents = async (events, id) => {
 
 export const deleteCollegeEvents = async (title, id) => {
     const college = await CollegeModel.findByIdAndUpdate(id, { $pull: { upcomingEvents: { title } } }, { new: true, runValidators: true }).exec();
+    return college;
+}
+
+export const shortlistCollege = async (studentId, collegeId)=>{
+    const college = await CollegeModel.findByIdAndUpdate(collegeId, { $addToSet: { shortListedStudents: studentId  } }, { new: true, runValidators: true }).exec();
+    await StudentModel.findByIdAndUpdate(studentId,{ $addToSet: {
+        collegeShorlisted: {
+          collegeID: collegeId,
+          collegeLogo: college.logo,
+        },
+      }, }, { new: true, runValidators: true }).exec();
+    return college;
+}
+
+export const removeShortlistCollege = async (studentId, collegeId)=>{
+    const college = await CollegeModel.findByIdAndUpdate(collegeId, { $pull: { shortListedStudents: studentId } }, { new: true, runValidators: true }).exec();
+    await StudentModel.findByIdAndUpdate(studentId,{  $pull: { collegeShorlisted: { collegeID: collegeId } }  }, { new: true, runValidators: true }).exec();
     return college;
 }
