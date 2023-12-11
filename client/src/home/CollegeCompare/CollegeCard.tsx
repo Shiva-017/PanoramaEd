@@ -57,12 +57,14 @@ const CollegeCard: React.FC<Props> = (props: Props): ReactElement => {
     return (
         <div>
             {!checked ? <TextField id="outlined-basic" label={`Enter college ${props.id}`} variant="outlined" onChange={(e) => { setCollegeName(e.target.value) }} /> : null}
+            
             <Slide direction="up" in={checked} mountOnEnter unmountOnExit>
+                
                 <Box width={500} sx={{ margin: 5, marginBottom: 0, backgroundColor: "#6699CC", borderRadius: 2 }}>
                     <CardMedia image={collegeData?.background} sx={{ paddingTop: "20px", paddingLeft: "20px", paddingBottom: "10px", height: 80, borderTopLeftRadius: 5, borderTopRightRadius: 5 }}>
                         <Avatar alt="name" src={collegeData?.logo} sx={{ width: 72, height: 72, border: 5, borderColor: "white" }} />
-                    </CardMedia>
-                    <Typography variant="h4" sx={{ fontWeight: "bold", margin: 1, marginBottom: 0, color: "#002387" }}>{collegeData?.name}</Typography>
+                        {collegeName !=="" ? <Typography variant="h4" sx={{ fontWeight: "bold", margin: 1, marginBottom: 0, color: "#002387" }}>{collegeData?.name}</Typography> :  <Typography variant="h5" sx={{ fontWeight: "bold", margin: 1, marginBottom: 3, color: "#002387", marginLeft: 18 }}>College not found</Typography>}
+                    </CardMedia>      
                     {getProgramDetails(collegeData, props.program).length > 0 ? (
                         getProgramDetails(collegeData, props.program).map((detail, index) => (
                             <Box key={index} sx={{ backgroundColor: index % 2 === 0 ? "#B9D9EB" : "#B0C4DE", paddingLeft: 2, paddingRight: 2, paddingTop: 1, paddingBottom: 1, borderRadius: 1 }}>
