@@ -18,20 +18,22 @@ export const findByProgramNameAndCollege = async (Pname, Cname) => {
 }
 
 
-export const suggestProgramsByStudentData = async (studentData) => {
-    const programs = await ProgramModel.find({'requirements.lorRequired': { $lte: studentData.lors },}).exec();
-    const sortedPrograms = programs.sort((a, b) => admitClassifier(studentData, b.requirements) - admitClassifier(studentData, a.requirements));
+export const suggestProgramsByStudentData = async (studentData ,exp, resumeRating) => {
+    const programs = await ProgramModel.find({'requirements.lorRequired': { $lte: studentData.lorRequired }}).exec();
+    const sortedPrograms = programs.sort((a, b) => admitClassifier(studentData, b.requirements, exp, resumeRating) - admitClassifier(studentData, a.requirements, exp, resumeRating));
+
     const ambitious = sortedPrograms.filter(
-        (program) => admitClassifier(studentData, program.requirements) >= 1
-    ).sort((a, b) => admitClassifier(studentData, b.requirements) - admitClassifier(studentData, a.requirements)).slice(0, 3);
+        (program) => admitClassifier(studentData, program.requirements, exp, resumeRating) >= 1
+    ).sort((a, b) => admitClassifier(studentData, b.requirements, exp, resumeRating) - admitClassifier(studentData, a.requirements, exp, resumeRating)).slice(0, 3);
 
     const moderate = sortedPrograms.filter(
-        (program) => admitClassifier(studentData, program.requirements) >= 0.75 && admitClassifier(studentData, program.requirements) < 1
-    ).sort((a, b) => admitClassifier(studentData, b.requirements) - admitClassifier(studentData, a.requirements)).slice(0, 3);
+        (program) => admitClassifier(studentData, program.requirements, exp, resumeRating) >= 0.75 && admitClassifier(studentData, program.requirements, exp, resumeRating) < 1
+    ).sort((a, b) => admitClassifier(studentData, b.requirements, exp, resumeRating) - admitClassifier(studentData, a.requirements, exp, resumeRating)).slice(0, 3);
 
     const safe = sortedPrograms.filter(
-        (program) => admitClassifier(studentData, program.requirements) >= 0.5 && admitClassifier(studentData, program.requirements) < 0.75
-    ).sort((a, b) => admitClassifier(studentData, b.requirements) - admitClassifier(studentData, a.requirements)).slice(0, 3);
+        (program) => admitClassifier(studentData, program.requirements, exp, resumeRating) >= 0.5 && admitClassifier(studentData, program.requirements, exp, resumeRating) < 0.75
+    ).sort((a, b) => admitClassifier(studentData, b.requirements, exp, resumeRating) - admitClassifier(studentData, a.requirements, exp, resumeRating)).slice(0, 3);
+
     const suggestedColleges = [...ambitious, ...moderate, ...safe];
     return suggestedColleges;
 }

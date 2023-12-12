@@ -11,18 +11,19 @@ const minMaxValues = {
 };
 
 
-function admitClassifier(studentData, programRequirements) {
+function admitClassifier(studentData, programRequirements, exp = 0, resumeRating = 0) {
     const normalizedStudentData = normalizeData(studentData);
     const normalizedProgramData = normalizeData(programRequirements)
     let totalScore = 0;
+    
     for (const key in normalizedStudentData) {
         if (key !== "lorRequired") {
             totalScore += weights[key] * normalizedStudentData[key];
         }
 
     }
-
     let requirementScore = 0;
+    
     for (const key in normalizedStudentData) {
         if (key !== "lorRequired") {
             requirementScore += weights[key] * normalizedProgramData[key];
@@ -30,12 +31,13 @@ function admitClassifier(studentData, programRequirements) {
     }
 
     const admissionScore = totalScore / requirementScore;
-    const maxExp = exp < 5 ? 5 : exp;
+    const maxExp = exp > 5 ? 5 : exp;
     const combinedScore = (
         (admissionScore * 0.6) +
-        (studentData.resumeRating / 5 * 0.2) +
+        (resumeRating / 5 * 0.2) +
         (exp / maxExp * 0.2)
     );
+
 
     return combinedScore;
 }

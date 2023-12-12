@@ -21,6 +21,14 @@ const ProgramSchema = new Schema({
         type: String,
         required: false
     },
+    state:{
+        type: String,
+        required: false
+    },
+    duration: {
+        type: Number,
+        required: true,
+    },
     requirements:{
         greScore:{
             type: String,

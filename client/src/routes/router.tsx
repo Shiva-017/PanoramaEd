@@ -4,6 +4,8 @@ import App from "../App";
 import CollegeDetails from "../home/CollegePage/CollegePage";
 import CollegeCompare from "../home/CollegeCompare/CollegeCompare";
 import StudentMetricsForm from "../home/StudentMetrics/StudentMetricsForm";
+import CollegeSuggest from "../home/CollegeSuggest/CollegeSuggest";
+
 
 export default createBrowserRouter([
     {
@@ -26,6 +28,10 @@ export default createBrowserRouter([
             {
                 path: '/find-college',
                 element: <StudentMetricsForm/>
+            },
+            {
+                path: '/suggested-colleges',
+                element: <CollegeSuggest/>
             }
         ]
     }
