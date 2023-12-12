@@ -4,7 +4,7 @@ import Student from '../../models/student';
 
 
 interface StudentCardProps {
-  title: string;
+  title: ReactNode;
   mandatoryContent: ReactNode;
   optionalContent?: ReactNode;
   optionalContent2?: ReactNode;

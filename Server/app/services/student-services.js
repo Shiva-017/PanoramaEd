@@ -1,7 +1,9 @@
 import StudentModel from "../models/student.js";
 
 export const searchStudents = async (params = {}) => {
-    const students = await StudentModel.find(params).exec();
+    const students = await StudentModel.find(params)
+    .populate()
+    .exec();
     return students;
 }
 
@@ -12,7 +14,9 @@ export const removeStudent = async (id) => {
 }
 
 export const findByStudentId = async (id) => {
-    const student = await StudentModel.findById(id).exec();
+    const student = await StudentModel.findById(id)
+    populate("collegeID")
+    .exec();
     return student;
 }
 

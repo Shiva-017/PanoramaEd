@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import backGround from '../../resources/northeast.png';
 import logo from '../../resources/anthony.jpeg';
 import {
@@ -20,11 +20,39 @@ import SchoolIcon from '@mui/icons-material/School';
 import StarIcon from '@mui/icons-material/Star';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { student } from '../../models/student';
+import Student from '../../models/student';
 import StudentCard from './StudentCard';
 import ShortlistCard from './ShortlistCard';
+import Button from '@mui/material/Button';
+
 
 const StudentProfile: React.FC = (): ReactElement => {
+
+  const [students, setStudents] = useState<Student>();
+    const getStudents = () => {
+      try {
+
+        const response = fetch(`http://localhost:3001/students/`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+          }).then(res => res.json())
+          .then(data => setStudents(data[0]));
+          // if (!response.ok) {
+          //   throw new Error(`HTTP error! Status: ${response.status}`);
+          // }
+
+        // const data = response.json();
+
+        // setStudents(data);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+};
+    useEffect(() => {
+        getStudents();
+      }, [])
+
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isProfileFormOpen, setIsProfileFormOpen] = useState(false);
 
@@ -55,8 +83,9 @@ const StudentProfile: React.FC = (): ReactElement => {
             <SchoolIcon />
           </IconButton>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            GradVerse
+            PanoramaEd
           </Typography>
+
           <TextField
             id="search"
             label="Search"
@@ -68,6 +97,12 @@ const StudentProfile: React.FC = (): ReactElement => {
               ),
             }}
           />
+
+          <Button color="inherit">Feed</Button>
+          <Button color="inherit">College Compare</Button>
+          <Button color="inherit">Find College</Button>
+
+          
           <IconButton color="inherit">
             <NotificationsIcon />
           </IconButton>
@@ -99,7 +134,7 @@ const StudentProfile: React.FC = (): ReactElement => {
 
       {isProfileFormOpen && (
         <form>
-          <TextField label="Degree Seeking" fullWidth margin="normal" />
+          <TextField label="Degree Seeking" />
           <TextField label="Intake" fullWidth margin="normal" />
           <TextField label="Undergrad Grade" fullWidth margin="normal" />
           <TextField label="Undergrad College" fullWidth margin="normal" />
@@ -149,7 +184,7 @@ const StudentProfile: React.FC = (): ReactElement => {
                 component="h2"
                 sx={{ fontWeight: 'bold', textAlign: 'center' }}
               >
-                Student Name
+                {students?.name}
               </Typography>
             </Stack>
           </Stack>
@@ -158,36 +193,36 @@ const StudentProfile: React.FC = (): ReactElement => {
         {/* Student Cards - 2x2 Grid */}
         <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4}>
-          <StudentCard title="Degree Seeking" mandatoryContent={student.degreeseeking} />
+          <StudentCard title="Degree Seeking" mandatoryContent={students?.degreeseeking} />
         </Grid>
 
         <Grid item xs={12} sm={6} md={4}>
-          <StudentCard title="Intake" mandatoryContent={student.intake} />
+          <StudentCard title="Intake" mandatoryContent={students?.intake} />
         </Grid>
 
         <Grid item xs={12} sm={6} md={4}>
           <StudentCard
             title="Educational Details"
-            mandatoryContent={student.undergradGrade}
-            optionalContent={student.undergradcollege}
-            optionalContent2={student.undergradcourse}
+            mandatoryContent={students?.undergradgrade}
+            optionalContent={students?.undergradcollege}
+            optionalContent2={students?.undergradcourse}
           />
         </Grid>
 
         <Grid item xs={12} sm={6} md={4}>
           <StudentCard
             title="Test Scores"
-            mandatoryContent={student.gre}
-            optionalContent={student.ielts}
+            mandatoryContent={students?.gre}
+            optionalContent={students?.ielts}
           />
         </Grid>
 
         <Grid item xs={12} sm={6} md={4}>
           <StudentCard
             title="Work Experience"
-            mandatoryContent={student.expCompany}
-            optionalContent={student.expDesignation}
-            optionalContent2={student.expDuration}
+            mandatoryContent={students?.experiencecompany}
+            optionalContent={students?.experiencedesignation}
+            optionalContent2={students?.experienceduration}
           />
         </Grid>
         </Grid>
@@ -206,7 +241,7 @@ const StudentProfile: React.FC = (): ReactElement => {
           >
             Colleges Shortlisted
           </Typography>
-          <Grid item xs={12} sm={6} md={4}>
+          {/* <Grid item xs={12} sm={6} md={4}>
       <ShortlistCard
             college="Northeastern University"
             program="Computer Science"
@@ -229,7 +264,7 @@ const StudentProfile: React.FC = (): ReactElement => {
             college="UTD Dallas"
             program="Computer Science"
           />
-          </Grid>
+          </Grid> */}
           </Grid>
     </div>
   );
