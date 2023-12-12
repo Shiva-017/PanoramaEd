@@ -1,29 +1,46 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import College from "../../models/college";
-import { type } from "os";
+import College, { FinanceType } from "../../models/college";
+
 import { AppState } from "..";
 
 
-export type CollegeState = College[];
+export type CollegeState = College;
 
-const initialState : CollegeState = [];
+const initialState : College = {
+    _id: '',
+    name: '',
+    logo: '',
+    background: '',
+    admissionLink: '',
+    address: '',
+    ranking: '',
+    state: '',
+    yearEstd: '',
+    country: '',
+    content: '',
+    programs: [],
+    upcomingEvents: [],
+    shortlistedStudents: [],
+    costOfStudy: FinanceType.Moderate,
+};
+
 
 
 const collegeSlice = createSlice(
     {
-        name: 'colleges',
+        name: 'college',
         initialState,
         reducers:{
-            loadColleges: (state, action: PayloadAction<CollegeState>)=>{
+            loadCollege: (state, action: PayloadAction<CollegeState>)=>{
                 return action.payload
             }
         }
     }
 );
 
-export const {loadColleges} = collegeSlice.actions;
-export const searchCollege = (query: string)=>{
-    return (state: AppState)=> state.colleges.filter(c=>c.name.startsWith(query));
+export const {loadCollege} = collegeSlice.actions;
+export const searchCollege = ()=>{
+    return (state: AppState)=> state.college;
 }
 export default collegeSlice;

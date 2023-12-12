@@ -38,7 +38,7 @@ export interface Program {
   requirements: Requirements
 }
 
-enum FinanceType{
+export enum FinanceType{
   "Premium",
   "Moderate",
   "Reasonable"
