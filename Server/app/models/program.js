@@ -19,11 +19,15 @@ const ProgramSchema = new Schema({
     },
     universityLogo:{
         type: String,
-        required: false
+        required: true
     },
     state:{
         type: String,
-        required: false
+        required: true
+    },
+    country:{
+        type: String,
+        required: true
     },
     duration: {
         type: Number,

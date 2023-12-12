@@ -39,7 +39,9 @@ export const findByMetrics = async (req, res) =>{
         const studentMetrics = req.body.studentData;
         const exp = req.body.exp;
         const resumeRating = req.body.resumeRating;
-        const programs = await programService.suggestProgramsByStudentData(studentMetrics, exp, resumeRating);
+        const country = req.body.country;
+        const program = req.body.program;
+        const programs = await programService.suggestProgramsByStudentData(studentMetrics, exp, resumeRating, country, program);
         setResponse(programs,res);
     } catch(e){
         setErrorResponse(e, res);

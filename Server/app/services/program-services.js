@@ -18,8 +18,8 @@ export const findByProgramNameAndCollege = async (Pname, Cname) => {
 }
 
 
-export const suggestProgramsByStudentData = async (studentData ,exp, resumeRating) => {
-    const programs = await ProgramModel.find({'requirements.lorRequired': { $lte: studentData.lorRequired }}).exec();
+export const suggestProgramsByStudentData = async (studentData, exp, resumeRating, country, program) => {
+    const programs = await ProgramModel.find({'requirements.lorRequired': { $lte: studentData.lorRequired }, country: country, name: program}).exec();
     const sortedPrograms = programs.sort((a, b) => admitClassifier(studentData, b.requirements, exp, resumeRating) - admitClassifier(studentData, a.requirements, exp, resumeRating));
 
     const ambitious = sortedPrograms.filter(
