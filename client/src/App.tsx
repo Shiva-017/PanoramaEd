@@ -7,6 +7,7 @@ import StudentSearch from './home/StudentSearch/StudentSearch';
 import PostForm from './home/PostForm/PostForm'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from './store'
+import { loadPosts } from './store/slices/StudentPost-slice'
 
 import './App.css';
 import CollegePage from './home/CollegePage/CollegePage';
@@ -22,16 +23,21 @@ type FormValues = {
   text: string;
 };
 
+
+
 function App() {
+
+  
 
 
   return (
      //<CollegePage/>
     // <StudentMetricsForm />
-    <CollegeCompare />
+    // <CollegeCompare />
     //<CollegeSuggest/>
   //  <StudentProfile/>
   // <ShortlistCard/>
+  <StudentSearch/>
   )
 
 }

@@ -49,7 +49,9 @@ const StudentMetricsForm: React.FC = (): ReactElement => {
                 lorRequired: lorReq,
             },
             exp: exp,
-            resumeRating: resumeRating
+            resumeRating: resumeRating, 
+            country: country,
+            program: course,
         }
 
         try {
