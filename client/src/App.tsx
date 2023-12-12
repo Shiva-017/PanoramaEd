@@ -15,6 +15,7 @@ import CollegeCompare from './home/CollegeCompare/CollegeCompare';
 
 import StudentProfile from './home/StudentPage/StudentProfile';
 import CollegeSuggest from './home/CollegeSuggest/CollegeSuggest';
+import ShortlistCard from './home/StudentPage/ShortlistCard';
 
 type FormValues = {
   title: string;
@@ -27,9 +28,10 @@ function App() {
   return (
      //<CollegePage/>
     // <StudentMetricsForm />
-    //<CollegeCompare />
+    <CollegeCompare />
     //<CollegeSuggest/>
-   <StudentProfile/>
+  //  <StudentProfile/>
+  // <ShortlistCard/>
   )
 
 }

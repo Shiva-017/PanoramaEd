@@ -29,6 +29,8 @@ export interface Program {
   name: string,
   ranking: string,
   university: string,
+  universityLogo: string;
+  state: string;
   fee: string,
   deadline?: string,
   duration?: string,
