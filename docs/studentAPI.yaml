@@ -21,17 +21,17 @@ paths:
           example: "Anthony Kodirekka"
           schema:
             type: string
+        - name: "degree"
+          in: "query"
+          required: false
+          example: "Masters"
+          schema:
+            type: string
         - name: "intake"
           in: "query"
           required: false
           example: "Fall 2024"
           schema:
-            type: string
-        - name: "course"
-          in: "query"
-          required: false
-          example: "ComputerScience"
-          schema: 
             type: string
         
       responses: 
@@ -76,12 +76,30 @@ components:
         intake:
           type: string
           example: Fall 2024
+        undergradgrade:
+          type: string
+          example: CGPA : 7.21/10
         undergradcollege:
           type: string
           example: NIT Allahabad
         undergradcourse:
           type: string
           example: Computer Science
+        gre:
+          type: string
+          example: GRE : 310
+        ielts:
+          type: string
+          example: IELTS : 7.5
+        experiencecompany:
+          type: string
+          example: UBS
+        experiencedesignation:
+          type: string
+          example: Software Engineer
+        experienceduration:
+          type: string
+          example: Jul 2018 - Aug 2023
         collegeShorlisted:
           type: array
           items:

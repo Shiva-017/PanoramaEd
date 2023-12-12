@@ -36,3 +36,73 @@
     transform: rotate(360deg);
   }
 }
+
+.studentApp {
+  display: flex;
+  justify-content: left;
+  align-items: last baseline;
+  height: 100vh;
+}
+
+.card-container {
+  display: flex;
+}
+
+.StudentCard {
+  border: 1px solid #ccc;
+  padding: 16px;
+}
+
+/* App.css */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  text-align: center;
+  margin: 20px;
+}
+
+.suggestcard-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.suggestcard {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.2s ease-in-out;
+}
+
+.suggestcard:hover {
+  transform: scale(1.05);
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+h3 {
+  color: #333;
+}
+
+p {
+  color: #555;
+}
+
+/* Optional: Add some responsive styles */
+@media (max-width: 768px) {
+  .suggestcard-container {
+    grid-template-columns: 1fr;
+  }
+}
+
