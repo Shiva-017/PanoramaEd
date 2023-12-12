@@ -14,6 +14,10 @@ export const postSlice = createSlice({
     }
 });
 
+export const retrievePosts = ()=>{
+    return (state: AppState)=> state.posts;
+}
+
 export const {loadPosts} = postSlice.actions;
 export default postSlice;
 

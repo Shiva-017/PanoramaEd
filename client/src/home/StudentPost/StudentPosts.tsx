@@ -12,22 +12,25 @@ import React, {useState, useEffect} from 'react';
 import { BiSolidUpvote } from "react-icons/bi";
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../store'
-import { loadPosts } from '../../store/slices/StudentPost-slice'
+import { loadPosts, retrievePosts } from '../../store/slices/StudentPost-slice'
+ import { useSelector } from 'react-redux';
 
 type FormValues = {
     title: string;
     text: string;
   };
 
-type Props = {
+// type Props = {
 
-    posts: Post[]
-}
+//     posts: Post[]
+// }
 
-const StudentPosts: React.FC<Props> = (props: Props): ReactElement => {
+// const StudentPosts: React.FC<Props> = (props: Props): ReactElement => {
+  const StudentPosts: React.FC= (): ReactElement => {
 
   const dispatch = useDispatch<AppDispatch>();
-    const [posts, setPosts] = useState<Post[]>([]);
+  const posts = useSelector(retrievePosts());
+    // const [posts, setPosts] = useState<Post[]>([]);
     const getPosts = () => {
 
         fetch(`http://localhost:3001/posts/`, {
@@ -35,10 +38,10 @@ const StudentPosts: React.FC<Props> = (props: Props): ReactElement => {
             headers: { 'Content-Type': 'application/json' },
           })
             .then(res => res.json())
-            .then((json) => {
-              // dispatch(loadPosts(json))
-              setPosts(json.reverse())
-              console.log(json) 
+            .then((data) => {
+              dispatch(loadPosts(data.reverse()))
+              // setPosts(json.reverse())
+              // console.log(data) 
                     
     });        
             
@@ -151,7 +154,8 @@ const StudentPosts: React.FC<Props> = (props: Props): ReactElement => {
           </div>
           <div>
           <Button variant="contained" onClick={handleCreateClick}  style={{backgroundColor:"#92C1B7" }} >Create</Button>
-          {isFormVisible && <PostForm onSubmit={HandleFormSubmit} posts={props.posts} setPosts={setPosts}/>}
+          {/* {isFormVisible && <PostForm onSubmit={HandleFormSubmit} posts={props.posts} setPosts={setPosts}/>}  */}
+          {isFormVisible && <PostForm onSubmit={HandleFormSubmit}  />} 
           </div>
          
           </>
