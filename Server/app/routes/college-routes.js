@@ -24,6 +24,12 @@ router.route('/:id')
     .delete(collegeController.remove)
     .get(collegeController.findById)
 
+router.route('/addPrograms/:id')
+    .put(collegeController.addPrograms);
+
+router.route('/deletePrograms/:id')
+    .put(collegeController.deletePrograms);
+
 router.route('/name/:name')
     .get(collegeController.findByName);
 

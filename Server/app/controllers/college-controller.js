@@ -32,6 +32,28 @@ export const updateEvents = async (req, res) => {
     }
 }
 
+export const addPrograms = async (req, res) => {
+    try {
+        const collegeId = req.params.id;
+        const programs = req.body;
+        const college = await collegeService.addCollegePrograms(programs, collegeId);
+        setResponse(college, res);
+    } catch (e) {
+        setErrorResponse(e, res);
+    }
+}
+
+export const deletePrograms = async (req, res) => {
+    try {
+        const collegeId = req.params.id;
+        const programs = req.body;
+        const college = await collegeService.RemoveCollegePrograms(programs, collegeId);
+        setResponse(college, res);
+    } catch (e) {
+        setErrorResponse(e, res);
+    }
+}
+
 export const removeEvent = async (req, res) => {
     try {
         const collegeId = req.params.id;

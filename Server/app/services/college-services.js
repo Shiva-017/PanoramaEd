@@ -54,24 +54,36 @@ export const updateCollegeEvents = async (events, id) => {
     return college;
 }
 
+export const addCollegePrograms = async (programs, id) => {
+    const college = await CollegeModel.findByIdAndUpdate(id, { $push: { programs: { $each: programs } } }, { new: true, runValidators: true }).exec();
+    return college;
+}
+
+export const RemoveCollegePrograms = async (programs, id) => {
+    const college = await CollegeModel.findByIdAndUpdate(id, { $pull: { programs: { $each: programs } } }, { new: true, runValidators: true }).exec();
+    return college;
+}
+
 export const deleteCollegeEvents = async (title, id) => {
     const college = await CollegeModel.findByIdAndUpdate(id, { $pull: { upcomingEvents: { title } } }, { new: true, runValidators: true }).exec();
     return college;
 }
 
-export const shortlistCollege = async (studentId, collegeId)=>{
-    const college = await CollegeModel.findByIdAndUpdate(collegeId, { $addToSet: { shortListedStudents: studentId  } }, { new: true, runValidators: true }).exec();
-    await StudentModel.findByIdAndUpdate(studentId,{ $addToSet: {
-        collegeShorlisted: {
-          collegeID: collegeId,
-          collegeLogo: college.logo,
+export const shortlistCollege = async (studentId, collegeId) => {
+    const college = await CollegeModel.findByIdAndUpdate(collegeId, { $addToSet: { shortListedStudents: studentId } }, { new: true, runValidators: true }).exec();
+    await StudentModel.findByIdAndUpdate(studentId, {
+        $addToSet: {
+            collegeShorlisted: {
+                collegeID: collegeId,
+                collegeLogo: college.logo,
+            },
         },
-      }, }, { new: true, runValidators: true }).exec();
+    }, { new: true, runValidators: true }).exec();
     return college;
 }
 
-export const removeShortlistCollege = async (studentId, collegeId)=>{
+export const removeShortlistCollege = async (studentId, collegeId) => {
     const college = await CollegeModel.findByIdAndUpdate(collegeId, { $pull: { shortListedStudents: studentId } }, { new: true, runValidators: true }).exec();
-    await StudentModel.findByIdAndUpdate(studentId,{  $pull: { collegeShorlisted: { collegeID: collegeId } }  }, { new: true, runValidators: true }).exec();
+    await StudentModel.findByIdAndUpdate(studentId, { $pull: { collegeShorlisted: { collegeID: collegeId } } }, { new: true, runValidators: true }).exec();
     return college;
 }
