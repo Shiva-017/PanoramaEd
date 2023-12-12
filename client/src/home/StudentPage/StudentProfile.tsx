@@ -14,35 +14,40 @@ import background from '../../resources/3626052.jpg';
 import SchoolIcon from '@mui/icons-material/School';
 import AirIcon from '@mui/icons-material/Air';
 import ShortlistCard from './ShortlistCard';
+import { useSelector } from 'react-redux';
+import { retrieveUsers} from '../../store/slices/login-slice';
+import User from '../../models/user';
 
 
 const StudentProfile: React.FC = (): ReactElement => {
 
-  const [students, setStudents] = useState<Student>();
+  const [student, setStudent] = useState<Student>();
+  const studentLoggedIn : User[] = useSelector(retrieveUsers());
 
-  const navigate = useNavigate();
-  const getStudents = () => {
+  const getStudentData = async()=>{
     try {
+      console.log("student", studentLoggedIn);
 
-      const response = fetch(`http://localhost:3001/students/`, {
+      const response = await fetch(`http://localhost:3001/students/${studentLoggedIn[0].email}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
-      }).then(res => res.json())
-        .then(data => setStudents(data[0]));
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! Status: ${response.status}`);
-      // }
+      });
 
-      // const data = response.json();
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
-      // setStudents(data);
+      const data = await response.json();
+      console.log(data,"data");
+      setStudent(data[0]);
     } catch (error) {
       console.error("Error:", error);
     }
-  };
+  }
+  
   useEffect(() => {
-    getStudents();
-  }, [])
+    getStudentData();
+  }, []);
 
 
 
@@ -57,7 +62,7 @@ const StudentProfile: React.FC = (): ReactElement => {
       </CardMedia>
 
       <CardHeader
-        title="shiva"
+        title={student?.name}
         sx={{ m: "auto", textAlign: "center" }}
       />
       <CardContent sx={{ display: "flex", justifyContent: "center" }}>

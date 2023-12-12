@@ -22,3 +22,15 @@ export const post = async (request, response) =>{
         setErrorResponse(err, response);
     }
 }
+
+//controller for updating chat
+export const update = async (request, response) => {
+    try {
+        const id = {...request.query};
+        const newMessage = {...request.body};
+        const chat = await chatService.update(newMessage, id);
+        setResponse(chat, response);
+    } catch (err) {
+        setErrorResponse(err, response);
+    }
+}

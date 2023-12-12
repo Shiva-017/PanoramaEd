@@ -32,10 +32,10 @@ export const remove = async (req, res) => {
     }
 }
 
-export const findById = async (req, res) => {
+export const findByEmail = async (req, res) => {
     try {
-        const studentId = req.params.id;
-        const student = await studentService.findByStudentId(studentId);
+        const studentEmail = req.params.id;
+        const student = await studentService.findByStudentEmail(studentEmail);
         setResponse(student, res);
     } catch (e) {
         setErrorResponse(e, res);

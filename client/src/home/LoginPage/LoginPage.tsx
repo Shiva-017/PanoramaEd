@@ -5,6 +5,8 @@ import * as io from "socket.io-client";
 // import bcrypt from 'bcryptjs';
 import './styles.css';
 
+import { loadUsers } from "../../store/slices/login-slice";
+
 import Chat from "../Chat/Chat";
 
 interface User {
@@ -16,6 +18,7 @@ interface User {
 
 
 const LoginPage: React.FC = () => {
+  // const user = useSelector(retrieveUser());
   const [user, setUser] = useState<User>({ name: '', email: '', password: '' });
   
   const socket = io.connect("http://localhost:4000");
@@ -53,16 +56,13 @@ const LoginPage: React.FC = () => {
       })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
+            console.log(data, "got data");
             if (data[0]) {
               console.log("In dispatch");
-                // dispatch({
-                //     type: "LOGIN_SUCCESSFUL",
-                //     payload: data[0]
-                // })
-                navigate('/');
+              dispatch(loadUsers(data));
+              navigate('/');
             } else {
-              alert("Given user name or password is incorrect.");
+              alert("Given email or password is incorrect.");
               window.location.reload();
             }
         });
@@ -74,18 +74,14 @@ const LoginPage: React.FC = () => {
 
     fetch(`http://localhost:3001/login`, {
         method: 'POST',
-        body: JSON.stringify({ ...user }),
+        body: JSON.stringify({ ...user, userType: "STUDENT" }),
         headers: { 'Content-Type': 'application/json' },
     })
         .then(res => res.json())
         .then(data => {
             console.log(data);
             if (data.name) {
-                // dispatch({
-                //     type: "SIGNUP_SUCCESSFUL",
-                //     payload: data
-                // })
-                console.log("Here");
+                dispatch(loadUsers([data]));
                 navigate('/');
             } else {
               alert("An account with this email-id already exists.");
@@ -132,7 +128,7 @@ const LoginPage: React.FC = () => {
         </div>
       </div>
 
-      {/* <Chat socket={socket} username={prompt('Enter name')} room="1234" /> */}
+      {/* <Chat socket={socket} username={prompt('Enter name') || ""} room="1234" /> */}
     </div>
   );
 }
