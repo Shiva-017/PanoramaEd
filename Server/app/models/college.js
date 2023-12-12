@@ -80,9 +80,9 @@ const CollegeSchema = new Schema({
     },
     shortListedStudents: {
         type: Array,
-        required: false,
+        required: true,
         items: {
-            studentId: Number
+            type: mongoose.Schema.Types.ObjectId, ref: 'StudentModel'
         }
     }
 })

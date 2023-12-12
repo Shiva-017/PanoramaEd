@@ -1,4 +1,4 @@
-import { CardMedia, IconButton, Stack, Typography } from '@mui/material';
+import { Alert, CardMedia, IconButton, Stack, Typography } from '@mui/material';
 import { Avatar } from '@mui/material';
 import College, { Program } from '../../models/college';
 import SchoolIcon from '@mui/icons-material/School';
@@ -17,10 +17,11 @@ const CollegeDetails: React.FC=():ReactElement=> {
     const [favourite, setFavourite] = useState<boolean>(false);
     const {collegeName} = useParams();
     const { t } = useTranslation('college-page');
+    const [showAlert, setShowAlert] = useState(0);
 
     const fetchCollegeData = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/colleges/name/${collegeName}`, {
+            const response = await fetch(`http://localhost:3001/colleges/name/${collegeName}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -39,8 +40,59 @@ const CollegeDetails: React.FC=():ReactElement=> {
         }
     };
 
-    const addToFavourites = ()=>{
-        setFavourite(!favourite);
+    const shortlistCollege = async () => {
+      try {
+          const response = await fetch(`http://localhost:3001/colleges?studentId=${"studentId"}?collegeId=${collegeData?._id}`, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+          });
+
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          const data = await response.json();
+      } catch (error) {
+          console.error("Error:", error);
+      }
+  };
+
+  const removeShortlistCollege = async () => {
+    try {
+        const response = await fetch(`http://localhost:3001/colleges/removeShortlist?studentId=${"studentId"}?collegeId=${collegeData?._id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+    } catch (error) {
+        console.error("Error:", error);
+    }
+};
+
+
+    const handleFavourites = ()=>{
+      setFavourite(!favourite);
+      if(!favourite){
+        setShowAlert(1);
+        setTimeout(()=>{
+          setShowAlert(0);
+        }, 1500);
+      }else{
+        setShowAlert(2);
+        setTimeout(()=>{
+          setShowAlert(0);
+        }, 1500);
+      } // move this logic to api responses
+       
     }
     
     useEffect(()=>{
@@ -49,11 +101,12 @@ const CollegeDetails: React.FC=():ReactElement=> {
     
   return (
     <div>
-      <CardMedia image={collegeData?.background}  sx={{ border: 5, borderColor: "whitesmoke", borderWidth: 15, borderRadius: 10, paddingTop: "250px", paddingLeft: "40px", paddingBottom: "10px" }}>
+      <CardMedia image={collegeData?.background}  sx={{ border: 5, borderColor: "whitesmoke", borderWidth: 15, borderRadius: 10, paddingLeft: "40px", paddingBottom: "10px" }}>
+      {showAlert===1 ? <Alert sx={{width: 600, left:450, top:30, position: 'absolute'}} variant="filled">Shortlisted the college!</Alert> : showAlert === 2 ? <Alert severity="info" sx={{width: 600, left:450, top:30, position: 'absolute'}} variant="filled">Removed from the shortlist!</Alert> : null}
         <Avatar
           alt={collegeData?.name}
           src={collegeData?.logo}
-          sx={{ width: 72, height: 72, border: 5, borderColor: "white" }}
+          sx={{ width: 72, height: 72, border: 5, borderColor: "white", marginTop: 25 }}
         />
       </CardMedia>
       <Stack direction="row">
@@ -66,8 +119,8 @@ const CollegeDetails: React.FC=():ReactElement=> {
       </Typography>
       </Stack>
 
-        <IconButton  onClick={addToFavourites}  >{favourite ? <FavoriteIcon sx={{fontSize: 36, marginTop:3, marginLeft: 1, color:"#fd5c63"}}  /> : <FavoriteBorderIcon sx={{fontSize: 36, marginTop:3, marginLeft: 1}}  />}</IconButton>
-
+        <IconButton  onClick={handleFavourites}  >{favourite ? <FavoriteIcon sx={{fontSize: 36, marginTop:2, marginLeft: 1, color:"#fd5c63"}}  /> : <FavoriteBorderIcon sx={{fontSize: 36, marginTop:3, marginLeft: 1}}  />}</IconButton>
+        {/* need to change the above condition by checking studentId in the aray of shortlisted students */}
       </Stack>
       
       

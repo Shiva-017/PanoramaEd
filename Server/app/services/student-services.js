@@ -22,6 +22,5 @@ export const save = async (newStudent) => {
 
     const student = new StudentModel(newStudent);
     return await student.save();
-
-    
 };
+

@@ -32,6 +32,28 @@ export const updateEvents = async (req, res) => {
     }
 }
 
+export const addPrograms = async (req, res) => {
+    try {
+        const collegeId = req.params.id;
+        const programs = req.body;
+        const college = await collegeService.addCollegePrograms(programs, collegeId);
+        setResponse(college, res);
+    } catch (e) {
+        setErrorResponse(e, res);
+    }
+}
+
+export const deletePrograms = async (req, res) => {
+    try {
+        const collegeId = req.params.id;
+        const programs = req.body;
+        const college = await collegeService.RemoveCollegePrograms(programs, collegeId);
+        setResponse(college, res);
+    } catch (e) {
+        setErrorResponse(e, res);
+    }
+}
+
 export const removeEvent = async (req, res) => {
     try {
         const collegeId = req.params.id;
@@ -69,6 +91,28 @@ export const findByName = async (req, res) => {
         const college = await collegeService.findByCollegeName(collegeName);
         setResponse(college, res);
     } catch (e) {
+        setErrorResponse(e, res);
+    }
+}
+
+export const shortlistCollege = async (req, res) => {
+    try{
+        const studentId = req.query.studentId;
+        const collegeId = req.query.collegeId;
+        const college = await collegeService.shortlistCollege(studentId, collegeId);
+        setResponse(college, res);
+    }catch(e){
+        setErrorResponse(e, res);
+    }
+}
+
+export const removeShortlistCollege = async (req, res) => {
+    try{
+        const studentId = req.query.studentId;
+        const collegeId = req.query.collegeId;
+        const college = await collegeService.removeShortlistCollege(studentId, collegeId);
+        setResponse(college, res);
+    }catch(e){
         setErrorResponse(e, res);
     }
 }
