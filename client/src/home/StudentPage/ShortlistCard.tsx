@@ -16,7 +16,7 @@ type Props = {
 const ShortlistCard: React.FC<ShortlistCardProps> = ({ college, program}) => {
   return (
     <div className="shortlist-card">
-        <Card sx={{ marginLeft: 5, paddingLeft: 3, borderLeft: 5, borderColor: "#603F8B", marginTop: 3, marginBottom: 3 }}>
+        <Card sx={{ width:'280%', height:'50px', marginLeft: 5, paddingLeft: 3, borderLeft: 5, borderColor: "#603F8B", marginTop: 3, marginBottom: 3 }}>
       <b>{college}</b>  
       <div className="program">{program}</div>
       

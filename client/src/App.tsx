@@ -36,9 +36,9 @@ function App() {
     // <StudentMetricsForm />
     // <CollegeCompare />
     //<CollegeSuggest/>
-  //  <StudentProfile/>
+    <StudentProfile/>
   // <ShortlistCard/>
-  <StudentSearch/>
+  //<StudentSearch/>
   )
 }
 

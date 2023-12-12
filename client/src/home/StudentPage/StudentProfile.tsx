@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import backGround from '../../resources/northeast.png';
 import logo from '../../resources/anthony.jpeg';
 import {
@@ -20,11 +20,47 @@ import SchoolIcon from '@mui/icons-material/School';
 import StarIcon from '@mui/icons-material/Star';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { student } from '../../models/student';
+import Student from '../../models/student';
 import StudentCard from './StudentCard';
 import ShortlistCard from './ShortlistCard';
+import Button from '@mui/material/Button';
+import EventIcon from '@mui/icons-material/Event';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import WorkIcon from '@mui/icons-material/Work';
+import College from '../../models/college';
+import { useNavigate } from 'react-router-dom';
+
 
 const StudentProfile: React.FC = (): ReactElement => {
+
+  const [students, setStudents] = useState<Student>();
+
+  const navigate = useNavigate();
+    const getStudents = () => {
+      try {
+
+        const response = fetch(`http://localhost:3001/students/`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+          }).then(res => res.json())
+          .then(data => setStudents(data[0]));
+          // if (!response.ok) {
+          //   throw new Error(`HTTP error! Status: ${response.status}`);
+          // }
+
+        // const data = response.json();
+
+        // setStudents(data);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+};
+    useEffect(() => {
+        getStudents();
+      }, [])
+
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isProfileFormOpen, setIsProfileFormOpen] = useState(false);
 
@@ -47,16 +83,33 @@ const StudentProfile: React.FC = (): ReactElement => {
     handleClose();
   };
 
+  const postRoute = ()=> {
+
+    navigate('/posts');
+
+  }
+  const collegeCompareRoute = ()=> {
+
+    navigate('/college-compare');
+
+  }
+  const findCollegeRoute = ()=> {
+
+    navigate('find-college');
+
+  }
+
   return (
-    <div>
+    <div style={{ margin: '0 150px' }}>
       <AppBar position="static" color="transparent">
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="school">
             <SchoolIcon />
           </IconButton>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            GradVerse
+            PanoramaEd
           </Typography>
+
           <TextField
             id="search"
             label="Search"
@@ -68,6 +121,12 @@ const StudentProfile: React.FC = (): ReactElement => {
               ),
             }}
           />
+
+          <Button color="inherit" onClick={postRoute}>Feed</Button>
+          <Button color="inherit"onClick={collegeCompareRoute}>College Compare</Button>
+          <Button color="inherit"onClick={findCollegeRoute}>Find College</Button>
+
+          
           <IconButton color="inherit">
             <NotificationsIcon />
           </IconButton>
@@ -96,7 +155,8 @@ const StudentProfile: React.FC = (): ReactElement => {
           </Menu>
         </Toolbar>
       </AppBar>
-
+      
+            
       {isProfileFormOpen && (
         <form>
           <TextField label="Degree Seeking" />
@@ -113,8 +173,9 @@ const StudentProfile: React.FC = (): ReactElement => {
         </form>
       )}
 
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
+<Grid container spacing={2}>
+        {/* Left side: background, avatar, shortlist cards */}
+        <Grid item xs={12} sm={6} md={6}>
           <CardMedia
             image={backGround}
             sx={{
@@ -139,9 +200,8 @@ const StudentProfile: React.FC = (): ReactElement => {
               }}
             />
           </CardMedia>
-        </Grid>
 
-        <Grid item xs={12}>
+          <Grid item xs={12}>
           <Stack direction="row" justifyContent="center">
             <Stack direction="column">
               <Typography
@@ -149,53 +209,13 @@ const StudentProfile: React.FC = (): ReactElement => {
                 component="h2"
                 sx={{ fontWeight: 'bold', textAlign: 'center' }}
               >
-                Student Name
+                {students?.name}
               </Typography>
             </Stack>
           </Stack>
         </Grid>
 
-        {/* Student Cards - 2x2 Grid */}
-        <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} md={4}>
-          <StudentCard title="Degree Seeking" mandatoryContent={student.degreeseeking} />
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <StudentCard title="Intake" mandatoryContent={student.intake} />
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <StudentCard
-            title="Educational Details"
-            mandatoryContent={student.undergradGrade}
-            optionalContent={student.undergradcollege}
-            optionalContent2={student.undergradcourse}
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <StudentCard
-            title="Test Scores"
-            mandatoryContent={student.gre}
-            optionalContent={student.ielts}
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={4}>
-          <StudentCard
-            title="Work Experience"
-            mandatoryContent={student.expCompany}
-            optionalContent={student.expDesignation}
-            optionalContent2={student.expDuration}
-          />
-        </Grid>
-        </Grid>
-
-        </Grid>
-
-        {/* Shortlist Cards - To the Right */}
-        <Grid item xs={12} sm={6} md={6}>
+          {/* Shortlist Cards - To the Left */}
           <Typography
             variant="h5"
             component="h2"
@@ -207,30 +227,67 @@ const StudentProfile: React.FC = (): ReactElement => {
             Colleges Shortlisted
           </Typography>
           <Grid item xs={12} sm={6} md={4}>
-      <ShortlistCard
-            college="Northeastern University"
-            program="Computer Science"
-          />
+            <ShortlistCard college="Northeastern University" program="Computer Science" />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-    <ShortlistCard
-            college="Harvard University"
-            program="Computer Science"
-          />
+            <ShortlistCard college="Harvard University" program="Computer Science" />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-          <ShortlistCard
-            college="UC Santa Cruz"
-            program="Computer Science"
-          />
+            <ShortlistCard college="UC Santa Cruz" program="Computer Science" />
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-          <ShortlistCard
-            college="UTD Dallas"
-            program="Computer Science"
-          />
+          {/* <Grid item xs={12} sm={6} md={4}>
+            <ShortlistCard college={students?.shortlistedcolleges[0].collegeID} program="Computer Science" />
+          </Grid> */}
+
+{/* {students?.shortlistedcolleges.map((collegeID, index)=>{
+          return(
+            <ShortlistCard collegeID={collegeID} key={index} program="Computer Science"></ShortlistCard>
+          )
+        })} */}
+        </Grid>
+
+        {/* Right side: student cards */}
+        <Grid item xs={12} sm={6} md={6}>
+          
+
+          {/* Student Cards - Single column (1x1) */}
+          <Grid container spacing={0} sx={{ width: '100%' }}>
+            <Grid item xs={12}>
+              <StudentCard 
+              title={<><SchoolIcon /> Degree Seeking</>}
+              mandatoryContent={students?.degreeseeking} />
+            </Grid>
+            <Grid item xs={12}>
+              <StudentCard 
+              title={<><EventIcon /> Intake</>} 
+              mandatoryContent={students?.intake} />
+            </Grid>
+            <Grid item xs={12}>
+              <StudentCard
+                title={<><MenuBookIcon /> Educational Details</>}
+                mandatoryContent={students?.undergradgrade}
+                optionalContent={students?.undergradcollege}
+                optionalContent2={students?.undergradcourse}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <StudentCard
+                title={<><AssessmentIcon /> Test Scores</>}
+                mandatoryContent={students?.gre}
+                optionalContent={students?.ielts}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <StudentCard
+                title={<><WorkIcon /> Work Experience</>}
+                mandatoryContent={students?.experiencecompany}
+                optionalContent={students?.experiencedesignation}
+                optionalContent2={students?.experienceduration}
+              />
+            </Grid>
           </Grid>
-          </Grid>
+        </Grid>
+      </Grid>
     </div>
   );
 };
