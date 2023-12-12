@@ -36,8 +36,10 @@ export const findByNameAndCollege = async (req, res) => {
 
 export const findByMetrics = async (req, res) =>{
     try{
-        const studentMetrics = req.body;
-        const programs = await programService.suggestProgramsByStudentData(studentMetrics);
+        const studentMetrics = req.body.studentData;
+        const exp = req.body.exp;
+        const resumeRating = req.body.resumeRating;
+        const programs = await programService.suggestProgramsByStudentData(studentMetrics, exp, resumeRating);
         setResponse(programs,res);
     } catch(e){
         setErrorResponse(e, res);

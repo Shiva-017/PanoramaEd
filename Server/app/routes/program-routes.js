@@ -7,7 +7,7 @@ const router = express.Router();
 //     .get(programController.findById)
 
 router.route('/suggest')
-    .get(programController.findByMetrics)
+    .post(programController.findByMetrics)
 
 router.route('/')
     .get(programController.find)
