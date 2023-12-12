@@ -10,6 +10,9 @@ import PostForm from '../../home/PostForm/PostForm'
 import React, {useState, useEffect} from 'react';
 // import { AiOutlineLike } from "react-icons/ai";
 import { BiSolidUpvote } from "react-icons/bi";
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../store'
+import { loadPosts } from '../../store/slices/StudentPost-slice'
 
 type FormValues = {
     title: string;
@@ -22,6 +25,8 @@ type Props = {
 }
 
 const StudentPosts: React.FC<Props> = (props: Props): ReactElement => {
+
+  const dispatch = useDispatch<AppDispatch>();
     const [posts, setPosts] = useState<Post[]>([]);
     const getPosts = () => {
 
@@ -30,13 +35,18 @@ const StudentPosts: React.FC<Props> = (props: Props): ReactElement => {
             headers: { 'Content-Type': 'application/json' },
           })
             .then(res => res.json())
-            .then(json => {
-              setPosts(json)
-              console.log(json)
-            })
+            .then((json) => {
+              // dispatch(loadPosts(json))
+              setPosts(json.reverse())
+              console.log(json) 
+                    
+    });        
+            
     }
     useEffect(() => {
+
         getPosts();
+  
       }, []);
 
 
@@ -62,6 +72,7 @@ const StudentPosts: React.FC<Props> = (props: Props): ReactElement => {
               if (response.status ===200){
                 // console.log("posted")
                 getPosts();
+                
                 console.log("hello",posts)
               }
             })
@@ -86,8 +97,8 @@ const StudentPosts: React.FC<Props> = (props: Props): ReactElement => {
           })
           .then(response => {
             if (response.status ===200){
-              console.log("psoted")
-              getPosts();
+              console.log("posted")
+              getPosts();    
             }
           })
        
@@ -103,6 +114,7 @@ const StudentPosts: React.FC<Props> = (props: Props): ReactElement => {
             if (response.status ===200){
               console.log("psoted")
               getPosts();
+     
             }
           })
 
