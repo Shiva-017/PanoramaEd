@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
-import { Card, CardContent, CardHeader, Stack, Typography } from "@mui/material";
+import {Avatar, Card, CardContent, CardHeader, Stack, Typography } from "@mui/material";
 import Student from '../../models/student';
+import logo from "../../resources/neulogo.jpg";
 
 
 interface ShortlistCardProps {
@@ -9,20 +10,20 @@ interface ShortlistCardProps {
 }
 
 type Props = {
-  student: Student
-  
+  // student: Student
+
 }
 
-const ShortlistCard: React.FC<ShortlistCardProps> = ({ college, program}) => {
+const ShortlistCard: React.FC = () => {
   return (
-    <div className="shortlist-card">
-        <Card sx={{ width:'280%', height:'50px', marginLeft: 5, paddingLeft: 3, borderLeft: 5, borderColor: "#603F8B", marginTop: 3, marginBottom: 3 }}>
-      <b>{college}</b>  
-      <div className="program">{program}</div>
-      
-    
+    <Stack direction="row" spacing={2} sx={{ borderLeft: 5, borderColor: "#1E90FF", paddingLeft:2, mt:3}}>
+      <Avatar src={logo}></Avatar>
+      <Card sx={{ width: "100%", height: '50px'}}>
+        <Typography variant='body1' sx={{fontWeight:"bold"}}>Northeastern University</Typography>
+        <Typography variant='body2'>Computer Science</Typography>
       </Card>
-    </div>
+      </Stack>
+    
   );
 };
 

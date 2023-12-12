@@ -52,7 +52,7 @@ export default createBrowserRouter([
             },
             {
                 path: '/profile',
-                element: <StudentProfile />
+                element: <div></div>
             },
             {
                 path: '/studentform',

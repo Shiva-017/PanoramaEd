@@ -61,8 +61,8 @@ const CollegeCard: React.FC<Props> = (props: Props): ReactElement => {
             
             <Slide direction="up" in={checked} mountOnEnter unmountOnExit>
                 
-                <Box width={500} sx={{ margin: 5, marginBottom: 0, backgroundColor: "#6699CC", borderRadius: 2 }}>
-                    <CardMedia image={collegeData?.background} sx={{ paddingTop: "20px", paddingLeft: "20px", paddingBottom: "10px", height: 180, borderTopLeftRadius: 5, borderTopRightRadius: 5 }}>
+                <Box width={500} sx={{ backgroundColor: "#6699CC", borderRadius: 2 }}>
+                    <CardMedia image={collegeData?.background} sx={{ paddingTop: "20px", paddingLeft: "20px", paddingBottom: "10px", height: 180, borderTopLeftRadius: 5, borderTopRightRadius: 5, mb:5 }}>
                         <Avatar alt="name" src={collegeData?.logo} sx={{ width: 72, height: 72, border: 5, borderColor: "white" }} />
                         {collegeName !=="" ? <Typography variant="h4" sx={{ fontWeight: "bold", margin: 1, marginBottom: 0, color: "whitesmoke" }}>{collegeData?.name}</Typography> :  <Typography variant="h5" sx={{ fontWeight: "bold", margin: 1, marginBottom: 3, color: "#002387", marginLeft: 18 }}>College not found</Typography>}
                     </CardMedia>      
