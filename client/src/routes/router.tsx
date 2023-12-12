@@ -9,7 +9,6 @@ import StudentPosts from "../home/StudentPost/StudentPosts"
 import LoginPage from "../home/LoginPage/LoginPage";
 import StudentProfile from "../home/StudentPage/StudentProfile";
 import StudentForm from "../home/StudentPage/StudentForm";
-import Layout from "../components/Layout";
 export default createBrowserRouter([
     {
         path: '/',
@@ -17,65 +16,49 @@ export default createBrowserRouter([
         errorElement: <></>,
         children: [
             {
-                element: (
-                    <Layout>
-                      <App />
-                    </Layout>
-                  ),
+                element: <App />
+,
                 index: true,
             },
             {
                 path: '/colleges/:collegeName',
-                element: 
-                <Layout>
-                    <CollegeDetails />
-                    </Layout>
+                element: <CollegeDetails />
+
             },
             {
                 path: '/college-compare',
-        element: (
-          <Layout>
-            <CollegeCompare />
-          </Layout>
-        ),
+                element: <CollegeCompare />
+
+                
             },
             {
                 path: '/find-college',
-                element: <Layout>
-                <StudentMetricsForm />
-              </Layout>
+                element: <StudentMetricsForm />
+
             },
             {
                 path: '/suggested-colleges',
-                element: <Layout>
-                <CollegeSuggest />
-              </Layout>
+                element: <CollegeSuggest />
+
             },
             {
                 path: '/login',
-                element: <LoginPage/>
+                element: <LoginPage />
             },
             {
                 path: '/posts',
-                element: <Layout>
-                <StudentPosts />
-              </Layout>
+                element: <StudentPosts />
+
             },
             {
                 path: '/profile',
-                element: 
-                <Layout>
-                  <StudentProfile />
-                </Layout>
+                element: <StudentProfile />
             },
             {
                 path: '/studentform',
-                element: 
-                <Layout>
-                    <StudentForm/>
-                    </Layout>
+                element: <StudentForm />
             }
-        
+
         ]
     }
 ])

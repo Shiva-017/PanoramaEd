@@ -10,11 +10,11 @@ const CollegeCompare: React.FC = (): ReactElement => {
     return (
         <ThemeProvider theme={theme}>
         <div style={{backgroundColor:"#E1EBEE"}}>
-            <Stack direction="row" marginLeft={70} marginTop={10} alignItems="center">
+            <Stack direction="row" marginLeft={70} marginTop={0} alignItems="center">
             <TextField id="outlined-basic" label={`Enter program`} variant="outlined" onChange={(e) => { setProgramName(e.target.value) }} />
             <Button variant="contained" color="button" sx={{height: 45, marginLeft:3}} onClick={()=>{setSearch(!search)}}>{search ? "Search Again" : "Search"}</Button>
             </Stack>
-            <Stack direction="row" justifyContent="space-around" alignItems="flex-start " height={1000}>
+            <Stack direction="row" justifyContent="space-around" alignItems="flex-start " height={600}>
                 <CollegeCard id={1} program={programName} triggered={search} ></CollegeCard>
                 <CollegeCard id={2} program={programName} triggered={search} ></CollegeCard>
             </Stack>
