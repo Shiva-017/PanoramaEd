@@ -11,6 +11,17 @@ export const find = async (req, res) => {
     }
 };
 
+export const findByIds = async (req, res) => {
+    try {
+        const ids = req.query.ids.split(',')  // send ids as comma seperated strings
+        const colleges = await collegeService.findByCollegeIds(ids);
+        setResponse(colleges, res);
+    } catch (err) {
+        setErrorResponse(err, res)
+    }
+};
+
+
 export const post = async (req, res) => {
     try {
         const newCollege = req.body;
