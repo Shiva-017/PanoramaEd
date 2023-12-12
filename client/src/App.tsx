@@ -5,6 +5,8 @@ import Post from './models/post'
 import StudentPosts from './home/StudentPost/StudentPosts';
 import StudentSearch from './home/StudentSearch/StudentSearch';
 import PostForm from './home/PostForm/PostForm'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from './store'
 
 import './App.css';
 import CollegePage from './home/CollegePage/CollegePage';

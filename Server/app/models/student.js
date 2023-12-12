@@ -46,11 +46,18 @@ const StudentSchema = new Schema({
         required: false
     },
     collegeShorlisted: {
-        type: Array,
+        type: [
+            {
+                collegeID: {
+                  type: mongoose.Schema.Types.ObjectId,
+                  ref: 'CollegeModel',
+                },
+                collegeLogo: {
+                  type: String,
+                },
+              },
+        ],
         required: false,
-        items: {
-            collegeId: Number
-        }
     }
 })
 
