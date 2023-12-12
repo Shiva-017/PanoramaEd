@@ -30,6 +30,7 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import WorkIcon from '@mui/icons-material/Work';
 import College from '../../models/college';
 import { useNavigate } from 'react-router-dom';
+import NavBar from '../../components/NavBar';
 
 
 const StudentProfile: React.FC = (): ReactElement => {
@@ -61,117 +62,11 @@ const StudentProfile: React.FC = (): ReactElement => {
       }, [])
 
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [isProfileFormOpen, setIsProfileFormOpen] = useState(false);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMyProfileClick = () => {
-    setAnchorEl(null);
-    setIsProfileFormOpen(true);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-    setIsProfileFormOpen(false);
-  };
-
-  const handleLogout = () => {
-    // Implement your logout logic here
-    handleClose();
-  };
-
-  const postRoute = ()=> {
-
-    navigate('/posts');
-
-  }
-  const collegeCompareRoute = ()=> {
-
-    navigate('/college-compare');
-
-  }
-  const findCollegeRoute = ()=> {
-
-    navigate('find-college');
-
-  }
+  
 
   return (
     <div style={{ margin: '0 150px' }}>
-      <AppBar position="static" color="transparent">
-        <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="school">
-            <SchoolIcon />
-          </IconButton>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            PanoramaEd
-          </Typography>
-
-          <TextField
-            id="search"
-            label="Search"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-
-          <Button color="inherit" onClick={postRoute}>Feed</Button>
-          <Button color="inherit"onClick={collegeCompareRoute}>College Compare</Button>
-          <Button color="inherit"onClick={findCollegeRoute}>Find College</Button>
-
-          
-          <IconButton color="inherit">
-            <NotificationsIcon />
-          </IconButton>
-          <IconButton color="inherit">
-            <StarIcon />
-          </IconButton>
-          <IconButton color="inherit">
-            <FavoriteBorderIcon />
-          </IconButton>
-          {/* User profile picture with popup menu */}
-          <IconButton
-            aria-label="user profile"
-            color="inherit"
-            onClick={handleClick}
-          >
-            <Avatar alt="User" src={logo} />
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>Home</MenuItem>
-            <MenuItem onClick={handleMyProfileClick}>My Profile</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </Menu>
-        </Toolbar>
-      </AppBar>
-      
-            
-      {isProfileFormOpen && (
-        <form>
-          <TextField label="Degree Seeking" />
-          <TextField label="Intake" fullWidth margin="normal" />
-          <TextField label="Undergrad Grade" fullWidth margin="normal" />
-          <TextField label="Undergrad College" fullWidth margin="normal" />
-          <TextField label="Undergrad Course" fullWidth margin="normal" />
-          <TextField label="GRE" fullWidth margin="normal" />
-          <TextField label="IELTS" fullWidth margin="normal" />
-          <TextField label="Experience Company" fullWidth margin="normal" />
-          <TextField label="Experience Designation" fullWidth margin="normal" />
-          <TextField label="Experience Duration" fullWidth margin="normal" />
-          <button type="submit">Save</button>
-        </form>
-      )}
+     
 
 <Grid container spacing={2}>
         {/* Left side: background, avatar, shortlist cards */}

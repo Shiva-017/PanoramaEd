@@ -19,6 +19,7 @@ import StudentProfile from './home/StudentPage/StudentProfile';
 import CollegeSuggest from './home/CollegeSuggest/CollegeSuggest';
 import ShortlistCard from './home/StudentPage/ShortlistCard';
 import LoginPage from './home/LoginPage/LoginPage';
+import Layout from './components/Layout';
 
 type FormValues = {
   title: string;
@@ -39,6 +40,7 @@ function App() {
     <StudentProfile/>
   // <ShortlistCard/>
   //<StudentSearch/>
+ // <Layout/>
   )
 }
 
