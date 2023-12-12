@@ -16,8 +16,12 @@ const CollegeDetails: React.FC=():ReactElement=> {
     const [collegeData, setCollegeData] = useState<College>();
     const [favourite, setFavourite] = useState<boolean>(false);
     const {collegeName} = useParams();
+
+    console.log(collegeName);
     const { t } = useTranslation('college-page');
     const [showAlert, setShowAlert] = useState(0);
+
+  
 
     const fetchCollegeData = async () => {
         try {

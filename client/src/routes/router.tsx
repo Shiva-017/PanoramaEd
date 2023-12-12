@@ -6,6 +6,7 @@ import CollegeCompare from "../home/CollegeCompare/CollegeCompare";
 import StudentMetricsForm from "../home/StudentMetrics/StudentMetricsForm";
 import CollegeSuggest from "../home/CollegeSuggest/CollegeSuggest";
 
+import StudentPosts from "../home/StudentPost/StudentPosts"
 
 export default createBrowserRouter([
     {
@@ -32,6 +33,11 @@ export default createBrowserRouter([
             {
                 path: '/suggested-colleges',
                 element: <CollegeSuggest/>
+            }
+            ,
+            {
+                path: '/posts',
+                element: <StudentPosts/>
             }
         ]
     }

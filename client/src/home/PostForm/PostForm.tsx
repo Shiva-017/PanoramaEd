@@ -12,11 +12,12 @@ import Post from '../../models/post'
 
   type Props = {
     onSubmit: (values: FormValues) => void;
-    posts: Post[]; 
-    setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+    // posts: Post[]; 
+    // setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   };
   
-  const PostForm: React.FC<Props> = ({ onSubmit, posts, setPosts }: Props): ReactElement => {
+  // const PostForm: React.FC<Props> = ({ onSubmit, posts }: Props): ReactElement => {
+    const PostForm: React.FC<Props> = ({ onSubmit }: Props): ReactElement => {
     const [formValues, setFormValues] = useState<FormValues>({
       title: "",
       text: "",
