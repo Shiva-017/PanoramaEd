@@ -11,6 +11,9 @@ import CollegePage from './home/CollegePage/CollegePage';
 import StudentMetricsForm from './home/StudentMetrics/StudentMetricsForm';
 import CollegeCompare from './home/CollegeCompare/CollegeCompare';
 
+import StudentProfile from './home/StudentPage/StudentProfile';
+import CollegeSuggest from './home/CollegeSuggest/CollegeSuggest';
+
 type FormValues = {
   title: string;
   text: string;
@@ -20,9 +23,11 @@ function App() {
 
 
   return (
-    // <CollegePage/>
+     //<CollegePage/>
     // <StudentMetricsForm />
-    <CollegeCompare />
+    //<CollegeCompare />
+    //<CollegeSuggest/>
+   <StudentProfile/>
   )
 
 }

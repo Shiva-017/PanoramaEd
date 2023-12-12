@@ -7,9 +7,7 @@ export const searchStudents = async (params = {}) => {
 
 export const removeStudent = async (id) => {
     const student = await StudentModel.findByIdAndDelete(id);
-    student.programs.forEach(async (program) => {
-        await ProgramModel.findByIdAndDelete(program.id);
-    })
+    
     return;
 }
 

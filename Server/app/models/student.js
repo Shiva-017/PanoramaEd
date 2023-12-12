@@ -5,11 +5,15 @@ const StudentSchema = new Schema({
         type: String,
         required: true
     },
-    degree: {
+    degreeseeking: {
         type: String,
         required: false
     },
     intake: {
+        type: String,
+        required: false
+    },
+    undergradgrade: {
         type: String,
         required: false
     },
@@ -18,6 +22,26 @@ const StudentSchema = new Schema({
         required: false
     },
     undergradcourse: {
+        type: String,
+        required: false
+    },
+    gre: {
+        type: String,
+        required: false
+    },
+    ielts: {
+        type: String,
+        required: false
+    },
+    experiencecompany: {
+        type: String,
+        required: false
+    },
+    experiencedesignation: {
+        type: String,
+        required: false
+    },
+    experienceduration: {
         type: String,
         required: false
     },
