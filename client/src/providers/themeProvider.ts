@@ -1,11 +1,7 @@
-import * as React from 'react';
-import Button, { ButtonPropsColorOverrides } from '@mui/material/Button';
 import {
   createTheme,
   PaletteColorOptions,
-  ThemeProvider,
 } from '@mui/material/styles';
-import { Stack } from '@mui/material';
 
 declare module '@mui/material/styles' {
   interface CustomPalette {
