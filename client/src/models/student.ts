@@ -1,6 +1,7 @@
 interface Student {
     _id: string,
     name: string,
+    email:string,
     degreeseeking: string,
     intake: string,
     undergradgrade: string,

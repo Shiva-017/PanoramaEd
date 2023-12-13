@@ -3,13 +3,26 @@ import ScrollToBottom from "react-scroll-to-bottom";
 
 import './styles.css';
 
-function Chat({ socket, username, room }) {
-  const [currentMessage, setCurrentMessage] = useState("");
-  const [messageList, setMessageList] = useState([]);
+interface ChatProps {
+  socket: any;
+  username: string;
+  room: string;
+}
+
+interface MessageData {
+  room: string;
+  author: string;
+  message: string;
+  time: string;
+}
+
+const Chat: React.FC<ChatProps> = ({ socket, username, room }) => {
+  const [currentMessage, setCurrentMessage] = useState<string>("");
+  const [messageList, setMessageList] = useState<MessageData[]>([]);
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
-      const messageData = {
+      const messageData: MessageData = {
         room: room,
         author: username,
         message: currentMessage,
@@ -26,7 +39,7 @@ function Chat({ socket, username, room }) {
   };
 
   useEffect(() => {
-    socket.on("receive_message", (data) => {
+    socket.on("receive_message", (data: MessageData) => {
       setMessageList((list) => [...list, data]);
     });
   }, [socket]);
@@ -43,7 +56,7 @@ function Chat({ socket, username, room }) {
                 <div
                     key={index}
                     className="message"
-                    id={username === messageContent.author ? "you" : "other"}
+                    id={username !== messageContent.author ? "you" : "other"}
                 >
                     <div>
                         <div className="message-content">

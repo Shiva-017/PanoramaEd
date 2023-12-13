@@ -5,6 +5,11 @@ const StudentSchema = new Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
     degreeseeking: {
         type: String,
         required: false
