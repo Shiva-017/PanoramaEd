@@ -1,7 +1,7 @@
 import { ReactElement } from "react"
 // import Post, {posts} from '../../models/post'
 import Post from '../../models/post'
-import { Card, CardContent, Typography, Button } from "@mui/material";
+import { Card,Grid, CardContent, Typography, Button } from "@mui/material";
 // import { Avatar } from '@mui/material';
 import logo from '../../resources/neulogo.jpg';
 import IconButton from '@mui/material/IconButton';
@@ -158,30 +158,48 @@ type FormValues = {
 
             <div>
             {posts.map((post) => (
-              <Card key={post.feedId} variant="outlined" style={{ marginLeft: 150,marginRight:50, borderColor: "#92C1B7", marginTop: 10, marginBottom:10, width: 800, borderRadius: 10}}>
-                 <Avatar
+              <Card key={post.feedId} variant="outlined" style={{ marginLeft: 150,marginRight:50, borderColor: "#FFFFFF",  marginTop: 10, marginBottom:10, width: 800, borderRadius: 10, backgroundColor:"#FFFFFF"}}>
+                 {/* <Avatar
                  alt={post.author}
                  src={logo}
                  sx={{ width: 35, height: 35, border: 5, borderColor: "white" }}
                  />
               
-                  <Typography variant="h6">{post.author}</Typography>
+                  <Typography variant="h6" style={{ fontWeight: 'bold', marginLeft:10 }}>{post.author}</Typography> */}
+
+<Grid container spacing={2}>
+        <Grid item>
+        <Avatar
+                 alt={post.author}
+                 src={logo}
+                 sx={{ width: 35, height: 35, border: 5, borderColor: "white" }}
+                 />
+        </Grid>
+        <Grid item>
+          
+          <Typography variant="body1" style={{ fontWeight: 'bold', marginLeft:10 }}>{post.author}</Typography>
+        </Grid>
+      </Grid>
+                  
+                  
                   
                 <CardContent>
                  
                   <Typography variant="body1" style={{ fontWeight: 'bold' }}>{post.title}</Typography>
                   <Typography variant="body1">{post.text}</Typography>
-                  <Button style={{color:"#92C1B7"}} onClick={()=>onUpVote(post._id || "",post.upVote)}>
-                  <BiSolidUpvote style={{color:"#92C1B7"}} />{post.upVote}</Button>
+                  <Button style={{color:"#000000"}} onClick={()=>onUpVote(post._id || "",post.upVote)}>
+                  <BiSolidUpvote  style={{color:"#000000"}} />{post.upVote}</Button>
                   <IconButton aria-label="delete" size="large" onClick={() => onDelete(post._id || "")}>
-                    <DeleteIcon style={{color:"#92C1B7"}}  />
+                    <DeleteIcon style={{color:"#000000"}}  />
+                    {/* <DeleteIcon style={{color:"#92C1B7"}}  /> */}
+                    
                   </IconButton>
                 </CardContent>
               </Card>
             ))}
           </div>
           <div>
-          <Button variant="contained" onClick={handleCreateClick}  style={{backgroundColor:"#92C1B7" ,marginLeft: 150 }} >{t('CREATE')}</Button>
+          <Button variant="contained" onClick={handleCreateClick}  style={{backgroundColor:"#000000" ,marginLeft: 150 }} >{t('CREATE')}</Button>
           {/* {isFormVisible && <PostForm onSubmit={HandleFormSubmit} posts={props.posts} setPosts={setPosts}/>}  */}
           {isFormVisible && <PostForm onSubmit={HandleFormSubmit}/>} 
           {isCancelVisible &&<Button
@@ -190,7 +208,7 @@ type FormValues = {
             color="primary"
             onClick={handleCancelClick} 
             fullWidth
-            style={{ borderColor: "#92C1B7", borderRadius: 10, backgroundColor:"#92C1B7",marginLeft: 335,marginTop: 10, width: 300}}
+            style={{ borderColor: "#FFFFFF", borderRadius: 10, backgroundColor:"#000000",marginLeft: 335,marginTop: 10, width: 300}}
         
           >
            {t('CANCEL')} 
@@ -207,6 +225,9 @@ type FormValues = {
 
 
 export default StudentPosts; 
+
+
+
 
 
 

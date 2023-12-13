@@ -75,7 +75,7 @@ import { useTranslation } from 'react-i18next';
             variant="contained"
             color="primary"
             fullWidth
-            style={{ borderColor: "#92C1B7", borderRadius: 10,  backgroundColor:"#92C1B7", width:300, marginLeft: 220}}
+            style={{ borderColor: "#92C1B7", borderRadius: 10,  backgroundColor:"#000000", width:300, marginLeft: 220}}
         
           >
            {t('SUBMIT')} 
