@@ -2,7 +2,7 @@ import { ReactElement } from "react"
 // import Post, {posts} from '../../models/post'
 import Post from '../../models/post'
 import { Card, CardContent, Typography, Button } from "@mui/material";
-import { Avatar } from '@mui/material';
+// import { Avatar } from '@mui/material';
 import logo from '../../resources/neulogo.jpg';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -13,7 +13,14 @@ import { BiSolidUpvote } from "react-icons/bi";
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../store'
 import { loadPosts, retrievePosts } from '../../store/slices/StudentPost-slice'
+import { loadStudent, searchstudent} from '../../store/slices/studentdetails-slice'
  import { useSelector } from 'react-redux';
+ import { useTranslation } from 'react-i18next';
+
+
+
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 
 type FormValues = {
     title: string;
@@ -28,8 +35,11 @@ type FormValues = {
 // const StudentPosts: React.FC<Props> = (props: Props): ReactElement => {
   const StudentPosts: React.FC= (): ReactElement => {
 
+
   const dispatch = useDispatch<AppDispatch>();
   const posts = useSelector(retrievePosts());
+  const student = useSelector(searchstudent())
+  const { t } = useTranslation('students-post');
     // const [posts, setPosts] = useState<Post[]>([]);
     const getPosts = () => {
 
@@ -54,11 +64,13 @@ type FormValues = {
 
 
     const HandleFormSubmit = (formValues: FormValues) => {
+      console.log(student.name);
     
       const newPost: Post = {
         
         feedId: new Date().getTime().toString(),
-        author: "Current User",
+        author: student.name,
+        // author: "Current User",
         title: formValues.title,
         text: formValues.text,
         upVote:0
@@ -81,6 +93,7 @@ type FormValues = {
             })
 
             setIsFormVisible(false);
+            setCancelVisible(false);
 
     };
 
@@ -89,9 +102,21 @@ type FormValues = {
     const [isFormVisible, setIsFormVisible] = useState(false);
     console.log("Hello 1", isFormVisible);
 
+    const   [isCancelVisible, setCancelVisible] = useState(false);
+    console.log("Hello 2", isCancelVisible);
+
     const handleCreateClick = () => {
       setIsFormVisible(true);
+      setCancelVisible(true);
+      
     };
+
+    const handleCancelClick = () =>{
+      setIsFormVisible(false)
+
+      setCancelVisible(false);
+
+    }
 
     const onDelete = (id:String):void => {
        fetch(`http://localhost:3001/posts/${id}`, {
@@ -139,6 +164,7 @@ type FormValues = {
                  src={logo}
                  sx={{ width: 35, height: 35, border: 5, borderColor: "white" }}
                  />
+              
                   <Typography variant="h6">{post.author}</Typography>
                   
                 <CardContent>
@@ -155,10 +181,23 @@ type FormValues = {
             ))}
           </div>
           <div>
-          <Button variant="contained" onClick={handleCreateClick}  style={{backgroundColor:"#92C1B7" ,marginLeft: 150 }} >Create</Button>
+          <Button variant="contained" onClick={handleCreateClick}  style={{backgroundColor:"#92C1B7" ,marginLeft: 150 }} >{t('CREATE')}</Button>
           {/* {isFormVisible && <PostForm onSubmit={HandleFormSubmit} posts={props.posts} setPosts={setPosts}/>}  */}
           {isFormVisible && <PostForm onSubmit={HandleFormSubmit}/>} 
+          {isCancelVisible &&<Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={handleCancelClick} 
+            fullWidth
+            style={{ borderColor: "#92C1B7", borderRadius: 10, backgroundColor:"#92C1B7",marginLeft: 335,marginTop: 10, width: 300}}
+        
+          >
+           {t('CANCEL')} 
+          </Button> }
           </div>
+
+          
          
           </div>
     

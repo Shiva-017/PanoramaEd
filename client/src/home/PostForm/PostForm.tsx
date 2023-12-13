@@ -2,6 +2,7 @@ import React, { ReactElement, useState } from "react";
 import { Button, TextField, Typography, makeStyles, Container } from "@mui/material";
 import { withStyles } from "@mui/material/styles"
 import Post from '../../models/post'
+import { useTranslation } from 'react-i18next';
 
   
   type FormValues = {
@@ -22,6 +23,8 @@ import Post from '../../models/post'
       title: "",
       text: "",
     });
+
+    const { t } = useTranslation('students-post');
   
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
@@ -38,7 +41,7 @@ import Post from '../../models/post'
     };
   
     return (
-      <Container component="main" maxWidth="md">
+      <Container component="main" maxWidth="md" >
         <Typography variant="h5">Create your Post</Typography>
         <form  onSubmit={handleSubmit}>
           <TextField
@@ -72,10 +75,10 @@ import Post from '../../models/post'
             variant="contained"
             color="primary"
             fullWidth
-            style={{ borderColor: "#92C1B7", borderRadius: 10, backgroundColor:"#92C1B7"}}
+            style={{ borderColor: "#92C1B7", borderRadius: 10,  backgroundColor:"#92C1B7", width:300, marginLeft: 220}}
         
           >
-            Submit
+           {t('SUBMIT')} 
           </Button>
         </form>
       </Container>
