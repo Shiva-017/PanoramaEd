@@ -44,6 +44,7 @@ const StudentProfile: React.FC = (): ReactElement => {
         headers: { 'Content-Type': 'application/json' },
       }).then(res => res.json())
       .then(data => {
+        console.log(data,"data");
         dispatch(loadStudent(data[0]))})
 
       // if (!response.ok) {
@@ -51,7 +52,7 @@ const StudentProfile: React.FC = (): ReactElement => {
       // }
 
       // const data = await response.json();
-      // console.log(data,"data");
+      
      
       // setStudent(data[0]);
     } catch (error) {

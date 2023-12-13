@@ -24,3 +24,13 @@ export const save = async (newStudent) => {
     return await student.save();
 };
 
+export const update = async (id,updateFields) => {
+
+    const student = await StudentModel.findByIdAndUpdate(
+        id,
+        { $set: updateFields },
+        { new: true }
+    ).exec();
+    return student;
+    
+    }

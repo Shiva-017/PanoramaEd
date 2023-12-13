@@ -77,8 +77,9 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
   }
 
   const studentform = ()=> {
-
+    
     navigate('/studentform');
+    handleClose();
 
   }
 
@@ -90,6 +91,15 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
   const studentdetails = ()=> {
 
     navigate('/studentdetails');
+    handleClose();
+
+  }
+
+  
+  const loginpage = ()=> {
+
+    navigate('/login');
+    handleClose();
 
   }
 
@@ -133,7 +143,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
           <MenuItem onClick={studentdetails}>My Profile</MenuItem>
           <MenuItem onClick={studentform}>Edit Profile</MenuItem>
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          <MenuItem onClick={loginpage}>Logout</MenuItem>
         </Menu>
       </Toolbar>
     </MuiAppBar>
