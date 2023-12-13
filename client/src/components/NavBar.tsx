@@ -71,7 +71,7 @@ const NavBar: React.FC<NavBarProps> = ({
   };
 
   return (
-    <MuiAppBar position="fixed" color="default">
+    <MuiAppBar position="fixed" color="default" sx={{padding: 1}}>
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="school">
           <SchoolIcon />

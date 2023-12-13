@@ -53,7 +53,7 @@ const StudentProfile: React.FC = (): ReactElement => {
 
 
   return (
-    <Card sx={{ width: 450,minHeight:"91vh", overflowY:"auto", padding: "auto", position:"absolute", left:0 }}>
+    <Card sx={{ width: 450,minHeight:"92vh", overflowY:"auto", padding: "auto", position:"absolute", left:0 }}>
       <CardMedia
         image={background}
         sx={{ height: 270, pt: 20 }}

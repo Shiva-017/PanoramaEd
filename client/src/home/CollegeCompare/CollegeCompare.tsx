@@ -9,7 +9,7 @@ const CollegeCompare: React.FC = (): ReactElement => {
     const [search, setSearch] = useState<boolean>(false);
     return (
         <ThemeProvider theme={theme}>
-        <div style={{backgroundColor:"#E1EBEE", position:"absolute", left:450, width:"1080px", overflowX:"auto", height:"90vh"}}>
+        <div style={{backgroundColor:"#E1EBEE", position:"absolute", left:450, top:70, width:"1080px", overflowX:"auto", height:"90vh"}}>
             <Stack direction="row" marginLeft={50} marginTop={5} alignItems="center" sx={{mb:2}}>
             <TextField id="outlined-basic" label={`Enter program`} variant="outlined" onChange={(e) => { setProgramName(e.target.value) }} />
             <Button variant="contained" color="button" sx={{height: 45, marginLeft:3}} onClick={()=>{setSearch(!search)}}>{search ? "Search Again" : "Search"}</Button>

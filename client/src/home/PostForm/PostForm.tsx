@@ -38,7 +38,7 @@ import Post from '../../models/post'
     };
   
     return (
-      <Container component="main" maxWidth="md" >
+      <Container component="main" maxWidth="md">
         <Typography variant="h5">Create your Post</Typography>
         <form  onSubmit={handleSubmit}>
           <TextField
