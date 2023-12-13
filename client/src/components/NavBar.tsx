@@ -4,32 +4,53 @@ import {
   AppBar as MuiAppBar,
   Avatar,
   IconButton,
-  InputAdornment,
   Menu,
   MenuItem,
   Toolbar,
   Typography,
-  Button,
-  TextField,
+  Button
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import SchoolIcon from '@mui/icons-material/School';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import StarIcon from '@mui/icons-material/Star';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ChatIcon from '@mui/icons-material/Chat';
 import logo from '../resources/anthony.jpeg';
 import { useNavigate } from 'react-router-dom';
 import CollegeSearch from '../home/StudentSearch/StudentSearch';
 import Translate from './Translate';
+import Chat from '../home/Chat/Chat';
+import * as io from "socket.io-client";
+import { useSelector } from 'react-redux';
+import { retrieveUsers } from '../store/slices/login-slice';
+import User from '../models/user';
 
-
+const chatURL = 'http://localhost:3001/chats';
 
 interface NavBarProps {
 }
 
-const NavBar: React.FC<NavBarProps> = ({
-}) => {
+const NavBar: React.FC<NavBarProps> = ({}) => {
+  const studentLoggedIn : User[] = useSelector(retrieveUsers());
+  // console.log("stu", studentLoggedIn);
+  const socket = io.connect("http://localhost:4000");
+  let chatId = localStorage.getItem('chatId');
+  // if (chatId === null) {
+  //   fetch(`${chatURL}/657918799114da85a4284b3d`, {
+  //     method: 'PATCH',
+  //     body: JSON.stringify({authorId: "", authorName: username, messageBody: currentMessage, timeStamp: timeStamp}),
+  //     headers: { 'Content-Type': 'application/json' },
+  //   });
+  // }
+
+
+  socket.emit("join_room", chatId);
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const [isChatOpen, setIsChatOpen] = React.useState<boolean | HTMLElement>(false);
+
+  const toggleChat = () => {
+    console.log("Chat", !isChatOpen);
+    setIsChatOpen(!isChatOpen);
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -78,6 +99,7 @@ const NavBar: React.FC<NavBarProps> = ({
   };
 
   return (
+    <>
     <MuiAppBar position="fixed" color="default" sx={{padding: 1}}>
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="school">
@@ -98,8 +120,8 @@ const NavBar: React.FC<NavBarProps> = ({
           Find College
         </Button>
 
-        <IconButton color="inherit">
-          <NotificationsIcon />
+        <IconButton color="inherit" onClick={toggleChat}>
+          <ChatIcon />
         </IconButton>
         <IconButton color="inherit">
           <Translate />
@@ -115,6 +137,11 @@ const NavBar: React.FC<NavBarProps> = ({
         </Menu>
       </Toolbar>
     </MuiAppBar>
+    
+    {
+      isChatOpen && <Chat socket={socket} username={String(Math.random())} room={localStorage.getItem('chatId') || ''}/>
+    }
+    </>
   );
 };
 

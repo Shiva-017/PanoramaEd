@@ -18,7 +18,6 @@ interface User {
 
 
 const LoginPage: React.FC = () => {
-  // const user = useSelector(retrieveUser());
   const [user, setUser] = useState<User>({ name: '', email: '', password: '' });
   
   const socket = io.connect("http://localhost:4000");
@@ -81,6 +80,7 @@ const LoginPage: React.FC = () => {
         .then(data => {
             console.log(data);
             if (data.name) {
+                createChat(data._id);
                 dispatch(loadUsers([data]));
                 navigate('/');
             } else {
@@ -88,6 +88,16 @@ const LoginPage: React.FC = () => {
               window.location.reload();
             }
         });
+  };
+
+  const createChat = (studentId: string) => {
+    fetch(`http://localhost:3001/chats`, {
+        method: 'POST',
+        body: JSON.stringify({ studentId: studentId, consultantId: "6578ff2aef06bbc1e93d928b"}),
+        headers: { 'Content-Type': 'application/json' },
+    })
+      .then(res => res.json())
+      .then(data => localStorage.setItem('chatId', data._id));
   };
 
   return (
