@@ -11,7 +11,7 @@ i18next.use(HttpApi)
     .init({
         lng: 'en',
         fallbackLng: 'en',
-        ns:['common', 'college-compare', 'college-page', 'navbar', 'student-profile','student-metric-form','student-profile','suggested-colleges'],
+        ns:['common', 'college-compare', 'college-page', 'navbar', 'student-profile','student-metric-form','student-profile','suggested-colleges','students-post'],
         backend:{
             loadPath: ' /i18n/{{lng}}/{{ns}}.json',
         },
