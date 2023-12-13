@@ -39,7 +39,7 @@ function App() {
     //<CollegeSuggest/>
     <StudentProfile/>
   // <ShortlistCard/>
-  //<StudentSearch/>
+  // <StudentSearch/>
  // <Layout/>
   )
 }
