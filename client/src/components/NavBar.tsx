@@ -12,7 +12,6 @@ import {
 } from '@mui/material';
 import SchoolIcon from '@mui/icons-material/School';
 import ChatIcon from '@mui/icons-material/Chat';
-import logo from '../resources/anthony.jpeg';
 import { useNavigate } from 'react-router-dom';
 import CollegeSearch from '../home/StudentSearch/StudentSearch';
 import Translate from './Translate';
@@ -138,7 +137,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
         </IconButton>
         {/* User profile picture with popup menu */}
         <IconButton aria-label="user profile" color="inherit" onClick={handleClick}>
-          <Avatar alt="User" src={logo} />
+          <Avatar alt="User"  />
         </IconButton>
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
           <MenuItem onClick={studentdetails}>My Profile</MenuItem>

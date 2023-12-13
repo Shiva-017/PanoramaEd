@@ -73,7 +73,7 @@ const StudentProfile: React.FC = (): ReactElement => {
         image={background}
         sx={{ height: 270, pt: 20 }}
       >
-        <Avatar src={logo} sx={{ margin: "auto", width: 90, height: 90, border: 4, borderColor: "#8DA399", mb: 2 }} />
+        <Avatar  sx={{ margin: "auto", width: 90, height: 90, border: 4, borderColor: "#8DA399", mb: 2 }} />
       </CardMedia>
 
       <CardHeader
