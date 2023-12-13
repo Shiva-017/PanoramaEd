@@ -19,7 +19,9 @@ import StarIcon from '@mui/icons-material/Star';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import logo from '../resources/anthony.jpeg';
 import { useNavigate } from 'react-router-dom';
-import CollegeSearch from '../home/StudentSearch/StudentSearch'
+import CollegeSearch from '../home/StudentSearch/StudentSearch';
+import Translate from './Translate';
+
 
 
 interface NavBarProps {
@@ -79,19 +81,6 @@ const NavBar: React.FC<NavBarProps> = ({
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           PanoramaEd
         </Typography>
-
-        {/* <TextField
-          id="search"
-          label="Search"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        /> */}
-
         <CollegeSearch/>
 
         <Button color="inherit" onClick={postRoute}>
@@ -108,12 +97,8 @@ const NavBar: React.FC<NavBarProps> = ({
           <NotificationsIcon />
         </IconButton>
         <IconButton color="inherit">
-          <StarIcon />
+          <Translate />
         </IconButton>
-        <IconButton color="inherit">
-          <FavoriteBorderIcon />
-        </IconButton>
-
         {/* User profile picture with popup menu */}
         <IconButton aria-label="user profile" color="inherit" onClick={handleClick}>
           <Avatar alt="User" src={logo} />
