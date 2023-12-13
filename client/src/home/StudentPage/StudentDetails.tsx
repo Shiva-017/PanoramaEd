@@ -37,6 +37,7 @@ import { useSelector } from 'react-redux';
 import { loadStudent, searchstudent } from '../../store/slices/studentdetails-slice'
 import { retrieveUsers } from '../../store/slices/login-slice';
 import User from '../../models/user';
+import { useTranslation } from 'react-i18next';
 
 
 const StudentDetails: React.FC = (): ReactElement => {
@@ -46,6 +47,7 @@ const StudentDetails: React.FC = (): ReactElement => {
 
  const dispatch = useDispatch<AppDispatch>();
   const students = useSelector(searchstudent());
+  const { t } = useTranslation('student-details');
 
   const navigate = useNavigate();
     const getStudents = () => {
@@ -90,7 +92,7 @@ const StudentDetails: React.FC = (): ReactElement => {
           <Grid container spacing={0} sx={{ width: '100%' }}>
             <Grid item xs={12}>
               <StudentCard
-                title={<><MenuBookIcon /> Educational Details</>}
+                title={<><MenuBookIcon /> {t('educational-details')}</>}
                 mandatoryContent={students?.undergradgrade}
                 optionalContent={students?.undergradcollege}
                 optionalContent2={students?.undergradcourse}
@@ -98,14 +100,14 @@ const StudentDetails: React.FC = (): ReactElement => {
             </Grid>
             <Grid item xs={12}>
               <StudentCard
-                title={<><AssessmentIcon /> Test Scores</>}
+                title={<><AssessmentIcon />{t('test-scores')}</>}
                 mandatoryContent={students?.gre}
                 optionalContent={students?.ielts}
               />
             </Grid>
             <Grid item xs={12}>
               <StudentCard
-                title={<><WorkIcon /> Work Experience</>}
+                title={<><WorkIcon /> {t('work-experience')}</>}
                 mandatoryContent={students?.experiencecompany}
                 optionalContent={students?.experiencedesignation}
                 optionalContent2={students?.experienceduration}
