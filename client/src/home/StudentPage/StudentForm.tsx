@@ -22,21 +22,24 @@ type FormValues = {
 };
 
 const StudentForm: React.FC = () => {
-  const [formValues, setFormValues] = useState<FormValues>({
-    degreeseeking: '',
-    intake: '',
-    undergradgrade: '',
-    undergradcollege: '',
-    undergradcourse: '',
-    gre: '',
-    ielts: '',
-    experiencecompany: '',
-    experiencedesignation: '',
-    experienceduration: '',
-  });
+
 
   const currentStudent: Student = useSelector(searchstudent());
   const navigate = useNavigate();
+  
+  const [formValues, setFormValues] = useState<FormValues>({
+    degreeseeking: currentStudent.degreeseeking || '',
+    intake: currentStudent.intake || '',
+    undergradgrade: currentStudent.undergradgrade || '',
+    undergradcollege: currentStudent.undergradcollege || '',
+    undergradcourse: currentStudent.undergradcourse || '',
+    gre: currentStudent.gre || '',
+    ielts: currentStudent.ielts || '',
+    experiencecompany: currentStudent.experiencecompany || '',
+    experiencedesignation: currentStudent.experiencedesignation || '',
+    experienceduration: currentStudent.experienceduration || '',
+  });
+
 
   const HandleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
