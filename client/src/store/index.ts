@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import collegeSlice from "./slices/college-slice";
 import postSlice from "./slices/StudentPost-slice";
 import programSuggestSlice from "./slices/college-suggest";
+import studentslice from "./slices/studentdetails-slice";
 import loginSlice from "./slices/login-slice";
 
 
@@ -11,7 +12,8 @@ export const store = configureStore({
         [collegeSlice.name]: collegeSlice.reducer,
         [postSlice.name]: postSlice.reducer,
         [programSuggestSlice.name]: programSuggestSlice.reducer,
-        [loginSlice.name]: loginSlice.reducer
+        [loginSlice.name]: loginSlice.reducer,
+        [studentslice.name]: studentslice.reducer
 
     }
 });

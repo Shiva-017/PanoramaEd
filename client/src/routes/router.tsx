@@ -9,6 +9,7 @@ import StudentPosts from "../home/StudentPost/StudentPosts"
 import LoginPage from "../home/LoginPage/LoginPage";
 import StudentProfile from "../home/StudentPage/StudentProfile";
 import StudentForm from "../home/StudentPage/StudentForm";
+import StudentDetails from "../home/StudentPage/StudentDetails";
 export default createBrowserRouter([
     {
         path: '/',
@@ -57,6 +58,10 @@ export default createBrowserRouter([
             {
                 path: '/studentform',
                 element: <StudentForm />
+            },
+            {
+                path: '/studentdetails',
+                element: <StudentDetails />
             }
 
         ]
