@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from "react-redux";
 import { searchCollege } from '../../store/slices/college-slice';
+import { searchstudent } from '../../store/slices/studentdetails-slice';
 
 const CollegeDetails: React.FC = (): ReactElement => {
 
@@ -22,11 +23,14 @@ const CollegeDetails: React.FC = (): ReactElement => {
 
   const { t } = useTranslation('college-page');
   const [showAlert, setShowAlert] = useState(0);
+  const student = useSelector(searchstudent());
+  console.log("🚀 ~ file: CollegePage.tsx:27 ~ student:", student)
 
   const shortlistCollege = async () => {
+    console.log(collegeData, "collegedata")
     try {
-      const response = await fetch(`http://localhost:3001/colleges?studentId=${"studentId"}?collegeId=${collegeData?._id}`, {
-        method: "POST",
+      const response = await fetch(`http://localhost:3001/colleges?studentId=${student._id}&collegeId=${collegeData?._id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -37,6 +41,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
       }
 
       const data = await response.json();
+      console.log("🚀 ~ file: CollegePage.tsx:43 ~ shortlistCollege ~ data:", data)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -44,8 +49,8 @@ const CollegeDetails: React.FC = (): ReactElement => {
 
   const removeShortlistCollege = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/colleges/removeShortlist?studentId=${"studentId"}?collegeId=${collegeData?._id}`, {
-        method: "POST",
+      const response = await fetch(`http://localhost:3001/colleges/removeShortlist?studentId=${student._id}&collegeId=${collegeData?._id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -56,6 +61,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
       }
 
       const data = await response.json();
+      console.log("🚀 ~ file: CollegePage.tsx:62 ~ removeShortlistCollege ~ data:", data)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -66,20 +72,20 @@ const CollegeDetails: React.FC = (): ReactElement => {
     setFavourite(!favourite);
     if (!favourite) {
       setShowAlert(1);
+      shortlistCollege();
       setTimeout(() => {
         setShowAlert(0);
       }, 1500);
     } else {
       setShowAlert(2);
+      removeShortlistCollege();
       setTimeout(() => {
         setShowAlert(0);
       }, 1500);
     }
-
   }
 
   useEffect(() => {
-    console.log(college);
     setCollegeData(college);
   }, [])
 

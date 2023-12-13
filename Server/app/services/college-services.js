@@ -74,12 +74,12 @@ export const deleteCollegeEvents = async (title, id) => {
     return college;
 }
 
-export const shortlistCollege = async (studentId, collegeId) => {
-    const college = await CollegeModel.findByIdAndUpdate(collegeId, { $addToSet: { shortListedStudents: studentId } }, { new: true, runValidators: true }).exec();
+export const shortlistCollege = async (studentId, id) => {
+    const college = await CollegeModel.findByIdAndUpdate(id, { $addToSet: { shortListedStudents: studentId } }, { new: true, runValidators: true }).exec();
     await StudentModel.findByIdAndUpdate(studentId, {
         $addToSet: {
             collegeShorlisted: {
-                collegeID: collegeId,
+                collegeID: id,
                 collegeLogo: college.logo,
             },
         },
@@ -87,8 +87,9 @@ export const shortlistCollege = async (studentId, collegeId) => {
     return college;
 }
 
-export const removeShortlistCollege = async (studentId, collegeId) => {
-    const college = await CollegeModel.findByIdAndUpdate(collegeId, { $pull: { shortListedStudents: studentId } }, { new: true, runValidators: true }).exec();
-    await StudentModel.findByIdAndUpdate(studentId, { $pull: { collegeShorlisted: { collegeID: collegeId } } }, { new: true, runValidators: true }).exec();
+export const removeShortlistCollege = async (studentId, id) => {
+    const college = await CollegeModel.findByIdAndUpdate(id, { $pull: { shortListedStudents: studentId } }, { new: true, runValidators: true }).exec();
+    
+    await StudentModel.findByIdAndUpdate(studentId, { $pull: { collegeShorlisted: { collegeID: id } } }, { new: true, runValidators: true }).exec();
     return college;
 }
