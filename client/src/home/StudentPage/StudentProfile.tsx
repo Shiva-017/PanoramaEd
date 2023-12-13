@@ -17,12 +17,21 @@ import ShortlistCard from './ShortlistCard';
 import { useSelector } from 'react-redux';
 import { retrieveUsers} from '../../store/slices/login-slice';
 import User from '../../models/user';
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../store'
+import { loadStudent, searchstudent } from '../../store/slices/studentdetails-slice'
+
+
 
 
 const StudentProfile: React.FC = (): ReactElement => {
 
-  const [student, setStudent] = useState<Student>();
+  // const [student, setStudent] = useState<Student>();
   const studentLoggedIn : User[] = useSelector(retrieveUsers());
+  //const [students, setStudents] = useState<Student>();
+
+  const dispatch = useDispatch<AppDispatch>();
+  const students = useSelector(searchstudent());
 
   const getStudentData = async()=>{
     try {
@@ -31,15 +40,18 @@ const StudentProfile: React.FC = (): ReactElement => {
       const response = await fetch(`http://localhost:3001/students/${studentLoggedIn[0].email}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
-      });
+      }).then(res => res.json())
+      .then(data => {
+        dispatch(loadStudent(data[0]))})
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+      // if (!response.ok) {
+      //   throw new Error(`HTTP error! Status: ${response.status}`);
+      // }
 
-      const data = await response.json();
-      console.log(data,"data");
-      setStudent(data[0]);
+      // const data = await response.json();
+      // console.log(data,"data");
+     
+      // setStudent(data[0]);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -62,7 +74,7 @@ const StudentProfile: React.FC = (): ReactElement => {
       </CardMedia>
 
       <CardHeader
-        title={student?.name}
+        title={students?.name}
         sx={{ m: "auto", textAlign: "center" }}
       />
       <CardContent sx={{ display: "flex", justifyContent: "center" }}>
@@ -72,7 +84,7 @@ const StudentProfile: React.FC = (): ReactElement => {
             <Typography sx={{fontSize: "12px", color:"GrayText", fontWeight:"bold"}}>DEGREE</Typography> 
             <Stack direction="row" spacing={1}>
               <SchoolIcon></SchoolIcon>
-              <Typography variant="body2">Masters</Typography>
+              <Typography variant="body2">{students?.degreeseeking}</Typography>
             </Stack>
           </Stack>
           <Stack direction="column" spacing={1}>
@@ -80,7 +92,7 @@ const StudentProfile: React.FC = (): ReactElement => {
             <Typography  sx={{fontSize: "12px", color:"GrayText", fontWeight:"bold"}}>INTAKE</Typography>
             <Stack direction="row" spacing={1}>
               <AirIcon></AirIcon>
-              <Typography variant="body2">Fall 23</Typography>
+              <Typography variant="body2">{students?.intake}</Typography>
             </Stack>
           </Stack>
         </Stack>

@@ -64,6 +64,11 @@ const NavBar: React.FC<NavBarProps> = ({
     navigate('/profile');
 
   }
+  const studentdetails = ()=> {
+
+    navigate('/studentdetails');
+
+  }
 
   const handleLogout = () => {
     // Implement your logout logic here
@@ -119,7 +124,7 @@ const NavBar: React.FC<NavBarProps> = ({
           <Avatar alt="User" src={logo} />
         </IconButton>
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-          <MenuItem onClick={profile}>My Profile</MenuItem>
+          <MenuItem onClick={studentdetails}>My Profile</MenuItem>
           <MenuItem onClick={studentform}>Edit Profile</MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
