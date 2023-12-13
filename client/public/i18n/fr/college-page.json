@@ -1,0 +1,17 @@
+{
+    "About": "À propos de",
+    "University-type": "Type d'Université",
+    "Global-rank": "Classement Mondial",
+    "Average-living-expenses": "Frais de vie moyens",
+    "Courses": "Cours",
+    "Application-deadline": "Date limite de candidature",
+    "Degree": "Degré",
+    "Duration": "Durée",
+    "Tuition-fee": "Frais de scolarité",
+    "Rolling": "Continu",
+    "ShortlistedCollege": "Collège présélectionné !",
+    "RemovedFromShortlist": "Retiré de la présélection !",
+    "ParagraphOne": "{{collegeName}} est une université publique de recherche à {{collegeAddress}}, {{state}}. C'est l'une des plus grandes universités de {{state}} et du {{country}}, avec plus de 60 000 étudiants répartis dans 11 collèges.",
+    "ParagraphTwo": " {{collegeName}} a été fondée en 1876 en tant que collège militaire réservé aux hommes avant de devenir une institution mixte en {{yearEstd}}. En 1976, elle est devenue l'une des quatre écoles à dominante féminine à devenir mixte",
+    "ParagraphThree": " Les offres académiques de l'université comprennent plus de 200 filières de premier cycle, 300 programmes de troisième cycle et un programme d'honneurs pour les étudiants très talentueux, connu sous le nom de 'Students Who Excel' (STEX)."
+}

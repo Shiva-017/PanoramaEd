@@ -22,6 +22,7 @@ import { AppDispatch } from '../../store'
 import { loadStudent, searchstudent } from '../../store/slices/studentdetails-slice'
 
 
+import { useTranslation } from 'react-i18next';
 
 
 const StudentProfile: React.FC = (): ReactElement => {
@@ -32,6 +33,7 @@ const StudentProfile: React.FC = (): ReactElement => {
 
   const dispatch = useDispatch<AppDispatch>();
   const students = useSelector(searchstudent());
+  const { t } = useTranslation('student-profile');
 
   const getStudentData = async()=>{
     try {
@@ -81,7 +83,7 @@ const StudentProfile: React.FC = (): ReactElement => {
         <Stack direction="row" spacing={18}>
           <Stack direction="column" spacing={1} >
             {/* <AttachMoneyIcon fontSize='small' /> */}
-            <Typography sx={{fontSize: "12px", color:"GrayText", fontWeight:"bold"}}>DEGREE</Typography> 
+            <Typography sx={{fontSize: "12px", color:"GrayText", fontWeight:"bold"}}>{t('DEGREE')}</Typography> 
             <Stack direction="row" spacing={1}>
               <SchoolIcon></SchoolIcon>
               <Typography variant="body2">{students?.degreeseeking}</Typography>
@@ -89,7 +91,7 @@ const StudentProfile: React.FC = (): ReactElement => {
           </Stack>
           <Stack direction="column" spacing={1}>
             {/* <AccessTimeFilledIcon fontSize='small' /> */}
-            <Typography  sx={{fontSize: "12px", color:"GrayText", fontWeight:"bold"}}>INTAKE</Typography>
+            <Typography  sx={{fontSize: "12px", color:"GrayText", fontWeight:"bold"}}>{t('INTAKE')}</Typography>
             <Stack direction="row" spacing={1}>
               <AirIcon></AirIcon>
               <Typography variant="body2">{students?.intake}</Typography>
@@ -98,7 +100,7 @@ const StudentProfile: React.FC = (): ReactElement => {
         </Stack>
       </CardContent>
       <Stack sx={{padding:5}}>
-        <Typography variant='body1' sx={{fontWeight:"bold"}}>Shortlisted Universities</Typography>
+        <Typography variant='body1' sx={{fontWeight:"bold"}}>{t('ShortlistedUniversities')}</Typography>
         <ShortlistCard/>
       </Stack>
     </Card>
