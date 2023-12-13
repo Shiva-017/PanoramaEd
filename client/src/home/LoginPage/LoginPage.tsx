@@ -60,7 +60,7 @@ const LoginPage: React.FC = () => {
                 //     type: "LOGIN_SUCCESSFUL",
                 //     payload: data[0]
                 // })
-                navigate('/');
+                navigate('/profile');
             } else {
               alert("Given user name or password is incorrect.");
               window.location.reload();
@@ -86,7 +86,7 @@ const LoginPage: React.FC = () => {
                 //     payload: data
                 // })
                 console.log("Here");
-                navigate('/');
+                navigate('/profile');
             } else {
               alert("An account with this email-id already exists.");
               window.location.reload();

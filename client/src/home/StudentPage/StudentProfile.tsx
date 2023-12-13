@@ -14,11 +14,20 @@ import background from '../../resources/3626052.jpg';
 import SchoolIcon from '@mui/icons-material/School';
 import AirIcon from '@mui/icons-material/Air';
 import ShortlistCard from './ShortlistCard';
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../store'
+import { useSelector } from 'react-redux';
+import { loadStudent, searchstudent } from '../../store/slices/studentdetails-slice'
+
+
 
 
 const StudentProfile: React.FC = (): ReactElement => {
 
-  const [students, setStudents] = useState<Student>();
+  //const [students, setStudents] = useState<Student>();
+
+  const dispatch = useDispatch<AppDispatch>();
+  const students = useSelector(searchstudent());
 
   const navigate = useNavigate();
   const getStudents = () => {
@@ -28,7 +37,11 @@ const StudentProfile: React.FC = (): ReactElement => {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       }).then(res => res.json())
-        .then(data => setStudents(data[0]));
+        .then(data => {
+          dispatch(loadStudent(data[0]))})
+        
+          
+          //setStudents(data[0]));
       // if (!response.ok) {
       //   throw new Error(`HTTP error! Status: ${response.status}`);
       // }
@@ -57,7 +70,7 @@ const StudentProfile: React.FC = (): ReactElement => {
       </CardMedia>
 
       <CardHeader
-        title="shiva"
+        title={students?.name}
         sx={{ m: "auto", textAlign: "center" }}
       />
       <CardContent sx={{ display: "flex", justifyContent: "center" }}>
@@ -67,7 +80,7 @@ const StudentProfile: React.FC = (): ReactElement => {
             <Typography sx={{fontSize: "12px", color:"GrayText", fontWeight:"bold"}}>DEGREE</Typography> 
             <Stack direction="row" spacing={1}>
               <SchoolIcon></SchoolIcon>
-              <Typography variant="body2">Masters</Typography>
+              <Typography variant="body2">{students?.degreeseeking}</Typography>
             </Stack>
           </Stack>
           <Stack direction="column" spacing={1}>
@@ -75,7 +88,7 @@ const StudentProfile: React.FC = (): ReactElement => {
             <Typography  sx={{fontSize: "12px", color:"GrayText", fontWeight:"bold"}}>INTAKE</Typography>
             <Stack direction="row" spacing={1}>
               <AirIcon></AirIcon>
-              <Typography variant="body2">Fall 23</Typography>
+              <Typography variant="body2">{students?.intake}</Typography>
             </Stack>
           </Stack>
         </Stack>
