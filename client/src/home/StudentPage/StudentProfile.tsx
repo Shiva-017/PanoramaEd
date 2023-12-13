@@ -1,6 +1,5 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 import backGround from '../../resources/northeast.png';
-import logo from '../../resources/anthony.jpeg';
 import SearchIcon from '@mui/icons-material/Search';
 
 import StarIcon from '@mui/icons-material/Star';

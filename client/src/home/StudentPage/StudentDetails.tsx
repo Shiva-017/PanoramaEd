@@ -50,29 +50,23 @@ const StudentDetails: React.FC = (): ReactElement => {
   const { t } = useTranslation('student-details');
 
   const navigate = useNavigate();
-    const getStudents = () => {
-      try {
-
-        const response = fetch(`http://localhost:3001/students/${studentLoggedIn[0].email}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-          }).then(res => res.json())
-          .then(data => {
-            dispatch(loadStudent(data[0]))})
-            
-            
-            //setStudents(data[0]));
-          // if (!response.ok) {
-          //   throw new Error(`HTTP error! Status: ${response.status}`);
-          // }
-
-        // const data = response.json();
-
-        // setStudents(data);
+  const getStudents = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/students/${studentLoggedIn[0].email}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      dispatch(loadStudent(data[0]));
     } catch (error) {
-        console.error("Error:", error);
+      console.error("Error:", error);
     }
-};
+  };
     useEffect(() => {
         getStudents();
       }, [])
