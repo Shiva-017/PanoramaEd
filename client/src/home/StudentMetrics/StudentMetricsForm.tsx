@@ -8,6 +8,7 @@ import theme from "../../providers/themeProvider";
 import { AppDispatch } from "../../store";
 import { loadSuggestedPrograms } from "../../store/slices/college-suggest";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 
 const StudentMetricsForm: React.FC = (): ReactElement => {
@@ -28,6 +29,8 @@ const StudentMetricsForm: React.FC = (): ReactElement => {
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+    const {t} = useTranslation('student-metric-form');
+    
 
     const findSuggestedColleges = async () => {
         let englishTestScore = {};
@@ -127,23 +130,23 @@ const StudentMetricsForm: React.FC = (): ReactElement => {
     return (
         <ThemeProvider theme={theme}>
             <div style={{height:"100vh", position:"absolute", top:100, left:400, width:"100%"}}>
-                <Typography variant={"h4"}>Take us through your dream education</Typography>
+                <Typography variant={"h4"}>{t('dreamEducation')}</Typography>
                 <FormControl>
                     <Stack direction="column" justifyContent="center" alignItems="center" sx={{ width: 100 }}>
                         <Stack direction="row" sx={{ width: 500, margin: 5 }} spacing={20}>
-                            <StudentMetricField items={countryOptions} defaultValue="Select Country" name="country" clickHandler={handleChange} id="country-select" value={country} header="Where do you want to study?"></StudentMetricField>
-                            <StudentMetricField items={courseOptions} defaultValue="Select Course" name="course" clickHandler={handleChange} id="course-select" value={course} header="What are you planning to study?"></StudentMetricField>
+                            <StudentMetricField items={countryOptions} defaultValue={t('selectCountry')} name="country" clickHandler={handleChange} id="country-select" value={country} header={t('studyLocation')}></StudentMetricField>
+                            <StudentMetricField items={courseOptions} defaultValue={t('selectCourse')} name="course" clickHandler={handleChange} id="course-select" value={course} header={t('studyPlan')}></StudentMetricField>
 
                         </Stack>
                         <Stack direction="row" sx={{ width: 500, margin: 5 }} spacing={20}>
-                            <StudentMetricField items={collegeOptions} defaultValue="Select College" name="college" clickHandler={handleChange} id="college-select" value={college} header="What was your undergraduate college?"></StudentMetricField>
-                            <StudentMetricField items={majorOptions} defaultValue="Select Major" name="major" clickHandler={handleChange} id="major-select" value={major} header="Which course did you major in?"></StudentMetricField>
+                            <StudentMetricField items={collegeOptions} defaultValue={t('selectCollege')} name="college" clickHandler={handleChange} id="college-select" value={college} header={t('undergraduateCollege')}></StudentMetricField>
+                            <StudentMetricField items={majorOptions} defaultValue={t('selectMajor')} name="major" clickHandler={handleChange} id="major-select" value={major} header={t('majorCourse')}></StudentMetricField>
 
                         </Stack>
 
                         <Stack direction="row" justifyContent="flex-start" sx={{ width: 500, margin: 5 }} spacing={20}>
                             <div>
-                                <Typography variant="h6" >What was your CGPA?</Typography>
+                                <Typography variant="h6" >{t('cgpa')}</Typography>
                                 <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                                     <OutlinedInput
                                         id="outlined-adornment-weight"
@@ -157,7 +160,7 @@ const StudentMetricsForm: React.FC = (): ReactElement => {
                                 </FormControl>
                             </div>
                             <div style={{ marginLeft: 330 }}>
-                                <Typography variant="h6" >Which english test did you take?</Typography>
+                                <Typography variant="h6" >{t('englishTest')}</Typography>
                                 <ToggleButtonGroup
                                     value={alignment}
                                     exclusive
@@ -196,7 +199,7 @@ const StudentMetricsForm: React.FC = (): ReactElement => {
 
                             <Stack direction="row" justifyContent="center" spacing={10} sx={{ width: 1200 }}>
                                 <Box sx={{ width: 400 }}>
-                                    <Typography variant="h6" >How do you rate your SOP?</Typography>
+                                    <Typography variant="h6" >{t('sopRating')}</Typography>
                                     <Stack direction="row" spacing={3}>
                                         <Slider
                                             aria-label="SOP-Rating"
@@ -213,7 +216,7 @@ const StudentMetricsForm: React.FC = (): ReactElement => {
                                 </Box>
 
                                 <Box sx={{ width: 400 }}>
-                                    <Typography variant="h6" >How do you rate your Resume?</Typography>
+                                    <Typography variant="h6" >{t('resumeRating')}</Typography>
                                     <Stack direction="row" spacing={3}>
                                         <Slider
                                             aria-label="Resume-Rating"
@@ -229,7 +232,7 @@ const StudentMetricsForm: React.FC = (): ReactElement => {
                                     </Stack>
                                 </Box>
                                 <Box sx={{ width: 400 }}>
-                                    <Typography variant="h6" >Number of recommendations?</Typography>
+                                    <Typography variant="h6" >{t('recommendationCount')}</Typography>
                                     <Stack direction="row" spacing={3}>
                                         <Slider
 
@@ -248,7 +251,7 @@ const StudentMetricsForm: React.FC = (): ReactElement => {
                             </Stack>
                             <Stack direction="row" sx={{ width: 1000, margin: 3 }} spacing={10} alignItems="center">
                                 <Box sx={{ width: 400 }}>
-                                    <Typography variant="h6" >Years of Experience?</Typography>
+                                    <Typography variant="h6" >{t('experienceYears')}</Typography>
                                     <Stack direction="row" spacing={3}>
                                         <Slider
                                             aria-label="experience"
@@ -264,7 +267,7 @@ const StudentMetricsForm: React.FC = (): ReactElement => {
                                     </Stack>
                                 </Box>
                                 <div>
-                                    <Typography variant="h6" >What was your GRE Score?</Typography>
+                                    <Typography variant="h6" >{t('greScore')}</Typography>
                                     <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
                                         <OutlinedInput
                                             id="outlined-adornment-weight"
@@ -277,7 +280,7 @@ const StudentMetricsForm: React.FC = (): ReactElement => {
                                         />
                                     </FormControl>
                                 </div>
-                                <Button variant="contained" color="button" sx={{ height: 60, width: 300 }} onClick={findSuggestedColleges}>Find universities</Button>
+                                <Button variant="contained" color="button" sx={{ height: 60, width: 300 }} onClick={findSuggestedColleges}>{t('FindUniversities')}</Button>
                             </Stack>
                         </Stack>
                     </Stack>

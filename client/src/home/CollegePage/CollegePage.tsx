@@ -86,7 +86,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
   return (
     <div style={{position:"absolute", top: 80, left: 5}}>
       <CardMedia image={collegeData?.background} sx={{ border: 5, borderColor: "whitesmoke", borderWidth: 15, borderRadius: 10, paddingLeft: "40px", paddingBottom: "10px" }}>
-        {showAlert === 1 ? <Alert sx={{ width: 600, left: 450, top: 30, position: 'absolute' }} variant="filled">Shortlisted the college!</Alert> : showAlert === 2 ? <Alert severity="info" sx={{ width: 600, left: 450, top: 30, position: 'absolute' }} variant="filled">Removed from the shortlist!</Alert> : null}
+        {showAlert === 1 ? <Alert sx={{ width: 600, left: 450, top: 30, position: 'absolute' }} variant="filled">{t('ShortListedCollege')}</Alert> : showAlert === 2 ? <Alert severity="info" sx={{ width: 600, left: 450, top: 30, position: 'absolute' }} variant="filled">{t('RemovedFromShortList')}</Alert> : null}
         <Avatar
           alt={collegeData?.name}
           src={collegeData?.logo}
@@ -116,7 +116,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
           <IconButton><SchoolIcon /></IconButton>
           <Stack direction="column">
             <Typography ml={2} sx={{ fontWeight: 500, fontSize: 17 }} >Public</Typography>
-            <Typography ml={2} sx={{ fontWeight: "regular", color: "#444444", fontSize: 14 }}>University Type</Typography>
+            <Typography ml={2} sx={{ fontWeight: "regular", color: "#444444", fontSize: 14 }}>{t('University-type')}</Typography>
           </Stack>
         </Stack>
 
@@ -124,7 +124,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
           <IconButton><StarIcon /></IconButton>
           <Stack direction="column">
             <Typography ml={2} sx={{ fontWeight: 500, fontSize: 17 }} >{collegeData?.ranking}</Typography>
-            <Typography ml={2} sx={{ fontWeight: "regular", color: "#444444", fontSize: 14 }}>QS Global Rank</Typography>
+            <Typography ml={2} sx={{ fontWeight: "regular", color: "#444444", fontSize: 14 }}>QS {t('Global-rank')}</Typography>
           </Stack>
         </Stack>
 
@@ -132,7 +132,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
           <IconButton><MonetizationOnIcon /></IconButton>
           <Stack direction="column">
             <Typography ml={2} sx={{ fontWeight: 500, fontSize: 17 }} >{collegeData?.costOfStudy}</Typography>
-            <Typography ml={2} sx={{ fontWeight: "regular", color: "#444444", fontSize: 14 }}>Average Living Expense</Typography>
+            <Typography ml={2} sx={{ fontWeight: "regular", color: "#444444", fontSize: 14 }}>{t('Average-living-expenses')}</Typography>
           </Stack>
         </Stack>
       </Stack>

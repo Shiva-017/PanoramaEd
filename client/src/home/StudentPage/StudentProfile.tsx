@@ -17,12 +17,14 @@ import ShortlistCard from './ShortlistCard';
 import { useSelector } from 'react-redux';
 import { retrieveUsers} from '../../store/slices/login-slice';
 import User from '../../models/user';
+import { useTranslation } from 'react-i18next';
 
 
 const StudentProfile: React.FC = (): ReactElement => {
 
   const [student, setStudent] = useState<Student>();
   const studentLoggedIn : User[] = useSelector(retrieveUsers());
+  const { t } = useTranslation('student-profile');
 
   const getStudentData = async()=>{
     try {
@@ -69,7 +71,7 @@ const StudentProfile: React.FC = (): ReactElement => {
         <Stack direction="row" spacing={18}>
           <Stack direction="column" spacing={1} >
             {/* <AttachMoneyIcon fontSize='small' /> */}
-            <Typography sx={{fontSize: "12px", color:"GrayText", fontWeight:"bold"}}>DEGREE</Typography> 
+            <Typography sx={{fontSize: "12px", color:"GrayText", fontWeight:"bold"}}>{t('DEGREE')}</Typography> 
             <Stack direction="row" spacing={1}>
               <SchoolIcon></SchoolIcon>
               <Typography variant="body2">Masters</Typography>
@@ -77,7 +79,7 @@ const StudentProfile: React.FC = (): ReactElement => {
           </Stack>
           <Stack direction="column" spacing={1}>
             {/* <AccessTimeFilledIcon fontSize='small' /> */}
-            <Typography  sx={{fontSize: "12px", color:"GrayText", fontWeight:"bold"}}>INTAKE</Typography>
+            <Typography  sx={{fontSize: "12px", color:"GrayText", fontWeight:"bold"}}>{t('INTAKE')}</Typography>
             <Stack direction="row" spacing={1}>
               <AirIcon></AirIcon>
               <Typography variant="body2">Fall 23</Typography>
@@ -86,7 +88,7 @@ const StudentProfile: React.FC = (): ReactElement => {
         </Stack>
       </CardContent>
       <Stack sx={{padding:5}}>
-        <Typography variant='body1' sx={{fontWeight:"bold"}}>Shortlisted Universities</Typography>
+        <Typography variant='body1' sx={{fontWeight:"bold"}}>{t('ShortlistedUniversities')}</Typography>
         <ShortlistCard/>
       </Stack>
     </Card>
