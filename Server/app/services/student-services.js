@@ -13,10 +13,8 @@ export const removeStudent = async (id) => {
     return;
 }
 
-export const findByStudentId = async (id) => {
-    const student = await StudentModel.findById(id)
-    populate("collegeID")
-    .exec();
+export const findByStudentEmail = async (studentEmail) => {
+    const student = await StudentModel.find({email: studentEmail}).exec();
     return student;
 }
 

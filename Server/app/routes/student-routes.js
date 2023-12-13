@@ -8,6 +8,6 @@ router.route('/')
 
 router.route('/:id')
     .delete(studentController.remove)
-    .get(studentController.findById)
+    .get(studentController.findByEmail)
 
 export default router;

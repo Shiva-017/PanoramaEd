@@ -1,4 +1,5 @@
 import User from '../models/user.js';
+import Student from '../models/student.js';
 
 // function to fetch the user
 export const fetch = async (params = {})=> {
@@ -9,5 +10,8 @@ export const fetch = async (params = {})=> {
 // function to save a new user
 export const save = async (newUser) => {
     const user = new User(newUser);
+    const student = new Student(newUser);
+    
+    await student.save();
     return await user.save();
 }
