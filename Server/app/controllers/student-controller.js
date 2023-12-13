@@ -42,3 +42,19 @@ export const findByEmail = async (req, res) => {
     }
 }
 
+export const update = async (request, response) => {
+
+    try{
+
+        const id = request.params.id;
+        const updateFields = request.body;
+        const student = await studentService.update(id,updateFields);
+        setResponse(student,response);
+
+    } catch (err){
+        setErrorResponse(err, response);
+
+
+    }
+
+}

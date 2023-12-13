@@ -9,5 +9,6 @@ router.route('/')
 router.route('/:id')
     .delete(studentController.remove)
     .get(studentController.findByEmail)
+    .patch(studentController.update);
 
 export default router;

@@ -24,20 +24,13 @@ export const save = async (newStudent) => {
     return await student.save();
 };
 
-export const update = async (id,degreeseeking ) => {
+export const update = async (id,updateFields) => {
 
-    const student = await StudentModel.findByIdAndUpdate(id,{$set: {degreeseeking: degreeseeking}},
-        {$set: {intake: intake}},
-        {$set: {undergradgrade: undergradgrade}},
-        {$set: {undergradcollege: undergradcollege}},
-        {$set: {undergradcourse: undergradcourse}},
-        {$set: {gre: gre}},
-        {$set: {ielts: ielts}},
-        {$set: {experiencecompany: experiencecompany}},
-        {$set: {experiencedesignation: experiencedesignation}},
-        {$set: {experienceduration: experienceduration}
-        
-    }).exec();
-    return post;
+    const student = await StudentModel.findByIdAndUpdate(
+        id,
+        { $set: updateFields },
+        { new: true }
+    ).exec();
+    return student;
     
     }
