@@ -60,6 +60,9 @@ const StudentSchema = new Schema({
                 collegeLogo: {
                   type: String,
                 },
+                collegeName: {
+                    type: String,
+                  },
               },
         ],
         required: false,
