@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import { useSelector } from 'react-redux';
+import { retrieveUsers } from "../../store/slices/login-slice";
+import User from "../../models/user";
 
 import './styles.css';
+
 
 interface ChatProps {
   socket: any;
@@ -16,25 +20,34 @@ interface MessageData {
   time: string;
 }
 
-const Chat: React.FC<ChatProps> = ({ socket, username, room }) => {
+const chatURL = 'http://localhost:3001/chats';
+
+const Chat: React.FC<ChatProps> = ({ socket, room }) => {
+  const studentLoggedIn : User[] = useSelector(retrieveUsers());
+  console.log("stud", studentLoggedIn);
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messageList, setMessageList] = useState<MessageData[]>([]);
+  const username = '';
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
+      const timeStamp =  new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes();
       const messageData: MessageData = {
         room: room,
         author: username,
         message: currentMessage,
-        time:
-          new Date(Date.now()).getHours() +
-          ":" +
-          new Date(Date.now()).getMinutes(),
+        time: timeStamp,
       };
 
       await socket.emit("send_message", messageData);
       setMessageList((list) => [...list, messageData]);
       setCurrentMessage("");
+
+      fetch(`${chatURL}/657918799114da85a4284b3d`, {
+        method: 'PATCH',
+        body: JSON.stringify({authorId: "", authorName: username, messageBody: currentMessage, timeStamp: timeStamp}),
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
   };
 
