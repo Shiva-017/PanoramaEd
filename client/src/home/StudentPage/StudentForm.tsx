@@ -21,6 +21,19 @@ type FormValues = {
   experienceduration: string;
 };
 
+const initialFormValues: FormValues = {
+  degreeseeking: '',
+  intake: '',
+  undergradgrade: '',
+  undergradcollege: '',
+  undergradcourse: '',
+  gre: '',
+  ielts: '',
+  experiencecompany: '',
+  experiencedesignation: '',
+  experienceduration: '',
+};
+
 const StudentForm: React.FC = () => {
 
 
@@ -41,7 +54,7 @@ const StudentForm: React.FC = () => {
   });
 
 
-  const HandleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const HandleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
 
@@ -58,34 +71,29 @@ const StudentForm: React.FC = () => {
       experienceduration: formValues.experienceduration,
     };
 
-    fetch(`http://localhost:3001/students/${currentStudent._id}`, {
+    const response = await fetch(`http://localhost:3001/students/${currentStudent._id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updateFields),
-    })
-      .then(response => response.json())
-      .then(updatedStudent => {
-        console.log('Student updated:', updatedStudent);
-      })
-      .catch(error => {
-        console.error('Error updating student:', error);
-      });
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    try {
+    const updatedStudent = await response.json();
+    console.log('Student updated:', updatedStudent);
 
     // Reset form values or perform any other necessary actions
-    setFormValues({
-      degreeseeking: '',
-      intake: '',
-      undergradgrade: '',
-      undergradcollege: '',
-      undergradcourse: '',
-      gre: '',
-      ielts: '',
-      experiencecompany: '',
-      experiencedesignation: '',
-      experienceduration: '',
-    });
-    navigate('/profile');
+  
+
+    setFormValues(initialFormValues);
     navigate('/studentdetails');
+  } catch (error) {
+    console.error('Error updating student:', error);
+    // Show an error message to the user or handle the error in an appropriate way
+  }
 
     // setIsFormVisible(false);
   };
