@@ -19,7 +19,7 @@ const initialState : Student = {
     experiencecompany: '',
     experiencedesignation: '',
     experienceduration: '',
-    shortlistedcolleges: []
+    collegeShorlisted: []
     
 };
 

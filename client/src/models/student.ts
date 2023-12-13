@@ -12,7 +12,7 @@ interface Student {
     experiencecompany: string,
     experiencedesignation: string,
     experienceduration: string,
-    shortlistedcolleges: string[]
+    collegeShorlisted: string[]
     }
     
     
