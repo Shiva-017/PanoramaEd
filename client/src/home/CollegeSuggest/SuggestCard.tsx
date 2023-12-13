@@ -1,7 +1,5 @@
 import React, { ReactNode } from 'react';
 import { Avatar, Card, CardActions, CardContent, CardHeader, IconButton, Stack, Typography } from "@mui/material";
-import logo from '../../resources/neulogo.jpg';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import College, { Program } from '../../models/college';
@@ -16,11 +14,11 @@ const SuggestCard: React.FC<Props> = (props: Props): ReactElement => {
   return (
 
 
-    <Card sx={{ maxWidth: 345, borderTop: 5, borderColor: "#0039a6", borderRadius: 1, paddingBottom: 3, paddingTop: 3, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-      <Avatar src={props.program.universityLogo} sx={{ margin: "auto" }} />
+    <Card sx={{ maxWidth: 500, borderTop: 5, borderColor: "#0039a6", borderRadius: 1, paddingBottom: 3, paddingTop: 3, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", mb: 5 }}>
+      <Avatar src={props.program.universityLogo} sx={{ margin: "auto", width:"70px", height:"70px" }}  />
 
       <CardHeader
-        title={props.program.name}
+        title={props.program.university}
       />
       <Typography variant='body1'>{props.program.state}</Typography>
       <CardContent sx={{ display: "flex", justifyContent: "center" }}>

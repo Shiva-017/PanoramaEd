@@ -2,7 +2,9 @@ import i18next from "i18next";
 import  {initReactI18next} from 'react-i18next';
 import HttpApi from 'i18next-http-backend';
 
-
+export const changeLanguage = (language:string)=>{
+    i18next.changeLanguage(language);
+}
 
 i18next.use(HttpApi)
     .use(initReactI18next)

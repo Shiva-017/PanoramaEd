@@ -58,10 +58,6 @@ export default (): ReactElement => {
 
 
     return (
-        // <Container sx={{ mb: 2 }}>
-        //     <TextField variant="outlined" size="small" sx={{ mr: 1 }} onChange={(e) => setCollegeName(e.target.value)}></TextField>
-        //     <Button variant="contained" onClick={searchHandler} style={{ marginTop: "4px", backgroundColor: "#92C1B7" }}>Search</Button>
-        // </Container>
         <>
          <TextField
          id="search"
@@ -75,7 +71,7 @@ export default (): ReactElement => {
            ),
          }}
        />
-       <Button variant="contained" size="large" onClick={searchHandler} style={{ marginTop: "4px", backgroundColor: "#000000", marginLeft:10 }}>Search</Button>
+       <Button variant="contained" size="large" onClick={searchHandler} style={{ marginTop: "4px", backgroundColor: "#000000", marginLeft:10, marginRight:5 }}>Search</Button>
        </>
     );
 }
