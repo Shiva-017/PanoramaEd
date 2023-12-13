@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter,redirectDocument } from "react-router-dom";
 import Root from "./Root";
 import App from "../App";
 import CollegeDetails from "../home/CollegePage/CollegePage";
@@ -11,6 +11,12 @@ import StudentProfile from "../home/StudentPage/StudentProfile";
 import StudentForm from "../home/StudentPage/StudentForm";
 import StudentDetails from "../home/StudentPage/StudentDetails";
 export default createBrowserRouter([
+    {
+        path: '/service-worker.js',
+        loader: () => redirectDocument("/service-worker.js")
+
+    },
+
     {
         path: '/',
         element: <Root />,
