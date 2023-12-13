@@ -35,11 +35,14 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../store'
 import { useSelector } from 'react-redux';
 import { loadStudent, searchstudent } from '../../store/slices/studentdetails-slice'
+import { retrieveUsers } from '../../store/slices/login-slice';
+import User from '../../models/user';
 
 
 const StudentDetails: React.FC = (): ReactElement => {
 
  // const [students, setStudents] = useState<Student>();
+ const studentLoggedIn : User[] = useSelector(retrieveUsers());
 
  const dispatch = useDispatch<AppDispatch>();
   const students = useSelector(searchstudent());
@@ -48,7 +51,7 @@ const StudentDetails: React.FC = (): ReactElement => {
     const getStudents = () => {
       try {
 
-        const response = fetch(`http://localhost:3001/students/`, {
+        const response = fetch(`http://localhost:3001/students/${studentLoggedIn[0].email}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
           }).then(res => res.json())

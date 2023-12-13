@@ -12,8 +12,8 @@ export const store = configureStore({
         [collegeSlice.name]: collegeSlice.reducer,
         [postSlice.name]: postSlice.reducer,
         [programSuggestSlice.name]: programSuggestSlice.reducer,
-        [loginSlice.name]: loginSlice.reducer
-        [studentslice.name]: studentslice.reducer,
+        [loginSlice.name]: loginSlice.reducer,
+        [studentslice.name]: studentslice.reducer
 
     }
 });

@@ -19,7 +19,6 @@ import { retrieveUsers} from '../../store/slices/login-slice';
 import User from '../../models/user';
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../store'
-import { useSelector } from 'react-redux';
 import { loadStudent, searchstudent } from '../../store/slices/studentdetails-slice'
 
 
@@ -27,7 +26,7 @@ import { loadStudent, searchstudent } from '../../store/slices/studentdetails-sl
 
 const StudentProfile: React.FC = (): ReactElement => {
 
-  const [student, setStudent] = useState<Student>();
+  // const [student, setStudent] = useState<Student>();
   const studentLoggedIn : User[] = useSelector(retrieveUsers());
   //const [students, setStudents] = useState<Student>();
 
@@ -41,15 +40,18 @@ const StudentProfile: React.FC = (): ReactElement => {
       const response = await fetch(`http://localhost:3001/students/${studentLoggedIn[0].email}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
-      });
+      }).then(res => res.json())
+      .then(data => {
+        dispatch(loadStudent(data[0]))})
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+      // if (!response.ok) {
+      //   throw new Error(`HTTP error! Status: ${response.status}`);
+      // }
 
-      const data = await response.json();
-      console.log(data,"data");
-      setStudent(data[0]);
+      // const data = await response.json();
+      // console.log(data,"data");
+     
+      // setStudent(data[0]);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -72,7 +74,7 @@ const StudentProfile: React.FC = (): ReactElement => {
       </CardMedia>
 
       <CardHeader
-        title={student?.name}
+        title={students?.name}
         sx={{ m: "auto", textAlign: "center" }}
       />
       <CardContent sx={{ display: "flex", justifyContent: "center" }}>

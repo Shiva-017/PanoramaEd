@@ -8,6 +8,7 @@ export type StudentState = Student;
 const initialState : Student = {
     _id: '',
     name: '',
+    email: '',
     degreeseeking: '',
     intake: '',
     undergradgrade: '',
