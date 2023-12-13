@@ -3,16 +3,20 @@ import { Outlet } from "react-router-dom"
 import store from "../store"
 import Layout from "../components/Layout";
 import { useLocation } from 'react-router-dom';
+import LayoutWithProfile from "../components/LayoutWithProfile";
 
 export default () => {
     const location = useLocation();
     const isLoginPage = location.pathname === '/login';
+    const isCollegeFinder = location.pathname === '/find-college';
+    const isCollgeSuggest = localStorage.pathname === '/suggested-colleges'
+    const isCollegPage = location.pathname.match(/^\/colleges\/([^/]+)$/);
     return (
         < Provider store={store}>
-            {isLoginPage ? <Outlet /> :
+            {isLoginPage ? <Outlet /> : isCollegeFinder || isCollegPage ?
                 <Layout>
                     <Outlet />
-                </Layout>}
+                </Layout> : <LayoutWithProfile><Outlet /></LayoutWithProfile>}
         </Provider>
     )
 }

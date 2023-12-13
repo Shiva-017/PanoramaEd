@@ -84,7 +84,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
   }, [])
 
   return (
-    <div>
+    <div style={{position:"absolute", top: 80, left: 5}}>
       <CardMedia image={collegeData?.background} sx={{ border: 5, borderColor: "whitesmoke", borderWidth: 15, borderRadius: 10, paddingLeft: "40px", paddingBottom: "10px" }}>
         {showAlert === 1 ? <Alert sx={{ width: 600, left: 450, top: 30, position: 'absolute' }} variant="filled">Shortlisted the college!</Alert> : showAlert === 2 ? <Alert severity="info" sx={{ width: 600, left: 450, top: 30, position: 'absolute' }} variant="filled">Removed from the shortlist!</Alert> : null}
         <Avatar

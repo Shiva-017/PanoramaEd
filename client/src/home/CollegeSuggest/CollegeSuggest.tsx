@@ -6,9 +6,10 @@ import SuggestCard from './SuggestCard';
 
 const CollegeSuggest: React.FC = (): ReactElement => {
     const suggestedPrograms = useSelector(getSuggestedPrograms());
+      
 
   return (
-    <div>
+    <div style={{position:"absolute", left:700, top: 100, width: "800px", height:"86vh", overflowY:"auto"}}>
         {suggestedPrograms.map((program)=>{
            return( <SuggestCard program={program}/>)
         })}

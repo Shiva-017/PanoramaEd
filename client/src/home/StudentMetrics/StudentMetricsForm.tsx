@@ -51,7 +51,7 @@ const StudentMetricsForm: React.FC = (): ReactElement => {
             exp: exp,
             resumeRating: resumeRating, 
             country: country,
-            program: course,
+            program: major,
         }
 
         try {
@@ -126,10 +126,10 @@ const StudentMetricsForm: React.FC = (): ReactElement => {
 
     return (
         <ThemeProvider theme={theme}>
-            <div>
+            <div style={{height:"100vh", position:"absolute", top:100, left:400, width:"100%"}}>
                 <Typography variant={"h4"}>Take us through your dream education</Typography>
                 <FormControl>
-                    <Stack direction="column" justifyContent="center" alignItems="center" sx={{ width: 1000 }}>
+                    <Stack direction="column" justifyContent="center" alignItems="center" sx={{ width: 100 }}>
                         <Stack direction="row" sx={{ width: 500, margin: 5 }} spacing={20}>
                             <StudentMetricField items={countryOptions} defaultValue="Select Country" name="country" clickHandler={handleChange} id="country-select" value={country} header="Where do you want to study?"></StudentMetricField>
                             <StudentMetricField items={courseOptions} defaultValue="Select Course" name="course" clickHandler={handleChange} id="course-select" value={course} header="What are you planning to study?"></StudentMetricField>
@@ -277,7 +277,7 @@ const StudentMetricsForm: React.FC = (): ReactElement => {
                                         />
                                     </FormControl>
                                 </div>
-                                <Button variant="contained" color="button" sx={{ height: 60, width: 200, marginTop: 5 }} onClick={findSuggestedColleges}>Find universities</Button>
+                                <Button variant="contained" color="button" sx={{ height: 60, width: 300 }} onClick={findSuggestedColleges}>Find universities</Button>
                             </Stack>
                         </Stack>
                     </Stack>
