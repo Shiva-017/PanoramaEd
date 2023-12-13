@@ -18,10 +18,10 @@ const Translate: React.FC = () => {
     const handleClose = (event: React.MouseEvent<HTMLElement>) => {
 
         const selectedLang = event.currentTarget.getAttribute('data-lang');
-
+      
         if (selectedLang) {
+            changeLanguage(selectedLang);
             setLang(selectedLang);
-            changeLanguage(lang);
         }
 
         setAnchorEl(null);
@@ -62,9 +62,6 @@ const Translate: React.FC = () => {
                 </MenuItem>
                 <MenuItem onClick={handleClose} data-lang="es">
                 <span style={{color: lang==="es" ? "blue" : "black"}}>Spanish</span> 
-                </MenuItem>
-                <MenuItem onClick={handleClose} data-lang="hi">
-                <span style={{color: lang==="hi" ? "blue" : "black"}}>Hindi</span> 
                 </MenuItem>
             </Menu>
         </div>
