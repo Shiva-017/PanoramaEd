@@ -81,6 +81,7 @@ export const shortlistCollege = async (studentId, id) => {
             collegeShorlisted: {
                 collegeID: id,
                 collegeLogo: college.logo,
+                collegeName: college.name,
             },
         },
     }, { new: true, runValidators: true }).exec();
