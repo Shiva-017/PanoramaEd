@@ -68,9 +68,9 @@ export const intakeOptions = [
     { value: "Spring 24", label: "Spring 24" },
     { value: "Fall 24", label: "Fall 24" },
     { value: "Winter 24", label: "Winter 24" },
-    { value: "Spring 24", label: "Spring 25" },
-    { value: "Fall 24", label: "Fall 25" },
-    { value: "Winter 24", label: "Winter 25" },
+    { value: "Spring 25", label: "Spring 25" },
+    { value: "Fall 25", label: "Fall 25" },
+    { value: "Winter 25", label: "Winter 25" },
 ];
 
 export const experinceOptions = [

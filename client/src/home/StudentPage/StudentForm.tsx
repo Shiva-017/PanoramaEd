@@ -84,7 +84,7 @@ const StudentForm: React.FC = () => {
       experiencedesignation: '',
       experienceduration: '',
     });
-   
+    navigate('/profile');
     navigate('/studentdetails');
 
     // setIsFormVisible(false);
