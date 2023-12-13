@@ -1,6 +1,12 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 import Student from '../../models/student';
+import { useSelector } from 'react-redux';
+import { retrieveUsers } from '../../store/slices/login-slice';
+import User from '../../models/user';
+
+
+
 
 type FormValues = {
   degreeseeking: string;
@@ -16,7 +22,7 @@ type FormValues = {
 };
 const HandleFormSubmit = (formValues: FormValues) => {
     
-      const newStudent: Student = {
+      const updateFields = {
         degreeseeking: formValues.degreeseeking,
         intake: formValues.intake,
         undergradgrade: formValues.undergradgrade,
@@ -34,20 +40,20 @@ const HandleFormSubmit = (formValues: FormValues) => {
       };
     
       // setPosts((posts) => [...posts, newPost]);
+      const studentLoggedIn : User[] = useSelector(retrieveUsers());
 
-     fetch(`http://localhost:3001/students/`, {
-            method: 'POST',
-            body: JSON.stringify(newStudent),
-            headers: { 'Content-Type': 'application/json' },
-          })
-            .then(response => {
-              if (response.status ===200){
-                // console.log("posted")
-               // getPosts();
-                
-                //console.log("hello",posts)
-              }
-            })
+      fetch(`http://localhost:3001/students/${studentLoggedIn[0].email}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updateFields),
+      })
+      .then(response => response.json())
+    .then(updatedStudent => {
+        console.log('Student updated:', updatedStudent);
+    })
+    .catch(error => {
+        console.error('Error updating student:', error);
+    });
 
             setIsFormVisible(false);
 
