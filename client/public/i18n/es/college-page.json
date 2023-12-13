@@ -1,0 +1,18 @@
+{
+    "About": "Acerca de",
+    "University-type": "Tipo de Universidad",
+    "Global-rank": "Clasificación Global",
+    "Average-living-expenses": "Gastos de Vida Promedio",
+    "Courses": "Cursos",
+    "Application-deadline": "Fecha límite de aplicación",
+    "Degree": "Grado",
+    "Duration": "Duración",
+    "Tuition-fee": "Tarifa de matrícula",
+    "Rolling": "Continuo",
+    "ShortlistedCollege": "¡Colegio preseleccionado!",
+    "RemovedFromShortlist": "¡Eliminado de la preselección!",
+    "ParagraphOne": "{{collegeName}} es una universidad pública de investigación en {{collegeAddress}}, {{state}}. Es una de las universidades más grandes en {{state}} y {{country}}, con más de 60,000 estudiantes en 11 facultades.",
+    "ParagraphTwo": " {{collegeName}} fue fundada en 1876 como una universidad militar solo para hombres antes de convertirse en una institución coeducativa en {{yearEstd}}. En 1976 se convirtió en una de las cuatro escuelas de dominio femenino en convertirse en coeducativa",
+    "ParagraphThree": " Las ofertas académicas de la universidad incluyen más de 200 carreras de pregrado, 300 programas de posgrado y un programa de honores para estudiantes altamente talentosos, conocido como 'Students Who Excel' (STEX)."
+  }
+  

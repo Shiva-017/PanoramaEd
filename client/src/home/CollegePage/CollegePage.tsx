@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from "react-redux";
 import { searchCollege } from '../../store/slices/college-slice';
+import { searchstudent } from '../../store/slices/studentdetails-slice';
 
 const CollegeDetails: React.FC = (): ReactElement => {
 
@@ -22,11 +23,14 @@ const CollegeDetails: React.FC = (): ReactElement => {
 
   const { t } = useTranslation('college-page');
   const [showAlert, setShowAlert] = useState(0);
+  const student = useSelector(searchstudent());
+  console.log("🚀 ~ file: CollegePage.tsx:27 ~ student:", student)
 
   const shortlistCollege = async () => {
+    console.log(collegeData, "collegedata")
     try {
-      const response = await fetch(`http://localhost:3001/colleges?studentId=${"studentId"}?collegeId=${collegeData?._id}`, {
-        method: "POST",
+      const response = await fetch(`http://localhost:3001/colleges?studentId=${student._id}&collegeId=${collegeData?._id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -37,6 +41,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
       }
 
       const data = await response.json();
+      console.log("🚀 ~ file: CollegePage.tsx:43 ~ shortlistCollege ~ data:", data)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -44,8 +49,8 @@ const CollegeDetails: React.FC = (): ReactElement => {
 
   const removeShortlistCollege = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/colleges/removeShortlist?studentId=${"studentId"}?collegeId=${collegeData?._id}`, {
-        method: "POST",
+      const response = await fetch(`http://localhost:3001/colleges/removeShortlist?studentId=${student._id}&collegeId=${collegeData?._id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -56,6 +61,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
       }
 
       const data = await response.json();
+      console.log("🚀 ~ file: CollegePage.tsx:62 ~ removeShortlistCollege ~ data:", data)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -66,27 +72,27 @@ const CollegeDetails: React.FC = (): ReactElement => {
     setFavourite(!favourite);
     if (!favourite) {
       setShowAlert(1);
+      shortlistCollege();
       setTimeout(() => {
         setShowAlert(0);
       }, 1500);
     } else {
       setShowAlert(2);
+      removeShortlistCollege();
       setTimeout(() => {
         setShowAlert(0);
       }, 1500);
     }
-
   }
 
   useEffect(() => {
-    console.log(college);
     setCollegeData(college);
   }, [])
 
   return (
     <div style={{position:"absolute", top: 80, left: 5}}>
       <CardMedia image={collegeData?.background} sx={{ border: 5, borderColor: "whitesmoke", borderWidth: 15, borderRadius: 10, paddingLeft: "40px", paddingBottom: "10px" }}>
-        {showAlert === 1 ? <Alert sx={{ width: 600, left: 450, top: 30, position: 'absolute' }} variant="filled">Shortlisted the college!</Alert> : showAlert === 2 ? <Alert severity="info" sx={{ width: 600, left: 450, top: 30, position: 'absolute' }} variant="filled">Removed from the shortlist!</Alert> : null}
+        {showAlert === 1 ? <Alert sx={{ width: 600, left: 450, top: 30, position: 'absolute' }} variant="filled">{t('ShortListedCollege')}</Alert> : showAlert === 2 ? <Alert severity="info" sx={{ width: 600, left: 450, top: 30, position: 'absolute' }} variant="filled">{t('RemovedFromShortList')}</Alert> : null}
         <Avatar
           alt={collegeData?.name}
           src={collegeData?.logo}
@@ -116,7 +122,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
           <IconButton><SchoolIcon /></IconButton>
           <Stack direction="column">
             <Typography ml={2} sx={{ fontWeight: 500, fontSize: 17 }} >Public</Typography>
-            <Typography ml={2} sx={{ fontWeight: "regular", color: "#444444", fontSize: 14 }}>University Type</Typography>
+            <Typography ml={2} sx={{ fontWeight: "regular", color: "#444444", fontSize: 14 }}>{t('University-type')}</Typography>
           </Stack>
         </Stack>
 
@@ -124,7 +130,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
           <IconButton><StarIcon /></IconButton>
           <Stack direction="column">
             <Typography ml={2} sx={{ fontWeight: 500, fontSize: 17 }} >{collegeData?.ranking}</Typography>
-            <Typography ml={2} sx={{ fontWeight: "regular", color: "#444444", fontSize: 14 }}>QS Global Rank</Typography>
+            <Typography ml={2} sx={{ fontWeight: "regular", color: "#444444", fontSize: 14 }}>QS {t('Global-rank')}</Typography>
           </Stack>
         </Stack>
 
@@ -132,7 +138,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
           <IconButton><MonetizationOnIcon /></IconButton>
           <Stack direction="column">
             <Typography ml={2} sx={{ fontWeight: 500, fontSize: 17 }} >{collegeData?.costOfStudy}</Typography>
-            <Typography ml={2} sx={{ fontWeight: "regular", color: "#444444", fontSize: 14 }}>Average Living Expense</Typography>
+            <Typography ml={2} sx={{ fontWeight: "regular", color: "#444444", fontSize: 14 }}>{t('Average-living-expenses')}</Typography>
           </Stack>
         </Stack>
       </Stack>

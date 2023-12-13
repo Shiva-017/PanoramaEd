@@ -1,6 +1,7 @@
 import { Avatar, Box, Button, CardMedia, Slide, Stack, Switch, TextField, ThemeProvider, Typography } from "@mui/material";
 import React, { ReactElement, useEffect, useState } from "react";
 import getProgramDetails from "../../helpers/getProgramDetails";
+import { useTranslation } from 'react-i18next';
 
 
 export interface Detail {
@@ -17,6 +18,7 @@ const CollegeCard: React.FC<Props> = (props: Props): ReactElement => {
     const [checked, setChecked] = useState(false);
     const [collegeData, setCollegeData] = useState<any>([]);
     const [collegeName, setCollegeName] = useState("");
+    const { t } = useTranslation('college-compare');
 
     useEffect(() => {
         setChecked(props.triggered);
@@ -57,7 +59,7 @@ const CollegeCard: React.FC<Props> = (props: Props): ReactElement => {
     return (
 
         <div>
-            {!checked ? <TextField id="outlined-basic" label={`Enter college ${props.id}`} variant="outlined" onChange={(e) => { setCollegeName(e.target.value) }} /> : null}
+            {!checked ? <TextField id="outlined-basic" label={t('EnterCollege') + ` ${props.id}`} variant="outlined" onChange={(e) => { setCollegeName(e.target.value) }} /> : null}
             
             <Slide direction="up" in={checked} mountOnEnter unmountOnExit>
                 
