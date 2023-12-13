@@ -89,6 +89,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
   }
   const studentdetails = ()=> {
 
+    navigate('/profile');
     navigate('/studentdetails');
     handleClose();
 
