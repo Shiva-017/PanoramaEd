@@ -8,6 +8,7 @@ import './styles.css';
 import { loadUsers } from "../../store/slices/login-slice";
 
 import Chat from "../Chat/Chat";
+import { useTranslation } from 'react-i18next';
 
 interface User {
   name: string;
@@ -21,6 +22,7 @@ const LoginPage: React.FC = () => {
   const [user, setUser] = useState<User>({ name: '', email: '', password: '' });
   
   const socket = io.connect("http://localhost:4000");
+  const { t } = useTranslation('login');
   socket.emit("join_room", "1234");
 
   const dispatch = useDispatch();
@@ -105,34 +107,34 @@ const LoginPage: React.FC = () => {
       <div className="container" id="container">
         <div className="form-container sign-up">
           <form onSubmit={handleSignup}>
-            <h1>Create Account</h1>
-            <span>or use your email for registeration</span>
+            <h1>{t('create-account')}</h1>
+            <span>{t('use-email-for-reg')}</span>
             <input type="text" placeholder="Name" value={user.name} onChange={e => setUser({ ...user, name: e.target.value })} required/>
             <input type="email" placeholder="Email" value={user.email} onChange={e => setUser({ ...user, email: e.target.value })} required/>
             <input type="password" placeholder="Password" value={user.password} onChange={e => setUser({ ...user, password: e.target.value })} required/>
-            <button>Sign Up</button>
+            <button>{t('Sign-Up')}</button>
           </form>
         </div>
         <div className="form-container sign-in">
           <form onSubmit={handleLogin}>
-            <h1>Sign In</h1>
-            <span>or use your email password</span>
+            <h1>{t('Sign-In-h1')}</h1>
+            <span>{t('use-password')}</span>
             <input type="email" placeholder="Email" value={user.email} onChange={e => setUser({ ...user, email: e.target.value })} required/>
             <input type="password" placeholder="Password" value={user.password} onChange={e => setUser({ ...user, password: e.target.value })} required/>
-            <button>Sign In</button>
+            <button>{t('Sign-In-button')}</button>
           </form>
         </div>
         <div className="toggle-container">
           <div className="toggle">
             <div className="toggle-panel toggle-left">
-              <h1>Welcome Back!</h1>
-              <p>Enter your personal details to use all of site features</p>
+              <h1>{t('Welcome-Back')}</h1>
+              <p>{t('Enter-personal-details')}</p>
               <button className="hidden" id="login">Sign In</button>
             </div>
             <div className="toggle-panel toggle-right">
-              <h1>Hello, Friend!</h1>
-              <p>Register with your personal details to use all of site features</p>
-              <button className="hidden" id="register">Sign Up</button>
+              <h1>{t('Welcome-PanaromaEd!')}</h1>
+              <p>{t('Register-personal-details')}</p>
+              <button className="hidden" id="register">{t('SignUp')}</button>
             </div>
           </div>
         </div>
