@@ -129,18 +129,20 @@ type FormValues = {
     
         return(
 
-            <>
+            <div style={{backgroundColor:"#E1EBEE", position:"absolute", left:450, width:"1080px", overflowX:"auto", height:"90vh"}}>
 
             <div>
             {posts.map((post) => (
-              <Card key={post.feedId} variant="outlined" style={{ marginLeft: 10, borderColor: "#92C1B7", marginTop: 10, marginBottom:10, width: 1000, borderRadius: 10}}>
+              <Card key={post.feedId} variant="outlined" style={{ marginLeft: 150,marginRight:50, borderColor: "#92C1B7", marginTop: 10, marginBottom:10, width: 800, borderRadius: 10}}>
                  <Avatar
                  alt={post.author}
                  src={logo}
                  sx={{ width: 35, height: 35, border: 5, borderColor: "white" }}
                  />
-                <CardContent>
                   <Typography variant="h6">{post.author}</Typography>
+                  
+                <CardContent>
+                 
                   <Typography variant="body1" style={{ fontWeight: 'bold' }}>{post.title}</Typography>
                   <Typography variant="body1">{post.text}</Typography>
                   <Button style={{color:"#92C1B7"}} onClick={()=>onUpVote(post._id || "",post.upVote)}>
@@ -153,12 +155,12 @@ type FormValues = {
             ))}
           </div>
           <div>
-          <Button variant="contained" onClick={handleCreateClick}  style={{backgroundColor:"#92C1B7" }} >Create</Button>
+          <Button variant="contained" onClick={handleCreateClick}  style={{backgroundColor:"#92C1B7" ,marginLeft: 150 }} >Create</Button>
           {/* {isFormVisible && <PostForm onSubmit={HandleFormSubmit} posts={props.posts} setPosts={setPosts}/>}  */}
-          {isFormVisible && <PostForm onSubmit={HandleFormSubmit}  />} 
+          {isFormVisible && <PostForm onSubmit={HandleFormSubmit}/>} 
           </div>
          
-          </>
+          </div>
     
         )
 

@@ -19,6 +19,7 @@ import StarIcon from '@mui/icons-material/Star';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import logo from '../resources/anthony.jpeg';
 import { useNavigate } from 'react-router-dom';
+import CollegeSearch from '../home/StudentSearch/StudentSearch'
 
 
 interface NavBarProps {
@@ -84,7 +85,7 @@ const NavBar: React.FC<NavBarProps> = ({
           PanoramaEd
         </Typography>
 
-        <TextField
+        {/* <TextField
           id="search"
           label="Search"
           InputProps={{
@@ -94,7 +95,9 @@ const NavBar: React.FC<NavBarProps> = ({
               </InputAdornment>
             ),
           }}
-        />
+        /> */}
+
+        <CollegeSearch/>
 
         <Button color="inherit" onClick={postRoute}>
           Feed

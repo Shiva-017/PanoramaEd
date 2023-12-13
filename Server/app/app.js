@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import registerRouter from './routes/index.js'
 import models from './models/index.js'
 //initializing the app with middleware,route and mongoDB connection
+
 const initialize = (app) => {
     app.use(cors());
     app.use(express.json());
@@ -14,5 +15,6 @@ const initialize = (app) => {
 
     registerRouter(app);
 }
+
 
 export default initialize;
