@@ -63,3 +63,20 @@ export const majorOptions = [
     { value: "Communications", label: "Communications" },
     { value: "International Relations", label: "International Relations" },
 ];
+
+export const intakeOptions = [
+    { value: "Spring 24", label: "Spring 24" },
+    { value: "Fall 24", label: "Fall 24" },
+    { value: "Winter 24", label: "Winter 24" },
+    { value: "Spring 24", label: "Spring 25" },
+    { value: "Fall 24", label: "Fall 25" },
+    { value: "Winter 24", label: "Winter 25" },
+];
+
+export const experinceOptions = [
+    { value: "< 1 Year", label: "< 1 year" },
+    { value: "1-2 Years", label: "1-2 Years" },
+    { value: "2-3 Years", label: "2-3 Years" },
+    { value: "3-4 Years", label: "3-4 Years" },
+    { value: ">4 Years", label: ">4 Years" },
+];

@@ -102,7 +102,16 @@ const StudentProfile: React.FC = (): ReactElement => {
       </CardContent>
       <Stack sx={{padding:5}}>
         <Typography variant='body1' sx={{fontWeight:"bold"}}>{t('ShortlistedUniversities')}</Typography>
-        <ShortlistCard/>
+        
+
+        {students && students.collegeShorlisted && students.collegeShorlisted.length > 0 &&
+          students?.collegeShorlisted?.map((collegeItem: any, index: any) => {
+          return (
+            <ShortlistCard logo={collegeItem.collegeLogo} college={collegeItem.collegeName} key={index}></ShortlistCard>
+          )
+        })}
+
+
       </Stack>
     </Card>
 

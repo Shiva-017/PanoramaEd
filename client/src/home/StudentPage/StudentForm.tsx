@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { retrieveUsers } from '../../store/slices/login-slice';
 import User from '../../models/user';
 import { loadStudent, searchstudent } from '../../store/slices/studentdetails-slice';
 import Student from '../../models/student';
 import { useNavigate } from 'react-router-dom';
+import { collegeOptions, experinceOptions, intakeOptions, majorOptions } from '../../constants/menuItems';
 
 type FormValues = {
   degreeseeking: string;
@@ -86,31 +87,50 @@ const StudentForm: React.FC = () => {
     // setIsFormVisible(false);
   };
 
+
+
   const handleChange = (fieldName: keyof FormValues) => (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<{ value: unknown }> | React.ChangeEvent<HTMLInputElement>
   ) => {
-    setFormValues({ ...formValues, [fieldName]: event.target.value });
+    const value = 'value' in event.target ? (event.target.value as string) : (event.target as HTMLInputElement).value;
+    setFormValues({ ...formValues, [fieldName]: value });
   };
 
   return (
-    <div style={{ position: 'absolute', left: 500, width: '1080px', overflowX: 'auto', height: '90vh' }}>
+    <div style={{ position: 'absolute', left: 500, top: 100,width: '1080px', overflowX: 'auto', height: '90vh' }}>
+      <h2>Please Enter your Details</h2>
       <form onSubmit={HandleFormSubmit}>
-        <TextField
-          label="Degree Seeking"
-          fullWidth
-          margin="normal"
-          name="degreeseeking"
-          value={formValues.degreeseeking}
-          onChange={handleChange('degreeseeking')}
-        />
-        <TextField
-          label="Intake"
-          fullWidth
-          margin="normal"
-          name="intake"
-          value={formValues.intake}
-          onChange={handleChange('intake')}
-        />
+      <InputLabel id="degreeseeking-label">Degree Seeking</InputLabel>
+        <Select
+  labelId="degreeseeking-label"
+  id="degreeseeking"
+  fullWidth
+  margin="dense"
+  name="degreeseeking"
+  value={formValues.degreeseeking}
+  onChange={handleChange('degreeseeking') as (event: SelectChangeEvent<string>, child: React.ReactNode) => void}
+>
+          <MenuItem value="Masters">Masters</MenuItem>
+        </Select>
+
+        <InputLabel id="intake-label">Intake</InputLabel>
+          <Select
+            labelId="intake-label"
+            id="intake"
+            fullWidth
+            margin="dense"
+            name="intake"
+            value={formValues.intake}
+            onChange={handleChange('intake') as (event: SelectChangeEvent<string>, child: React.ReactNode) => void}
+          >
+            {intakeOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+
+       
         <TextField
           label="Undergrad Grade"
           fullWidth
@@ -119,22 +139,42 @@ const StudentForm: React.FC = () => {
           value={formValues.undergradgrade}
           onChange={handleChange('undergradgrade')}
         />
-         <TextField
-          label="Undergrad College"
-          fullWidth
-          margin="normal"
-          name="undergradcollege"
-          value={formValues.undergradcollege}
-          onChange={handleChange('undergradcollege')}
-        />
-         <TextField
-          label="Undergrad Course"
-          fullWidth
-          margin="normal"
-          name="undergradcourse"
-          value={formValues.undergradcourse}
-          onChange={handleChange('undergradcourse')}
-        />
+
+<InputLabel id="undergradcollege-label">Undergrad College</InputLabel>
+          <Select
+            labelId="undergradcollege-label"
+            id="undergradcollege"
+            fullWidth
+            margin="dense"
+            name="undergradcollege"
+            value={formValues.undergradcollege}
+            onChange={handleChange('undergradcollege') as (event: SelectChangeEvent<string>, child: React.ReactNode) => void}
+          >
+            {collegeOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+
+          <InputLabel id="undergradcourse-label">Undergrad Course</InputLabel>
+          <Select
+            labelId="undergradcourse-label"
+            id="undergradcourse"
+            fullWidth
+            margin="dense"
+            name="undergradcourse"
+            value={formValues.undergradcourse}
+            onChange={handleChange('undergradcourse') as (event: SelectChangeEvent<string>, child: React.ReactNode) => void}
+          >
+            {majorOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+
+          
          <TextField
           label="GRE"
           fullWidth
@@ -167,15 +207,23 @@ const StudentForm: React.FC = () => {
           value={formValues.experiencedesignation}
           onChange={handleChange('experiencedesignation')}
         />
-         <TextField
-          label="Experience Duration"
-          fullWidth
-          margin="normal"
-          name="experienceduration"
-          value={formValues.experienceduration}
-          onChange={handleChange('experienceduration')}
-        />
-        {/* Add similar lines for other fields */}
+         <InputLabel id="experienceduration-label">Experience Duration</InputLabel>
+          <Select
+            labelId="experienceduration-label"
+            id="experienceduration"
+            fullWidth
+            margin="dense"
+            name="experienceduration"
+            value={formValues.experienceduration}
+            onChange={handleChange('experienceduration') as (event: SelectChangeEvent<string>, child: React.ReactNode) => void}
+          >
+            {experinceOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+       
         <Button type="submit" variant="contained" color="primary">
           Save
         </Button>
@@ -185,3 +233,4 @@ const StudentForm: React.FC = () => {
 };
 
 export default StudentForm;
+
