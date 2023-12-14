@@ -2,7 +2,7 @@ import React, {useState, useEffect, FormEvent} from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from 'react-i18next';
-import './styles.css';
+import './styles.scss';
 
 import { loadUsers } from "../../store/slices/login-slice";
 
