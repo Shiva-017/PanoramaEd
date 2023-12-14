@@ -154,7 +154,7 @@ type FormValues = {
     
         return(
 
-            <div style={{backgroundColor:"#E1EBEE", position:"absolute", left:450, width:"1080px", overflowX:"auto", height:"90vh", top:80}}>
+            <div style={{ position:"absolute", left:450, width:"1080px", overflowX:"auto", height:"90vh", top:80}}>
 
             <div>
             {posts.map((post) => (
