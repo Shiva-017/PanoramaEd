@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { retrieveUsers } from "../../store/slices/login-slice";
 import User from "../../models/user";
 
-import './styles.css';
+import './styles.scss';
 
 
 interface ChatProps {
