@@ -1,12 +1,14 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/OuSBNpwM)
 
-# Global Education Helper Platform (PanoramaEd)
+# PanoramaEd  (Global Education Helper Platform)
  
 ## Project Overview
+
+PanoramaEd is a revolutionary web app designed to empower students in their pursuit of the perfect international college experience. Our platform offers a comprehensive suite of features tailored to guide and support students through every step of their journey toward higher education abroad. Whether you're exploring universities, researching programs, seeking admission advice, or sharing your educational journey, this platform is your go-to destination.
  
-Welcome to the Global Education Helper Platform! This platform is designed to empower students worldwide in their pursuit of higher education. Whether you're exploring universities, researching programs, seeking admission advice, or sharing your educational journey, this platform is your go-to destination.
  
 ## Key Entities
+ ![model](image-1.png)
 
 ### 1. Student
 
@@ -91,37 +93,42 @@ Welcome to the Global Education Helper Platform! This platform is designed to em
 
 ## Features
  
-### 1. University Research and Program Exploration
+1. Explore Colleges Worldwide
 - Browse and research information about universities globally.
 - Explore detailed program descriptions, fees, and admission requirements.
- 
-### 2. Admission Chances Calculator
-- Evaluate your chances of getting admitted to a particular university based on your profile.
-- Gain insights into admission requirements and program competitiveness.
- 
-### 3. Interactive Student Feed
-- Share your experiences, insights, and questions in a dynamic student feed.
-- Upvote and engage with posts from fellow students.
- 
-### 4. Advanced Filtering Options
-- Filter universities based on courses, locations, and other criteria.
-- Connect with students who share similar academic interests.
- 
-### 5. Consultation with Experienced Consultants
+
+2. Consultation with Experienced Consultants
 - Connect with experienced consultants for personalized advice.
 - Engage in one-on-one chats to address your academic queries.
  
-### 6. University Admin Video Content
-- Access exclusive video content posted by university administrators.
-- Gain insights into programs, campus life, and more.
+3. College Predictor
+- Evaluate your chances of getting admitted to a particular university based on your profile.
 
-## POST API:
+4. Dynamic College Comparison
+- Make confident comparison with our intuitive comparison tools
+- 
+ 
+5. Student driven insights
+- panoramaEd provides a platform for students to share their admission journey and communicate through posts.
+ 
+6. Multilingual support
+- PanoramaEd transcends language barriers, offering support in multiple languages.
 
-- implemented REST API calls for the following:
+### Develeopment and Execution
+- clone the repo repository on your local system
+- import the repository on to IDE and go to the repository path in the terminal
+- perform below steps in both 'client' and 'server' folders of the repository. 'client' folder contains code for UI and 'server' folder contains code for backend
+1. Run `npm i`.
+2. Run `npm start`.
+3. The PanoramaEd App should be accessible at `http://localhost:3000`.
 
-- 1. Show all the posts of students
-- 2. Save new post of a student
-- 3. remove a post by ID
+
+
+
+
+
+
+
 
 
  

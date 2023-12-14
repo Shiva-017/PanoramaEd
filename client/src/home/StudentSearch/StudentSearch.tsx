@@ -1,7 +1,5 @@
 import { ReactElement, useState } from "react";
 import Container from '@mui/material/Container';
-// import Button from '@mui/material/Button';
-// import TextField from '@mui/material/TextField';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
@@ -20,17 +18,12 @@ import {
     TextField,
   } from '@mui/material';
 
-// type Props = {
-//     onSearch: (query: string) => void
-// }
-
-
 export default (): ReactElement => {
     const [collegeName, setCollegeName] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
-
+// function to handle College Search based on text typed in serach box
 
     const searchHandler = async () => {
 
