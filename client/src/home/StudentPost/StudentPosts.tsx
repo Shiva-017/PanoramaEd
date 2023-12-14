@@ -1,24 +1,18 @@
 import { ReactElement } from "react"
-// import Post, {posts} from '../../models/post'
 import Post from '../../models/post'
 import { Card,Grid, CardContent, Typography, Button } from "@mui/material";
-// import { Avatar } from '@mui/material';
 import logo from '../../resources/neulogo.jpg';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PostForm from '../../home/PostForm/PostForm'
 import React, {useState, useEffect} from 'react';
-// import { AiOutlineLike } from "react-icons/ai";
 import { BiSolidUpvote } from "react-icons/bi";
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../store'
 import { loadPosts, retrievePosts } from '../../store/slices/StudentPost-slice'
 import { loadStudent, searchstudent} from '../../store/slices/studentdetails-slice'
- import { useSelector } from 'react-redux';
- import { useTranslation } from 'react-i18next';
-
-
-
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 
@@ -27,12 +21,6 @@ type FormValues = {
     text: string;
   };
 
-// type Props = {
-
-//     posts: Post[]
-// }
-
-// const StudentPosts: React.FC<Props> = (props: Props): ReactElement => {
   const StudentPosts: React.FC= (): ReactElement => {
 
 
@@ -40,7 +28,9 @@ type FormValues = {
   const posts = useSelector(retrievePosts());
   const student = useSelector(searchstudent())
   const { t } = useTranslation('students-post');
-    // const [posts, setPosts] = useState<Post[]>([]);
+
+  // function to fetch posts using API call
+    
     const getPosts = () => {
 
         fetch(`http://localhost:3001/posts/`, {
@@ -50,8 +40,6 @@ type FormValues = {
             .then(res => res.json())
             .then((data) => {
               dispatch(loadPosts(data.reverse()))
-              // setPosts(json.reverse())
-              // console.log(data) 
                     
     });        
             
@@ -62,7 +50,7 @@ type FormValues = {
   
       }, []);
 
-
+// function to create new post and update the posts collection 
     const HandleFormSubmit = (formValues: FormValues) => {
       console.log(student.name);
     
@@ -70,25 +58,20 @@ type FormValues = {
         
         feedId: new Date().getTime().toString(),
         author: student.name,
-        // author: "Current User",
         title: formValues.title,
         text: formValues.text,
         upVote:0
       };
     
-      // setPosts((posts) => [...posts, newPost]);
-
-     fetch(`http://localhost:3001/posts/`, {
+    fetch(`http://localhost:3001/posts/`, {
             method: 'POST',
             body: JSON.stringify(newPost),
             headers: { 'Content-Type': 'application/json' },
           })
             .then(response => {
               if (response.status ===200){
-                // console.log("posted")
                 getPosts();
                 
-                console.log("hello",posts)
               }
             })
 
@@ -98,7 +81,7 @@ type FormValues = {
     };
 
     
-
+// logic to enable and disable new post form 
     const [isFormVisible, setIsFormVisible] = useState(false);
     console.log("Hello 1", isFormVisible);
 
@@ -132,6 +115,8 @@ type FormValues = {
        
     }
 
+    //fucntion to update upVote on student post
+
     const onUpVote = (id:String,upVote:number):void => {
       
       fetch(`http://localhost:3001/posts/${id}/?upvote=${upVote+1}`, {
@@ -150,8 +135,6 @@ type FormValues = {
     }
 
 
-
-    
         return(
 
             <div style={{backgroundColor:"#E1EBEE", position:"absolute", left:450, width:"1080px", overflowX:"auto", height:"90vh", top:80}}>
@@ -159,14 +142,7 @@ type FormValues = {
             <div>
             {posts.map((post) => (
               <Card key={post.feedId} variant="outlined" style={{ marginLeft: 150,marginRight:50, borderColor: "#FFFFFF",  marginTop: 10, marginBottom:10, width: 800, borderRadius: 10, backgroundColor:"#FFFFFF"}}>
-                 {/* <Avatar
-                 alt={post.author}
-                 src={logo}
-                 sx={{ width: 35, height: 35, border: 5, borderColor: "white" }}
-                 />
-              
-                  <Typography variant="h6" style={{ fontWeight: 'bold', marginLeft:10 }}>{post.author}</Typography> */}
-
+                 
 <Grid container spacing={2}>
         <Grid item>
         <Avatar
@@ -191,7 +167,6 @@ type FormValues = {
                   <BiSolidUpvote  style={{color:"#000000"}} />{post.upVote}</Button>
                   <IconButton aria-label="delete" size="large" onClick={() => onDelete(post._id || "")}>
                     <DeleteIcon style={{color:"#000000"}}  />
-                    {/* <DeleteIcon style={{color:"#92C1B7"}}  /> */}
                     
                   </IconButton>
                 </CardContent>
@@ -200,7 +175,6 @@ type FormValues = {
           </div>
           <div>
           <Button variant="contained" onClick={handleCreateClick}  style={{backgroundColor:"#000000" ,marginLeft: 150 }} >{t('CREATE')}</Button>
-          {/* {isFormVisible && <PostForm onSubmit={HandleFormSubmit} posts={props.posts} setPosts={setPosts}/>}  */}
           {isFormVisible && <PostForm onSubmit={HandleFormSubmit}/>} 
           {isCancelVisible &&<Button
             type="submit"
@@ -214,8 +188,6 @@ type FormValues = {
            {t('CANCEL')} 
           </Button> }
           </div>
-
-          
          
           </div>
     

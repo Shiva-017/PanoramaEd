@@ -13,11 +13,11 @@ import { useTranslation } from 'react-i18next';
 
   type Props = {
     onSubmit: (values: FormValues) => void;
-    // posts: Post[]; 
-    // setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+   
   };
+
+  //form to capure details of new post
   
-  // const PostForm: React.FC<Props> = ({ onSubmit, posts }: Props): ReactElement => {
     const PostForm: React.FC<Props> = ({ onSubmit }: Props): ReactElement => {
     const [formValues, setFormValues] = useState<FormValues>({
       title: "",
@@ -30,6 +30,7 @@ import { useTranslation } from 'react-i18next';
       const { name, value } = e.target;
       setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
     };
+
   
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
