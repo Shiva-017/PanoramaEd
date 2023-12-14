@@ -7,7 +7,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ProgramDetail from "./ProgramDetail";
 import Timer from "@mui/icons-material/Timer";
 
-
+//this component renders a program card with some details
 type Props = {
     program: Program
 }

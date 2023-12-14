@@ -26,9 +26,7 @@ import { useTranslation } from 'react-i18next';
 
 const StudentProfile: React.FC = (): ReactElement => {
 
-  // const [student, setStudent] = useState<Student>();
   const studentLoggedIn : User[] = useSelector(retrieveUsers());
-  //const [students, setStudents] = useState<Student>();
 
   const dispatch = useDispatch<AppDispatch>();
   const students = useSelector(searchstudent());
@@ -45,15 +43,6 @@ const StudentProfile: React.FC = (): ReactElement => {
       .then(data => {
         console.log(data,"data");
         dispatch(loadStudent(data[0]))})
-
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! Status: ${response.status}`);
-      // }
-
-      // const data = await response.json();
-      
-     
-      // setStudent(data[0]);
     } catch (error) {
       console.error("Error:", error);
     }

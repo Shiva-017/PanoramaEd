@@ -14,7 +14,7 @@ interface User {
 
 
 const LoginPage: React.FC = () => {
-  const { t } = useTranslation('college-page');
+  const { t } = useTranslation('login');
   const [user, setUser] = useState<User>({ name: '', email: '', password: '' });
 
   const dispatch = useDispatch();
