@@ -24,6 +24,7 @@ const CollegeCard: React.FC<Props> = (props: Props): ReactElement => {
         setChecked(props.triggered);
     }, [props.triggered]);
 
+    // fetching college data from the input sent as a prop to this card
     const fetchCollegeData = async () => {
         try {
             const response = await fetch(`http://localhost:3001/colleges/name/${collegeName}`, {

@@ -24,8 +24,8 @@ const CollegeDetails: React.FC = (): ReactElement => {
   const { t } = useTranslation('college-page');
   const [showAlert, setShowAlert] = useState(0);
   const student = useSelector(searchstudent());
-  console.log("🚀 ~ file: CollegePage.tsx:27 ~ student:", student)
 
+  // shortlists a user by api call
   const shortlistCollege = async () => {
     console.log(collegeData, "collegedata")
     try {
@@ -47,6 +47,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
     }
   };
 
+  // api call to remove from shortlist
   const removeShortlistCollege = async () => {
     try {
       const response = await fetch(`http://localhost:3001/colleges/removeShortlist?studentId=${student._id}&collegeId=${collegeData?._id}`, {
@@ -61,13 +62,12 @@ const CollegeDetails: React.FC = (): ReactElement => {
       }
 
       const data = await response.json();
-      console.log("🚀 ~ file: CollegePage.tsx:62 ~ removeShortlistCollege ~ data:", data)
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
-
+  //this function interacts with fav icon to send api calls
   const handleFavourites = () => {
     setFavourite(!favourite);
     if (!favourite) {
@@ -90,7 +90,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
   }, [])
 
   return (
-    <div style={{position:"absolute", top: 80, left: 5}}>
+    <div style={{ position: "absolute", top: 80, left: 5 }}>
       <CardMedia image={collegeData?.background} sx={{ border: 5, borderColor: "whitesmoke", borderWidth: 15, borderRadius: 10, paddingLeft: "40px", paddingBottom: "10px" }}>
         {showAlert === 1 ? <Alert sx={{ width: 600, left: 450, top: 30, position: 'absolute' }} variant="filled">{t('ShortListedCollege')}</Alert> : showAlert === 2 ? <Alert severity="info" sx={{ width: 600, left: 450, top: 30, position: 'absolute' }} variant="filled">{t('RemovedFromShortList')}</Alert> : null}
         <Avatar
@@ -110,7 +110,6 @@ const CollegeDetails: React.FC = (): ReactElement => {
         </Stack>
 
         <IconButton onClick={handleFavourites}  >{favourite ? <FavoriteIcon sx={{ fontSize: 36, marginTop: 2, marginLeft: 1, color: "#fd5c63" }} /> : <FavoriteBorderIcon sx={{ fontSize: 36, marginTop: 3, marginLeft: 1 }} />}</IconButton>
-        {/* need to change the above condition by checking studentId in the aray of shortlisted students */}
       </Stack>
 
 

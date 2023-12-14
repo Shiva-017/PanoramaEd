@@ -4,7 +4,7 @@ import CollegeCard from "./CollegeCard";
 import { useTranslation } from 'react-i18next';
 import theme from "../../providers/themeProvider";
 
-
+// this page renders comparision of colleges
 const CollegeCompare: React.FC = (): ReactElement => {
     const [programName, setProgramName] = useState("");
     const [search, setSearch] = useState<boolean>(false);

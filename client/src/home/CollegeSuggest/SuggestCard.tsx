@@ -9,7 +9,7 @@ import { ReactElement } from "react";
 type Props = {
   program: Program;
 }
-
+// its a card of suggested college detail
 const SuggestCard: React.FC<Props> = (props: Props): ReactElement => {
   return (
 

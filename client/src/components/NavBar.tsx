@@ -36,16 +36,14 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
     if (socket === '') {
       setSocket(io.connect("http://localhost:4000"));
     }
-    fetch(`${chatURL}/?userId=${studentLoggedIn._id}`, {
+    fetch(`${chatURL}/?userId=${studentLoggedIn?._id}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
       .then(res => res.json())
       .then(data => {
-        setChatId(data[0]._id);
+        setChatId(data[0]?._id);
       });
-
-    console.log("chatId: ", chatId);
   }
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
