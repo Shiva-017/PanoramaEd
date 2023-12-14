@@ -27,27 +27,38 @@ interface NavBarProps {
 }
 
 const NavBar: React.FC<NavBarProps> = ({}) => {
-  const studentLoggedIn : User[] = useSelector(retrieveUsers());
-  // console.log("stu", studentLoggedIn);
-  const socket = io.connect("http://localhost:4000");
-  let chatId = localStorage.getItem('chatId');
-  // if (chatId === null) {
-  //   fetch(`${chatURL}/657918799114da85a4284b3d`, {
-  //     method: 'PATCH',
-  //     body: JSON.stringify({authorId: "", authorName: username, messageBody: currentMessage, timeStamp: timeStamp}),
-  //     headers: { 'Content-Type': 'application/json' },
-  //   });
-  // }
+  const studentLoggedIn : User = useSelector(retrieveUsers())[0];
 
+  const [chatId, setChatId] = React.useState<string>('');
+  const [socket, setSocket] = React.useState<any>('');
+  
+  if (chatId === '') {
+    if (socket === '') {
+      setSocket(io.connect("http://localhost:4000"));
+    }
+    fetch(`${chatURL}/?userId=${studentLoggedIn._id}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then(res => res.json())
+      .then(data => {
+        setChatId(data[0]._id);
+      });
 
-  socket.emit("join_room", chatId);
+    console.log("chatId: ", chatId);
+  }
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const [isChatOpen, setIsChatOpen] = React.useState<boolean | HTMLElement>(false);
 
+  const [isChatEmitted, setIsChatEmitted] = React.useState<boolean | HTMLElement>(false);
+
   const toggleChat = () => {
-    console.log("Chat", !isChatOpen);
+    if (!isChatEmitted) {
+      setIsChatEmitted(true);
+      socket.emit("join_room", chatId);
+    }
     setIsChatOpen(!isChatOpen);
   };
 
@@ -97,7 +108,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
 
   
   const loginpage = ()=> {
-
+    window.localStorage.clear();
     navigate('/login');
     handleClose();
 
@@ -149,7 +160,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
     </MuiAppBar>
     
     {
-      isChatOpen && <Chat socket={socket} username={String(Math.random())} room={localStorage.getItem('chatId') || ''}/>
+      isChatOpen && <Chat socket={socket} room={chatId || ''}/>
     }
     </>
   );

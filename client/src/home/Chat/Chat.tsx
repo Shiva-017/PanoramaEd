@@ -9,7 +9,6 @@ import './styles.css';
 
 interface ChatProps {
   socket: any;
-  username: string;
   room: string;
 }
 
@@ -23,16 +22,17 @@ interface MessageData {
 const chatURL = 'http://localhost:3001/chats';
 
 const Chat: React.FC<ChatProps> = ({ socket, room }) => {
-  const studentLoggedIn : User[] = useSelector(retrieveUsers());
+  const studentLoggedIn : User = useSelector(retrieveUsers())[0];
   console.log("stud", studentLoggedIn);
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messageList, setMessageList] = useState<MessageData[]>([]);
-  const username = '';
+  const username = studentLoggedIn.name;
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
       const timeStamp =  new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes();
-      const messageData: MessageData = {
+      console.log("Sending to room: ", room);
+      const messageData: any = {
         room: room,
         author: username,
         message: currentMessage,
@@ -42,10 +42,10 @@ const Chat: React.FC<ChatProps> = ({ socket, room }) => {
       await socket.emit("send_message", messageData);
       setMessageList((list) => [...list, messageData]);
       setCurrentMessage("");
-
-      fetch(`${chatURL}/657918799114da85a4284b3d`, {
+      
+      fetch(`${chatURL}/${room}`, {
         method: 'PATCH',
-        body: JSON.stringify({authorId: "", authorName: username, messageBody: currentMessage, timeStamp: timeStamp}),
+        body: JSON.stringify({authorId: studentLoggedIn._id, authorName: username, messageBody: currentMessage, timeStamp: timeStamp}),
         headers: { 'Content-Type': 'application/json' },
       });
     }

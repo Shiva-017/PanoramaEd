@@ -110,6 +110,9 @@ PanoramaEd is a revolutionary web app designed to empower students in their purs
 6. Multilingual support
 - PanoramaEd transcends language barriers, offering support in multiple languages.
 
+7. Chat with consultant
+- If you have any queries you can chat with the consultant to resolve your doubts.
+
 ### Develeopment and Execution
 - clone the repo repository on your local system
 - import the repository on to IDE and go to the repository path in the terminal
