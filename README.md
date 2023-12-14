@@ -57,12 +57,12 @@ PanoramaEd is a revolutionary web app designed to empower students in their purs
 ### 6. Post
 
 - **Fields:**
-  - `id`: Unique identifier for the post.
-  - `status`: Current status of the post.
-  - `message`: Content of the post.
-  - `votes`: Number of votes received.
-  - `comments`: Array of comments on the post.
-  - `postedBy`: ID of the student who posted the content.
+  - `_id`: Unique identifier for the post.
+  - `author`: name of the author who has posted
+  - `title`: title of the post
+  - `text`: Content of the post.
+  - `upVote`: Number of votes received.
+ 
 
 ### 7. Intake
 
