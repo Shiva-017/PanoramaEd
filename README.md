@@ -121,7 +121,7 @@ PanoramaEd is a revolutionary web app designed to empower students in their purs
 2. Run `npm start`.
 3. The PanoramaEd App should be accessible at `http://localhost:3000`.
 
-APIs:
+APIs Backend:
 
 Find college by name can be accessed at GET: `http://localhost:3001/colleges/name/${collegeName}`
 to shortlist a college PUT: `http://localhost:3001/colleges?studentId=${student._id}&collegeId=${collegeData?._id}`
