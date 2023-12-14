@@ -33,7 +33,7 @@ PanoramaEd is a revolutionary web app designed to empower students in their purs
 ### 3. Chat
 
 - **Fields:**
-  - `id`: Unique identifier generated as a combination of student and consultant IDs.
+  - `id`: Unique identifier generated for the chat between a student and a consultant
   - `studentId` - Unique identifier of the student to whom this chat belongs
   - `consultantId` - Unique identifier of the consultant to whom this chat belongs
   - `messages`: Array of messages within the chat.
