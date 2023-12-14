@@ -44,7 +44,6 @@ const StudentProfile: React.FC = (): ReactElement => {
       .then(data => {
         console.log(data,"data");
         dispatch(loadStudent(data[0]))})
-
     } catch (error) {
       console.error("Error:", error);
     }
