@@ -123,15 +123,14 @@ PanoramaEd is a revolutionary web app designed to empower students in their purs
 
 APIs:
 
-Posts RESI APIs can be accessed at  `http://localhost:3001/posts`
 Find college by name can be accessed at GET: `http://localhost:3001/colleges/name/${collegeName}`
 to shortlist a college PUT: `http://localhost:3001/colleges?studentId=${student._id}&collegeId=${collegeData?._id}`
 college suggest can be fetched by POST : `http://localhost:3001/programs/suggest`, additionally you have to send student metrics object in body.
-
-
-
-
-
+API to GET all posts can be accessed at  `http://localhost:3001/posts`
+API to POST a new Student post can be accessed at `http://localhost:3001/posts/`
+API to DELETE a Student post can be accessed at `http://localhost:3001/posts/${id}`
+API to PATCH (update upVote field ) in the post can be accessed at `http://localhost:3001/posts/${id}/?upvote=${upVote+1}`
+API to get Student Details `http://localhost:3000/studentdetails`
 
 
 
