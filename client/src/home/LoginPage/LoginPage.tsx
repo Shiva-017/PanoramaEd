@@ -61,6 +61,7 @@ const LoginPage: React.FC = () => {
             if (data[0]) {
               console.log("In dispatch");
               dispatch(loadUsers(data));
+              window.localStorage.setItem('user',data[0]);
               navigate('/studentdetails');
             } else {
               alert("Given email or password is incorrect.");
@@ -84,6 +85,7 @@ const LoginPage: React.FC = () => {
             if (data.name) {
                 createChat(data._id);
                 dispatch(loadUsers([data]));
+                window.localStorage.setItem('user',data);
                 navigate('/studentform');
             } else {
               alert("An account with this email-id already exists.");
