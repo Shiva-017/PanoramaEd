@@ -39,10 +39,11 @@ import { retrieveUsers } from '../../store/slices/login-slice';
 import User from '../../models/user';
 import { useTranslation } from 'react-i18next';
 
+// Functional component definition for StudentDetails
 
 const StudentDetails: React.FC = (): ReactElement => {
 
- // const [students, setStudents] = useState<Student>();
+   // Redux state management
  const studentLoggedIn : User[] = useSelector(retrieveUsers());
 
  const dispatch = useDispatch<AppDispatch>();
@@ -50,6 +51,9 @@ const StudentDetails: React.FC = (): ReactElement => {
   const { t } = useTranslation('student-details');
 
   const navigate = useNavigate();
+
+    // Function to fetch student data from the server
+
   const getStudents = async () => {
     try {
       const response = await fetch(`http://localhost:3001/students/${studentLoggedIn[0].email}`, {
@@ -67,6 +71,9 @@ const StudentDetails: React.FC = (): ReactElement => {
       console.error("Error:", error);
     }
   };
+
+    // Fetch student data on component mount
+
     useEffect(() => {
         getStudents();
       }, [])
@@ -82,7 +89,7 @@ const StudentDetails: React.FC = (): ReactElement => {
         <Grid item xs={12} sm={6} md={6}>
           
 
-          {/* Student Cards - Single column (1x1) */}
+          
           <Grid container spacing={0} sx={{ width: '100%' }}>
             <Grid item xs={12}>
               <StudentCard
@@ -113,5 +120,7 @@ const StudentDetails: React.FC = (): ReactElement => {
     </div>
   );
 };
+
+// Exporting the component as default
 
 export default StudentDetails;

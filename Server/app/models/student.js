@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+
+// Creating a Mongoose schema for the Student model
 const Schema = mongoose.Schema;
 const StudentSchema = new Schema({
     name: {
@@ -68,6 +70,8 @@ const StudentSchema = new Schema({
         required: false,
     }
 })
+
+// Creating a Mongoose model for the Student schema
 
 const StudentModel = mongoose.model('student', StudentSchema);
 export default StudentModel;

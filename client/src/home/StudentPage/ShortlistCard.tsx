@@ -3,7 +3,7 @@ import {Avatar, Card, CardContent, CardHeader, Stack, Typography } from "@mui/ma
 import Student from '../../models/student';
 import logo from "../../resources/neulogo.jpg";
 
-
+// Props for the ShortlistCard component
 interface ShortlistCardProps {
   logo: string;
   college: string;
@@ -13,7 +13,7 @@ type Props = {
   // student: Student
 
 }
-
+// ShortlistCard component definition
 const ShortlistCard: React.FC<ShortlistCardProps> = ({  logo,college }) => {
   return (
     <Stack direction="row" spacing={2} sx={{ borderLeft: 5, borderColor: "#1E90FF", paddingLeft:2, mt:3}}>
@@ -26,5 +26,5 @@ const ShortlistCard: React.FC<ShortlistCardProps> = ({  logo,college }) => {
     
   );
 };
-
+// Exporting the ShortlistCard component as the default export
 export default ShortlistCard;
