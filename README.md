@@ -34,6 +34,8 @@ PanoramaEd is a revolutionary web app designed to empower students in their purs
 
 - **Fields:**
   - `id`: Unique identifier generated as a combination of student and consultant IDs.
+  - `studentId` - Unique identifier of the student to whom this chat belongs
+  - `consultantId` - Unique identifier of the consultant to whom this chat belongs
   - `messages`: Array of messages within the chat.
 
 ### 4. University Admin
@@ -113,6 +115,9 @@ PanoramaEd is a revolutionary web app designed to empower students in their purs
  
 6. Multilingual support
 - PanoramaEd transcends language barriers, offering support in multiple languages.
+
+7. Chat with consultant
+- If you have any queries you can chat with the consultant to resolve your doubts.
 
 ### Develeopment and Execution
 - clone the repo repository on your local system
