@@ -10,33 +10,27 @@ PanoramaEd is a revolutionary web app designed to empower students in their purs
 ## Key Entities
  ![model](image-1.png)
 
-### 1. Student
 
-- **Fields:**
-  - `id`: Unique identifier for the student.
-  - `name`: Full name of the student.
-  - `degree`: Current academic degree of the student.
-  - `university`: University currently associated with the student.
-  - `score`: Academic score or GPA.
-  - `nationality`: Nationality of the student.
-  - `experience`: Relevant work or academic experience.
-  - `programsShortlisted`: Array of program IDs that the student has shortlisted.
-  - `programsApplied`: Array of program IDs that the student has applied to.
+### 3. Chat Model
 
-### 2. Consultant
+## Attributes
 
-- **Fields:**
-  - `id`: Unique identifier for the consultant.
-  - `name`: Full name of the consultant.
-  - `rating`: Rating assigned to the consultant based on student interactions.
+### Message Schema
 
-### 3. Chat
+- `authorId`: String, required - Unique identifier of the message author.
+- `authorName`: String, required - Full name of the message author.
+- `messageBody`: String, required - The content of the message.
+- `timeStamp`: String, required - Timestamp indicating when the message was sent.
 
-- **Fields:**
-  - `id`: Unique identifier generated for the chat between a student and a consultant
-  - `studentId` - Unique identifier of the student to whom this chat belongs
-  - `consultantId` - Unique identifier of the consultant to whom this chat belongs
-  - `messages`: Array of messages within the chat.
+### Chat Schema
+
+- `studentId`: String, required - Unique identifier for the student involved in the chat.
+- `consultantId`: String, required - Unique identifier for the consultant involved in the chat.
+- `messages`: Array of objects, each object having the following properties:
+  - `authorId`: String, required - Unique identifier of the message author.
+  - `authorName`: String, required - Full name of the message author.
+  - `messageBody`: String, required - The content of the message.
+  - `timeStamp`: String, required - Timestamp indicating when the message was sent.
 
 ### 4. University Admin
 
@@ -126,6 +120,12 @@ PanoramaEd is a revolutionary web app designed to empower students in their purs
 1. Run `npm i`.
 2. Run `npm start`.
 3. The PanoramaEd App should be accessible at `http://localhost:3000`.
+
+APIs:
+
+Posts RESI APIs can be accessed at  `http://localhost:3001/posts`
+
+
 
 
 

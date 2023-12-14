@@ -147,7 +147,7 @@ type FormValues = {
         <Grid item>
         <Avatar
                  alt={post.author}
-                 src={logo}
+                 src={''}
                  sx={{ width: 35, height: 35, border: 5, borderColor: "white" }}
                  />
         </Grid>
