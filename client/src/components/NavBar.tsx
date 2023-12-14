@@ -97,7 +97,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
 
   
   const loginpage = ()=> {
-
+    window.localStorage.clear();
     navigate('/login');
     handleClose();
 

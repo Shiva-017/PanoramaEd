@@ -9,7 +9,6 @@ export default () => {
     const location = useLocation();
     const isLoginPage = location.pathname === '/login';
     const isCollegeFinder = location.pathname === '/find-college';
-    const isCollgeSuggest = localStorage.pathname === '/suggested-colleges'
     const isCollegPage = location.pathname.match(/^\/colleges\/([^/]+)$/);
     return (
         < Provider store={store}>
