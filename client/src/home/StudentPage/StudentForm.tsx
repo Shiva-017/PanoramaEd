@@ -8,6 +8,8 @@ import Student from '../../models/student';
 import { useNavigate } from 'react-router-dom';
 import { collegeOptions, experinceOptions, intakeOptions, majorOptions } from '../../constants/menuItems';
 
+// Define the structure of form values
+
 type FormValues = {
   degreeseeking: string;
   intake: string;
@@ -20,6 +22,8 @@ type FormValues = {
   experiencedesignation: string;
   experienceduration: string;
 };
+
+// Initial values for the form fields
 
 const initialFormValues: FormValues = {
   degreeseeking: '',
@@ -34,12 +38,16 @@ const initialFormValues: FormValues = {
   experienceduration: '',
 };
 
+// Functional component for the student form
+
 const StudentForm: React.FC = () => {
 
-
+  // Retrieve the current student from Redux state
   const currentStudent: Student = useSelector(searchstudent());
+  // Initialize navigation hook
   const navigate = useNavigate();
   
+  // State hook to manage form values
   const [formValues, setFormValues] = useState<FormValues>({
     degreeseeking: currentStudent.degreeseeking || '',
     intake: currentStudent.intake || '',
@@ -53,11 +61,11 @@ const StudentForm: React.FC = () => {
     experienceduration: currentStudent.experienceduration || '',
   });
 
-
+// Handle form submission
   const HandleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-
+// Prepare the updated fields for the PATCH request
     const updateFields = {
       degreeseeking: formValues.degreeseeking,
       intake: formValues.intake,
@@ -70,13 +78,13 @@ const StudentForm: React.FC = () => {
       experiencedesignation: formValues.experiencedesignation,
       experienceduration: formValues.experienceduration,
     };
-
+// Send a PATCH request to update student data
     const response = await fetch(`http://localhost:3001/students/${currentStudent._id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updateFields),
     });
-
+// Handle HTTP errors
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -85,28 +93,26 @@ const StudentForm: React.FC = () => {
     const updatedStudent = await response.json();
     console.log('Student updated:', updatedStudent);
 
-    // Reset form values or perform any other necessary actions
-  
+// Reset form values and navigate to the student details page  
 
     setFormValues(initialFormValues);
     navigate('/studentdetails');
   } catch (error) {
     console.error('Error updating student:', error);
-    // Show an error message to the user or handle the error in an appropriate way
   }
 
-    // setIsFormVisible(false);
   };
 
 
-
+// Handle form field changes
   const handleChange = (fieldName: keyof FormValues) => (
     event: React.ChangeEvent<{ value: unknown }> | React.ChangeEvent<HTMLInputElement>
   ) => {
+    // Extract the value from the event and update the form values
     const value = 'value' in event.target ? (event.target.value as string) : (event.target as HTMLInputElement).value;
     setFormValues({ ...formValues, [fieldName]: value });
   };
-
+// Render the student form
   return (
     <div style={{ position: 'absolute', left: 500, top: 100,width: '1080px', overflowX: 'auto', height: '90vh' }}>
       <h2>Please Enter your Details</h2>
@@ -243,5 +249,6 @@ const StudentForm: React.FC = () => {
   );
 };
 
+// Export the StudentForm component
 export default StudentForm;
 

@@ -1,9 +1,11 @@
 import * as studentService from "../services/student-services.js";
 import { setResponse, setErrorResponse } from './response-handler.js';
 
+// Controller function to find students based on parameters
 export const find = async (req, res) => {
     try {
         const params = { ...req.params, ...req.query };
+                // Searching for students using the service function
         const students = await studentService.searchStudents(params);
         setResponse(students, res);
     } catch (err) {
@@ -11,6 +13,7 @@ export const find = async (req, res) => {
     }
 };
 
+// Controller function to add a new student
 export const post = async (req, res) => {
     try {
         const newStudent = req.body;
@@ -21,6 +24,7 @@ export const post = async (req, res) => {
     }
 };
 
+// Controller function to remove a student by ID
 
 export const remove = async (req, res) => {
     try {
@@ -31,6 +35,7 @@ export const remove = async (req, res) => {
         setErrorResponse(e, res);
     }
 }
+// Controller function to find a student by email
 
 export const findByEmail = async (req, res) => {
     try {
@@ -41,6 +46,7 @@ export const findByEmail = async (req, res) => {
         setErrorResponse(e, res);
     }
 }
+// Controller function to update a student by ID
 
 export const update = async (request, response) => {
 

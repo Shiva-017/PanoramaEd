@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { Card, CardContent, CardHeader, Stack, Typography } from "@mui/material";
 import Student from '../../models/student';
 
-
+// Defining the props interface for the StudentCard component
 interface StudentCardProps {
   title: ReactNode;
   mandatoryContent: ReactNode;
@@ -10,10 +10,13 @@ interface StudentCardProps {
   optionalContent2?: ReactNode;
 }
 
+// Defining the props type for the StudentCard component
+
 type Props = {
   student: Student
   
 }
+// Functional component definition for the StudentCard
 
 const StudentCard: React.FC<StudentCardProps> = ({ title, mandatoryContent, optionalContent,optionalContent2 }) => {
   return (
@@ -31,5 +34,7 @@ const StudentCard: React.FC<StudentCardProps> = ({ title, mandatoryContent, opti
     </div>
   );
 };
+
+// Exporting the StudentCard component as default
 
 export default StudentCard;

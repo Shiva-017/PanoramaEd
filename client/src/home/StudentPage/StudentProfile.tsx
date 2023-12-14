@@ -23,21 +23,20 @@ import { loadStudent, searchstudent } from '../../store/slices/studentdetails-sl
 
 import { useTranslation } from 'react-i18next';
 
-
+// Main component for displaying student profile
 const StudentProfile: React.FC = (): ReactElement => {
 
-  // const [student, setStudent] = useState<Student>();
+// Redux hooks for managing state and dispatch
   const studentLoggedIn : User[] = useSelector(retrieveUsers());
-  //const [students, setStudents] = useState<Student>();
-
   const dispatch = useDispatch<AppDispatch>();
   const students = useSelector(searchstudent());
   const { t } = useTranslation('student-profile');
 
+// Function to fetch student data from the server
   const getStudentData = async()=>{
     try {
       console.log("student", studentLoggedIn);
-
+// Fetching student data based on the logged-in user's email
       const response = await fetch(`http://localhost:3001/students/${studentLoggedIn[0].email}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -46,25 +45,18 @@ const StudentProfile: React.FC = (): ReactElement => {
         console.log(data,"data");
         dispatch(loadStudent(data[0]))})
 
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! Status: ${response.status}`);
-      // }
-
-      // const data = await response.json();
-      
-     
-      // setStudent(data[0]);
     } catch (error) {
       console.error("Error:", error);
     }
   }
-  
+    // Fetch student data when the component mounts
   useEffect(() => {
     getStudentData();
   }, []);
 
 
 
+  // Render student profile
 
   return (
     <Card sx={{ width: 450,minHeight:"92vh", overflowY:"auto", padding: "auto", position:"absolute", left:0 }}>
@@ -82,7 +74,6 @@ const StudentProfile: React.FC = (): ReactElement => {
       <CardContent sx={{ display: "flex", justifyContent: "center" }}>
         <Stack direction="row" spacing={18}>
           <Stack direction="column" spacing={1} >
-            {/* <AttachMoneyIcon fontSize='small' /> */}
             <Typography sx={{fontSize: "12px", color:"GrayText", fontWeight:"bold"}}>{t('DEGREE')}</Typography> 
             <Stack direction="row" spacing={1}>
               <SchoolIcon></SchoolIcon>
@@ -90,7 +81,6 @@ const StudentProfile: React.FC = (): ReactElement => {
             </Stack>
           </Stack>
           <Stack direction="column" spacing={1}>
-            {/* <AccessTimeFilledIcon fontSize='small' /> */}
             <Typography  sx={{fontSize: "12px", color:"GrayText", fontWeight:"bold"}}>{t('INTAKE')}</Typography>
             <Stack direction="row" spacing={1}>
               <AirIcon></AirIcon>
