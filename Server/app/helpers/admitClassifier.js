@@ -1,5 +1,9 @@
 
+import vader from 'vader-sentiment';
+
 const weights = { greScore: 0.1, toeflScore: 0.2, sopRating: 0.35, cgpa: 0.35, ieltsScore: 0.2 };
+
+
 
 
 const minMaxValues = {
@@ -12,10 +16,13 @@ const minMaxValues = {
 
 
 function admitClassifier(studentData, programRequirements, exp = 0, resumeRating = 0) {
+    const input = 'VADER is very smart, handsome, and funny';
+    const intensity = vader.SentimentIntensityAnalyzer.polarity_scores(input);
+    console.log(intensity);
     const normalizedStudentData = normalizeData(studentData);
     const normalizedProgramData = normalizeData(programRequirements)
     let totalScore = 0;
-    
+
     for (const key in normalizedStudentData) {
         if (key !== "lorRequired") {
             totalScore += weights[key] * normalizedStudentData[key];
@@ -23,7 +30,7 @@ function admitClassifier(studentData, programRequirements, exp = 0, resumeRating
 
     }
     let requirementScore = 0;
-    
+
     for (const key in normalizedStudentData) {
         if (key !== "lorRequired") {
             requirementScore += weights[key] * normalizedProgramData[key];

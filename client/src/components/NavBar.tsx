@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import SchoolIcon from '@mui/icons-material/School';
 import ChatIcon from '@mui/icons-material/Chat';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import CollegeSearch from '../home/StudentSearch/StudentSearch';
 import Translate from './Translate';
 import Chat from '../home/Chat/Chat';
@@ -20,18 +20,22 @@ import * as io from "socket.io-client";
 import { useSelector } from 'react-redux';
 import { retrieveUsers } from '../store/slices/login-slice';
 import User from '../models/user';
+import BraintreeDropIn from './BraintreeDropin';
+
+
 
 const chatURL = 'http://localhost:3001/chats';
 
 interface NavBarProps {
 }
 
-const NavBar: React.FC<NavBarProps> = ({}) => {
-  const studentLoggedIn : User = useSelector(retrieveUsers())[0];
-
+const NavBar: React.FC<NavBarProps> = ({ }) => {
+  const studentLoggedIn: User = useSelector(retrieveUsers())[0];
+  const [showBraintreeDropIn, setShowBraintreeDropIn] = React.useState(false);
   const [chatId, setChatId] = React.useState<string>('');
   const [socket, setSocket] = React.useState<any>('');
-  
+  const [clientToken, setClientToken] = React.useState<any>('');
+
   if (chatId === '') {
     if (socket === '') {
       setSocket(io.connect("http://localhost:4000"));
@@ -69,34 +73,35 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
   };
 
   const navigate = useNavigate();
-  const postRoute = ()=> {
+
+  const postRoute = () => {
     navigate('/posts');
 
   }
-  const collegeCompareRoute = ()=> {
+  const collegeCompareRoute = () => {
 
     navigate('/college-compare');
 
   }
-  const findCollegeRoute = ()=> {
+  const findCollegeRoute = () => {
 
     navigate('/find-college');
 
   }
 
-  const studentform = ()=> {
-    
+  const studentform = () => {
+
     navigate('/studentform');
     handleClose();
 
   }
 
-  const profile = ()=> {
+  const profile = () => {
 
     navigate('/profile');
 
   }
-  const studentdetails = ()=> {
+  const studentdetails = () => {
 
     navigate('/profile');
     navigate('/studentdetails');
@@ -104,12 +109,31 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
 
   }
 
-  
-  const loginpage = ()=> {
+
+  const loginpage = () => {
     window.localStorage.clear();
     navigate('/login');
     handleClose();
+  }
 
+  const initializePayment = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/process-payment`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setClientToken(data);
+    } catch (err) {
+
+    }
   }
 
   const handleLogout = () => {
@@ -119,47 +143,58 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
 
   return (
     <>
-    <MuiAppBar position="fixed" color="default" sx={{padding: 1}}>
-      <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="school">
-          <SchoolIcon />
-        </IconButton>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          PanoramaEd
-        </Typography>
-        <CollegeSearch/>
+      <MuiAppBar position="fixed" color="default" sx={{ padding: 1 }}>
+        <Toolbar>
+          <IconButton edge="start" color="inherit" aria-label="school">
+            <SchoolIcon />
+          </IconButton>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            PanoramaEd
+          </Typography>
+          <CollegeSearch />
 
-        <Button color="inherit" onClick={postRoute}>
-          Feed
-        </Button>
-        <Button color="inherit" onClick={collegeCompareRoute}>
-          College Compare
-        </Button>
-        <Button color="inherit" onClick={findCollegeRoute}>
-          Find College
-        </Button>
+          <Button color="inherit" onClick={postRoute}>
+            Feed
+          </Button>
+          <Button color="inherit" onClick={collegeCompareRoute}>
+            College Compare
+          </Button>
+          <Button color="inherit" onClick={findCollegeRoute}>
+            Find College
+          </Button>
+         
+            <Button color="inherit" onClick={() => {setShowBraintreeDropIn(true)}}
+                        disabled={showBraintreeDropIn}>
+              Get Premium
+            </Button>
+        
+          <BraintreeDropIn
+            show={showBraintreeDropIn}
+            onPaymentCompleted={() => {
+                setShowBraintreeDropIn(false);
+            }}
+        />
+          <IconButton color="inherit" onClick={toggleChat}>
+            <ChatIcon />
+          </IconButton>
+          <IconButton color="inherit">
+            <Translate />
+          </IconButton>
+          {/* User profile picture with popup menu */}
+          <IconButton aria-label="user profile" color="inherit" onClick={handleClick}>
+            <Avatar alt="User" />
+          </IconButton>
+          <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+            <MenuItem onClick={studentdetails}>My Profile</MenuItem>
+            <MenuItem onClick={studentform}>Edit Profile</MenuItem>
+            <MenuItem onClick={loginpage}>Logout</MenuItem>
+          </Menu>
+        </Toolbar>
+      </MuiAppBar>
 
-        <IconButton color="inherit" onClick={toggleChat}>
-          <ChatIcon />
-        </IconButton>
-        <IconButton color="inherit">
-          <Translate />
-        </IconButton>
-        {/* User profile picture with popup menu */}
-        <IconButton aria-label="user profile" color="inherit" onClick={handleClick}>
-          <Avatar alt="User"  />
-        </IconButton>
-        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-          <MenuItem onClick={studentdetails}>My Profile</MenuItem>
-          <MenuItem onClick={studentform}>Edit Profile</MenuItem>
-          <MenuItem onClick={loginpage}>Logout</MenuItem>
-        </Menu>
-      </Toolbar>
-    </MuiAppBar>
-    
-    {
-      isChatOpen && <Chat socket={socket} room={chatId || ''}/>
-    }
+      {
+        isChatOpen && <Chat socket={socket} room={chatId || ''} />
+      }
     </>
   );
 };

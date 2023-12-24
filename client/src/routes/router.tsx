@@ -12,6 +12,7 @@ import StudentProfile from '../home/StudentPage/StudentProfile';
 import StudentForm from '../home/StudentPage/StudentForm';
 import StudentDetails from '../home/StudentPage/StudentDetails';
 import ProtectedRoute from './ProtectedRoute';
+import BraintreeDropIn from '../components/BraintreeDropin';
 
 export default createBrowserRouter([
   {
@@ -58,7 +59,7 @@ export default createBrowserRouter([
       {
         path: '/studentdetails',
         element: <ProtectedRoute element={<StudentDetails />} />,
-      },
+      }
     ],
   },
 ]);

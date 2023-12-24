@@ -8,8 +8,6 @@ export const setErrorResponse = (err, response)=> {
 
     response.status(500)
     .json({
-
-
         code: "ServiceError",
         message: err.message
      });
