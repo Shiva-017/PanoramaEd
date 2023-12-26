@@ -15,9 +15,10 @@ export default () => {
     const isLoginPage = location.pathname === '/login';
     const isCollegeFinder = location.pathname === '/find-college';
     const isCollegPage = location.pathname.match(/^\/colleges\/([^/]+)$/);
+    const isPaymentPage = location.pathname === '/process-payment';
     return (
         < Provider store={store}>
-            {isLoginPage ? <Outlet /> : isCollegeFinder || isCollegPage ?
+            {isLoginPage ? <Outlet /> : isCollegeFinder || isCollegPage || isPaymentPage ?
                 <Layout>
                     <Outlet />
                 </Layout> : <LayoutWithProfile><Outlet /></LayoutWithProfile>}

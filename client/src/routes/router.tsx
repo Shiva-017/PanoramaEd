@@ -12,7 +12,7 @@ import StudentProfile from '../home/StudentPage/StudentProfile';
 import StudentForm from '../home/StudentPage/StudentForm';
 import StudentDetails from '../home/StudentPage/StudentDetails';
 import ProtectedRoute from './ProtectedRoute';
-import BraintreeDropIn from '../components/BraintreeDropin';
+import PaymentGateWay from '../home/PaymentGateway/PaymentPortal';
 
 export default createBrowserRouter([
   {
@@ -59,6 +59,10 @@ export default createBrowserRouter([
       {
         path: '/studentdetails',
         element: <ProtectedRoute element={<StudentDetails />} />,
+      },
+      {
+        path: '/process-payment',
+        element: <ProtectedRoute element={<PaymentGateWay />} />,
       }
     ],
   },

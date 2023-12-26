@@ -86,8 +86,9 @@ const CollegeDetails: React.FC = (): ReactElement => {
   }
 
   useEffect(() => {
+    console.log("college name changes", college);
     setCollegeData(college);
-  }, [])
+  }, [college])
 
   return (
     <div style={{ position: "absolute", top: 80, left: 5 }}>
