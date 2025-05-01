@@ -14,7 +14,7 @@ initialize(app);
 
 
 app.use(cors());
-app.listen(port, () => console.log(`server is listening at port ${port}`));
+app.listen(port, () => console.log(`[server] listening on port ${port}`));
 
 const server = http.createServer(app);
 
