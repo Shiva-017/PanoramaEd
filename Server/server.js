@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("help_accepted", (acceptedRequest) => {
-    console.log("Help accepted:", acceptedRequest);
+    console.log('[socket] help accepted:', acceptedRequest?.requestId);
     // Notify the specific student
     io.emit("help_accepted", acceptedRequest);
   });
