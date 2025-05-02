@@ -40,7 +40,7 @@ io.on("connection", (socket) => {
 
   // NEW: Help queue events
   socket.on("new_help_request", (helpRequest) => {
-    console.log("New help request:", helpRequest);
+    console.log('[socket] new help request from:', helpRequest?.studentId);
     // Broadcast to all connected mentors
     socket.broadcast.emit("new_help_request", helpRequest);
   });
