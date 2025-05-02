@@ -30,7 +30,7 @@ io.on("connection", (socket) => {
 
   socket.on("join_room", (data) => {
     socket.join(data);
-    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+    console.log('[socket] joined room:', data);
   });
 
   // Existing chat functionality
