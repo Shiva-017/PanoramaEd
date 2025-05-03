@@ -59,7 +59,7 @@ export const update = async (request, response) => {
 
         const id = request.params.id;
         const updateFields = request.body;
-        console.log('PATCH updateFields:', updateFields);
+        console.log('[student] PATCH fields:', Object.keys(updateFields));
         const before = await studentService.update(id, {}); // fetch current doc
         console.log('PATCH student before update:', before);
         const student = await studentService.update(id, updateFields);
