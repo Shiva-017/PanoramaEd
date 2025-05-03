@@ -52,7 +52,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("User Disconnected", socket.id);
+    console.log('[socket] disconnected:', socket.id);
   });
 });
 
