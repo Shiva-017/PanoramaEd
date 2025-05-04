@@ -41,7 +41,7 @@ export const findByEmail = async (req, res) => {
     try {
         const studentEmail = req.params.id;
         const students = await studentService.findByStudentEmail(studentEmail);
-        console.debug('findByEmail:', studentEmail, students);
+        console.log('[student] findByEmail:', studentEmail);
         if (students.length === 1) {
             setResponse(students[0], res);
         } else {
