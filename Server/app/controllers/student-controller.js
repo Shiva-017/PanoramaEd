@@ -63,7 +63,7 @@ export const update = async (request, response) => {
         const before = await studentService.update(id, {}); // fetch current doc
         console.log('[student] fetched before update:', before?._id);
         const student = await studentService.update(id, updateFields);
-        console.log('PATCH student after update:', student);
+        console.log('[student] updated:', student?._id);
         setResponse(student,response);
 
     } catch (err){
