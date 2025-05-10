@@ -10,7 +10,7 @@ export const searchStudents = async (params = {}) => {
     .exec();
     return students;
 }
-// Function to remove a student by ID
+// Remove a student document by ID
 export const removeStudent = async (id) => {
     const student = await StudentModel.findByIdAndDelete(id);
     
