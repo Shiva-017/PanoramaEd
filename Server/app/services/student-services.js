@@ -1,7 +1,7 @@
 import StudentModel from "../models/student.js";
 
 
-// Function to search for students based on provided parameters
+// Search students matching provided params
 
 export const searchStudents = async (params = {}) => {
         // Using Mongoose to find students with optional parameters and populating related data
