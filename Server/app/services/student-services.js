@@ -17,7 +17,7 @@ export const removeStudent = async (id) => {
     return;
 }
 
-// Function to find a student by email
+// Find students by email address
 export const findByStudentEmail = async (studentEmail) => {
     const student = await StudentModel.find({email: studentEmail}).exec();
     return student;
