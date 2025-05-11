@@ -22,7 +22,7 @@ export const findByStudentEmail = async (studentEmail) => {
     const student = await StudentModel.find({email: studentEmail}).exec();
     return student;
 }
-// Function to save a new student
+// Persist a new student document
 export const save = async (newStudent) => {
 
     const student = new StudentModel(newStudent);
