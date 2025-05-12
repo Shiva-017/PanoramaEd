@@ -29,7 +29,7 @@ export const save = async (newStudent) => {
     return await student.save();
 };
 
-// Function to update a student by ID with new fields
+// Apply partial update to a student document
 
 export const update = async (id,updateFields) => {
 
