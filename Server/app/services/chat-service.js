@@ -7,7 +7,7 @@ export const fetch = async (params = {})=> {
     return chat;
 }
 
-// function to save a user chat
+// persist a new chat thread
 export const save = async (newChat) => {
     const chat = new Chat(newChat);
     return await chat.save();
