@@ -1,6 +1,6 @@
 import Chat from '../models/chat.js';
 
-// function to fetch the user chat
+// fetch chat thread for a given user
 export const fetch = async (params = {})=> {
     const userId = params.userId;
     const chat = await Chat.find({"$or": [{"studentId": userId}, {"consultantId": userId}]}).exec();
