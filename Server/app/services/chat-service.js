@@ -13,7 +13,7 @@ export const save = async (newChat) => {
     return await chat.save();
 }
 
-// function to update a chat
+// append a new message to an existing chat
 export const update = async(newMessage, id) => {
     const chat = await Chat.updateOne({_id: id}, {$push: {messages: newMessage}}).exec();
     return chat;
