@@ -32,7 +32,7 @@ export const post = async (request, response) =>{
         // Issue JWT token after signup
         const payload = { id: user._id, email: user.email };
         if (user.userType) payload.userType = user.userType;
-        const token = jwt.sign(payload, 'panoramaed_secret', { expiresIn: '2h' });
+        const token = jwt.sign(payload, process.env.JWT_SECRET || 'panoramaed_secret', { expiresIn: '4h' });
         setResponse({ user, token }, response);
     } catch(err) {
         if (err.code === 11000 && err.keyPattern && err.keyPattern.email) {
