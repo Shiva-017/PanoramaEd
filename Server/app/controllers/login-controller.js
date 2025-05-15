@@ -13,7 +13,7 @@ export const fetch = async (request, response) => {
         // Issue JWT token (only include userType if present)
         const payload = { id: user[0]._id, email: user[0].email };
         if (user[0].userType) payload.userType = user[0].userType;
-        const token = jwt.sign(payload, 'panoramaed_secret', { expiresIn: '2h' });
+        const token = jwt.sign(payload, process.env.JWT_SECRET || 'panoramaed_secret', { expiresIn: '4h' });
         setResponse({ user: user[0], token }, response);
     } catch (err) {
         setErrorResponse(err, response);
