@@ -8,7 +8,7 @@ export const fetch = async (params = {}) => {
     return mentors;
 }
 
-// function to fetch mentor by user credentials (for login)
+// fetch mentor by email + password credentials
 export const fetchByCredentials = async (email, password) => {
     // First find user with CONSULTANT type
     const user = await User.findOne({ 
