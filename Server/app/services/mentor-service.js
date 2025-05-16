@@ -2,7 +2,7 @@ import User from '../models/user.js';
 import Mentor from '../models/mentor.js';
 import bcrypt from 'bcrypt';
 
-// function to fetch mentors
+// fetch all mentor profiles matching params
 export const fetch = async (params = {}) => {
     const mentors = await Mentor.find(params).populate('userId').exec();
     return mentors;
