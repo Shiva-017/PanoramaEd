@@ -24,7 +24,7 @@ export const fetch = async (params = {})=> {
 export const save = async (newUser) => {
     // Hash the password before saving
     if (newUser.password) {
-        const saltRounds = 10;
+        const saltRounds = 12;
         newUser.password = await bcrypt.hash(newUser.password, saltRounds);
     }
     // Ensure name is present in Student document
