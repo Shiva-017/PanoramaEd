@@ -22,7 +22,7 @@ export const fetch = async (params = {})=> {
 
 // function to save a new user
 export const save = async (newUser) => {
-    // Hash the password before saving
+    // Hash password with bcrypt before persisting
     if (newUser.password) {
         const saltRounds = 12;
         newUser.password = await bcrypt.hash(newUser.password, saltRounds);
