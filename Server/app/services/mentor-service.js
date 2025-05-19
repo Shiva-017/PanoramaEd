@@ -25,7 +25,7 @@ export const fetchByCredentials = async (email, password) => {
     return mentor;
 }
 
-// function to save a new mentor
+// create user account and linked mentor profile
 export const save = async (newMentorData) => {
     // Create user first
     let hashedPassword = newMentorData.password;
