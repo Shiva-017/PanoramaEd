@@ -48,7 +48,7 @@ export const save = async (newMentorData) => {
         specializations: newMentorData.specializations || ['general'],
         bio: newMentorData.bio || "",
         experience: newMentorData.experience || "",
-        languages: newMentorData.languages || ["English"]
+        languages: newMentorData.languages || ['English']
     });
     return await mentor.save();
 }
