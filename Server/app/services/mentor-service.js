@@ -45,7 +45,7 @@ export const save = async (newMentorData) => {
         userId: savedUser._id,
         name: newMentorData.name,
         email: newMentorData.email,
-        specializations: newMentorData.specializations || ["general"],
+        specializations: newMentorData.specializations || ['general'],
         bio: newMentorData.bio || "",
         experience: newMentorData.experience || "",
         languages: newMentorData.languages || ["English"]
