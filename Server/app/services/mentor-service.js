@@ -53,7 +53,7 @@ export const save = async (newMentorData) => {
     return await mentor.save();
 }
 
-// function to update mentor status
+// update a mentor's availability status
 export const updateStatus = async (mentorId, status) => {
     return await Mentor.findByIdAndUpdate(
         mentorId, 
