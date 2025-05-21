@@ -62,7 +62,7 @@ export const updateStatus = async (mentorId, status) => {
     ).exec();
 }
 
-// function to get available mentors
+// fetch mentors currently available for chat
 export const getAvailableMentors = async (specialization = null) => {
     let query = { 
         status: 'online',
