@@ -1,7 +1,7 @@
 
 import vader from 'vader-sentiment';
 
-const weights = { greScore: 0.15, toeflScore: 0.2, sopRating: 0.35, cgpa: 0.35, ieltsScore: 0.2 };
+const weights = { greScore: 0.15, toeflScore: 0.15, sopRating: 0.35, cgpa: 0.35, ieltsScore: 0.2 };
 
 
 
