@@ -1,6 +1,6 @@
 import Post from '../models/post.js';
 
-// function to fetch all the student posts
+// fetch all posts sorted newest first
 export const fetch = async (params = {}) => {
     const posts = await Post.find({}).sort({ createdAt: -1 }).exec();
     return posts;
