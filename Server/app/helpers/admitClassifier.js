@@ -41,7 +41,7 @@ function admitClassifier(studentData, programRequirements, exp = 0, resumeRating
     const maxExp = exp > 6 ? 6 : exp;
     const combinedScore = (
         (admissionScore * 0.65) +
-        (resumeRating / 5 * 0.2) +
+        (resumeRating / 5 * 0.15) +
         (exp / maxExp * 0.2)
     );
 
