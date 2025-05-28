@@ -6,7 +6,7 @@ export const fetch = async (params = {}) => {
     return posts;
 }
 
-// function to find a post by ID
+// find a single post by its document ID
 export const findById = async (id) => {
     const post = await Post.findById(id).exec();
     return post;
