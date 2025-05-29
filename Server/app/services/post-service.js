@@ -12,7 +12,7 @@ export const findById = async (id) => {
     return post;
 }
 
-// function to save a student post
+// persist a new student post document
 export const save = async (newPost) => {
     const post = new Post(newPost);
     return await post.save();
