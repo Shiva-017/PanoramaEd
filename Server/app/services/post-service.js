@@ -18,7 +18,7 @@ export const save = async (newPost) => {
     return await post.save();
 }
 
-// function to remove a post
+// delete a post by ID and return removed doc
 export const remove = async (id) => {
     const post = await Post.findByIdAndDelete(id).exec();
     return post;
