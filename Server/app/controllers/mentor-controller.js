@@ -21,7 +21,7 @@ export const login = async (request, response) => {
         await mentorService.updateStatus(mentor._id, 'online');
         
         // Issue JWT token
-        const token = jwt.sign({ id: mentor._id, email: mentor.email, userType: 'CONSULTANT' }, 'panoramaed_secret', { expiresIn: '2h' });
+        const token = jwt.sign({ id: mentor._id, email: mentor.email, userType: 'CONSULTANT' }, process.env.JWT_SECRET || 'panoramaed_secret', { expiresIn: '4h' });
         setResponse({ mentor, token }, response);
     } catch(err) {
         setErrorResponse(err, response);
