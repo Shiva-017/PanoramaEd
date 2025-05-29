@@ -8,7 +8,7 @@ export const login = async (request, response) => {
         const { email, password } = request.body;
         
         if (!email || !password) {
-            return setErrorResponse({ message: "Email and password are required" }, response);
+            return setErrorResponse({ message: "Email and password are required fields" }, response);
         }
         
         const mentor = await mentorService.fetchByCredentials(email, password);
