@@ -17,7 +17,7 @@ export const login = async (request, response) => {
             return setErrorResponse({ message: "Invalid credentials or not a consultant account" }, response);
         }
         
-        // Update status to online when logging in
+        // Mark mentor as online after successful login
         await mentorService.updateStatus(mentor._id, 'online');
         
         // Issue JWT token
