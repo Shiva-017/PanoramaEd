@@ -40,7 +40,7 @@ export const getStudentRequest = async (studentId) => {
             studentId: studentId, 
             status: { $in: ['waiting', 'accepted'] }
         }).exec();
-        console.log('Found result:', result);
+        console.log('[queue] result:', result?._id ?? null);
         return result;
     } catch (error) {
         console.error('Error in getStudentRequest:', error);
