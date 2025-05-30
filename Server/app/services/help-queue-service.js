@@ -1,6 +1,6 @@
 import HelpQueue from '../models/help-queue.js';
 
-// Get all waiting students
+// Retrieve all help requests with waiting status
 export const getWaitingStudents = async () => {
     return await HelpQueue.find({ status: 'waiting' })
         .sort({ requestedAt: 1 })
