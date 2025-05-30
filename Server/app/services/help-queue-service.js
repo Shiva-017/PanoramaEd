@@ -35,7 +35,7 @@ export const acceptHelpRequest = async (requestId, mentorData) => {
 // Get student's current help request
 export const getStudentRequest = async (studentId) => {
     try {
-        console.log('Searching for student request with ID:', studentId);
+        console.log('[queue] searching for studentId:', studentId);
         const result = await HelpQueue.findOne({ 
             studentId: studentId, 
             status: { $in: ['waiting', 'accepted'] }
