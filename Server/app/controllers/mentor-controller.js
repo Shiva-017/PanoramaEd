@@ -14,7 +14,7 @@ export const login = async (request, response) => {
         const mentor = await mentorService.fetchByCredentials(email, password);
         
         if (!mentor) {
-            return setErrorResponse({ message: "Invalid credentials or not a mentor account" }, response);
+            return setErrorResponse({ message: "Invalid credentials or not a consultant account" }, response);
         }
         
         // Update status to online when logging in
