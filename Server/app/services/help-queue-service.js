@@ -43,7 +43,7 @@ export const getStudentRequest = async (studentId) => {
         console.log('[queue] result:', result?._id ?? null);
         return result;
     } catch (error) {
-        console.error('Error in getStudentRequest:', error);
+        console.error('[queue] getStudentRequest error:', error.message);
         throw error;
     }
 };
