@@ -7,7 +7,7 @@ export const getWaitingStudents = async () => {
         .exec();
 };
 
-// Add student to queue
+// Enqueue a new student help request
 export const addToQueue = async (studentData) => {
     const helpRequest = new HelpQueue(studentData);
     return await helpRequest.save();
