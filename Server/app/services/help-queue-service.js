@@ -13,7 +13,7 @@ export const addToQueue = async (studentData) => {
     return await helpRequest.save();
 };
 
-// Accept help request
+// Accept a queued help request and assign mentor
 export const acceptHelpRequest = async (requestId, mentorData) => {
     const chatRoomId = `help_${requestId}_${Date.now()}`;
     
