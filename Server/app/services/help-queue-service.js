@@ -57,7 +57,7 @@ export const completeHelpRequest = async (requestId) => {
     ).exec();
 };
 
-// Clear old requests for a student (mark as completed)
+// Expire all pending requests for a student
 export const clearOldRequests = async (studentId) => {
     return await HelpQueue.updateMany(
         { 
