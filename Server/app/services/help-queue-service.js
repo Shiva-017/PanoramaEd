@@ -32,7 +32,7 @@ export const acceptHelpRequest = async (requestId, mentorData) => {
     return updatedRequest;
 };
 
-// Get student's current help request
+// Fetch the active help request for a student
 export const getStudentRequest = async (studentId) => {
     try {
         console.log('[queue] searching for studentId:', studentId);
