@@ -48,7 +48,7 @@ export const getStudentRequest = async (studentId) => {
     }
 };
 
-// Complete help request
+// Mark a help request as completed
 export const completeHelpRequest = async (requestId) => {
     return await HelpQueue.findByIdAndUpdate(
         requestId,
