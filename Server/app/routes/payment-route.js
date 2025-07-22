@@ -1,10 +1,10 @@
-import express from "express";
-import * as paymentController from '../controllers/payment-controller.js';
+// import express from "express";
+// import * as paymentController from '../controllers/payment-controller.js';
 
-const router = express.Router();
+// const router = express.Router();
 
-router.route('/')
-    .get(paymentController.getClientToken)
-    .post(paymentController.processPayment);
+// router.route('/')
+//     .get(paymentController.getClientToken)
+//     .post(paymentController.processPayment);
 
-export default router;
+// export default router;
