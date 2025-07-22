@@ -10,7 +10,7 @@ const initialize = (app) => {
     app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded());
-    mongoose.connect('mongodb+srv://ShivaTeja:mjwq19Z2a0xXcWHC@multiverse.nfd7nt6.mongodb.net/?retryWrites=true&w=majority')
+    mongoose.connect('mongodb+srv://shivateja:7758015455Ab@cluster0.d4qlwnw.mongodb.net/panoramaed?retryWrites=true&w=majority&appName=Cluster0')
 //    mongoose.connect('mongodb+srv://anthony:akhil143@webdesign.ygxesjt.mongodb.net/panoramadb?retryWrites=true&w=majority');
 
     registerRouter(app);

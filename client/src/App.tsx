@@ -33,7 +33,7 @@ function App() {
 
 
   return (
-     //<CollegePage/>
+     <CollegePage/>
     // <StudentMetricsForm />
     // <CollegeCompare />
     //<CollegeSuggest/>
@@ -41,7 +41,7 @@ function App() {
   // <ShortlistCard/>
   // <StudentSearch/>
  // <Layout/>
-      <LoginPage/>
+      // <LoginPage/>
   )
 }
 

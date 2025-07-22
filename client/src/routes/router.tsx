@@ -30,11 +30,11 @@ export default createBrowserRouter([
       },
       {
         path: '/colleges/:collegeName',
-        element: <ProtectedRoute element={<CollegeDetails />} />,
+        element: <CollegeDetails />,
       },
       {
         path: '/college-compare',
-        element: <ProtectedRoute element={<CollegeCompare />} />,
+        element: <CollegeCompare />,
       },
       {
         path: '/find-college',
@@ -50,7 +50,7 @@ export default createBrowserRouter([
       },
       {
         path: '/posts',
-        element: <ProtectedRoute element={<StudentPosts />} />,
+        element: <StudentPosts />,
       },
       {
         path: '/studentform',

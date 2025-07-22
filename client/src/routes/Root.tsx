@@ -9,7 +9,7 @@ import LayoutWithProfile from "../components/LayoutWithProfile";
 export default () => {
     const navigate = useNavigate();
     useEffect(() => {
-        navigate('/login');
+        navigate('/posts');
       }, [navigate]);
     const location = useLocation();
     const isLoginPage = location.pathname === '/login';
