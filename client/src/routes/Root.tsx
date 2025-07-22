@@ -9,16 +9,19 @@ import LayoutWithProfile from "../components/LayoutWithProfile";
 export default () => {
     const navigate = useNavigate();
     useEffect(() => {
-        navigate('/posts');
+        navigate('/login');
       }, [navigate]);
     const location = useLocation();
     const isLoginPage = location.pathname === '/login';
-    const isCollegeFinder = location.pathname === '/find-college';
-    const isCollegPage = location.pathname.match(/^\/colleges\/([^/]+)$/);
-    const isPaymentPage = location.pathname === '/process-payment';
+    // const isCollegeFinder = location.pathname === '/find-college';
+    // const isCollegPage = location.pathname.match(/^\/colleges\/([^/]+)$/);
+    // const isPaymentPage = location.pathname === '/process-payment';
+    // const isCollegeCompare = location.pathname === '/college-compare';
+    // const isStudentPosts = location.pathname === '/posts';
+    const isStudentDetails = location.pathname === '/studentdetails';
     return (
         < Provider store={store}>
-            {isLoginPage ? <Outlet /> : isCollegeFinder || isCollegPage || isPaymentPage ?
+            {isLoginPage ? <Outlet /> : !isStudentDetails ?
                 <Layout>
                     <Outlet />
                 </Layout> : <LayoutWithProfile><Outlet /></LayoutWithProfile>}

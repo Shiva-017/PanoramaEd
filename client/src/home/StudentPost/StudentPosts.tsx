@@ -363,7 +363,7 @@ const StudentPosts: React.FC = () => {
   const studentInitial = getSafeInitial(studentName);
 
   return (
-    <Box sx={{ backgroundColor: '#f5f7fa', minHeight: '100vh', pt: 2 }}>
+    <Box sx={{ backgroundColor: '#D3D9D4', minHeight: '100vh', minWidth: '80vh', pt: 2, mt: 100 }}>
       <Container maxWidth="md">
         {/* Header Section */}
         <Paper 
@@ -372,7 +372,7 @@ const StudentPosts: React.FC = () => {
             p: 3, 
             mb: 3, 
             borderRadius: 3,
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(135deg, #667eea 0%,#764ba2 100%)',
             color: 'white'
           }}
         >
