@@ -12,7 +12,7 @@ import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
+import { StaleWhileRevalidate, CacheFirst, NetworkFirst } from 'workbox-strategies';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
 declare const self: ServiceWorkerGlobalScope;
@@ -70,6 +70,25 @@ registerRoute(
   })
 );
 
+// Cache student profile API responses
+registerRoute(
+  ({ url, request }) => {
+    return (
+      url.pathname.startsWith('/students/') &&
+      request.method === 'GET'
+    );
+  },
+  new StaleWhileRevalidate({
+    cacheName: 'student-profile-api',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200]
+      })
+    ]
+  }),
+  'GET'
+);
+
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener('message', (event) => {
@@ -95,6 +114,23 @@ registerRoute(
   'GET');
 
 self.addEventListener('fetch', (event) => {
+  if (
+    event.request.method === 'PATCH' &&
+    event.request.url.includes('/students/')
+  ) {
+    event.respondWith(
+      fetch(event.request).then(async (response) => {
+        // After PATCH, update the cache for the corresponding GET
+        const getUrl = event.request.url;
+        const cache = await caches.open('student-profile-api');
+        // Fetch the latest profile and update the cache
+        const getResponse = await fetch(getUrl.replace(/\/students\/.*/, (match) => match));
+        await cache.put(getUrl.replace(/\/students\/.*/, (match) => match), getResponse.clone());
+        return response;
+      })
+    );
+    return;
+  }
   event.respondWith(
     caches.match(event.request)
       .then(response => {

@@ -5,6 +5,7 @@ import postSlice from "./slices/StudentPost-slice";
 import programSuggestSlice from "./slices/college-suggest";
 import studentslice from "./slices/studentdetails-slice";
 import loginSlice from "./slices/login-slice";
+import mentorSlice from "./slices/mentor-slice";
 
 
 export const store = configureStore({
@@ -13,7 +14,8 @@ export const store = configureStore({
         [postSlice.name]: postSlice.reducer,
         [programSuggestSlice.name]: programSuggestSlice.reducer,
         [loginSlice.name]: loginSlice.reducer,
-        [studentslice.name]: studentslice.reducer
+        [studentslice.name]: studentslice.reducer,
+        [mentorSlice.name]: mentorSlice.reducer
 
     }
 });

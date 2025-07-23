@@ -8,20 +8,46 @@ import LayoutWithProfile from "../components/LayoutWithProfile";
 
 export default () => {
     const navigate = useNavigate();
-    useEffect(() => {
-        navigate('/posts');
-      }, [navigate]);
     const location = useLocation();
+
+    useEffect(() => {
+        // Only redirect to login if it's the root path
+        if (location.pathname === '/') {
+            navigate('/login');
+        }
+    }, [navigate, location.pathname]);
+
+    // Define which pages don't need layout
     const isLoginPage = location.pathname === '/login';
-    const isCollegeFinder = location.pathname === '/find-college';
-    const isCollegPage = location.pathname.match(/^\/colleges\/([^/]+)$/);
-    const isPaymentPage = location.pathname === '/process-payment';
+    const isMentorAuthPage = location.pathname === '/mentor-auth';
+    const isStudentDetails = location.pathname === '/studentdetails';
+    const isMentorDashboard = location.pathname === '/mentor-dashboard';
+
+    // Pages that should render without any layout wrapper
+    const noLayoutPages = isLoginPage || isMentorAuthPage;
+
+    // Pages that should use LayoutWithProfile
+    const profileLayoutPages = isStudentDetails;
+
+    // Pages that should use mentor-specific layout (if you have one)
+    const mentorPages = isMentorDashboard;
+
     return (
-        < Provider store={store}>
-            {isLoginPage ? <Outlet /> : isCollegeFinder || isCollegPage || isPaymentPage ?
+        <Provider store={store}>
+            {noLayoutPages ? (
+                <Outlet />
+            ) : profileLayoutPages ? (
+                <LayoutWithProfile>
+                    <Outlet />
+                </LayoutWithProfile>
+            ) : mentorPages ? (
+                // You might want a MentorLayout component later
+                <Outlet />
+            ) : (
                 <Layout>
                     <Outlet />
-                </Layout> : <LayoutWithProfile><Outlet /></LayoutWithProfile>}
+                </Layout>
+            )}
         </Provider>
-    )
-}
+    );
+};
