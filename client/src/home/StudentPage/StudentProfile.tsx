@@ -29,10 +29,9 @@ import background from '../../resources/3626052.jpg';
 import SchoolIcon from '@mui/icons-material/School';
 import AirIcon from '@mui/icons-material/Air';
 import ShortlistCard from './ShortlistCard';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { retrieveUsers} from '../../store/slices/login-slice';
 import User from '../../models/user';
-import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../store'
 import { loadStudent, searchstudent } from '../../store/slices/studentdetails-slice'
 import { useTranslation } from 'react-i18next';
@@ -41,6 +40,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import { authFetch } from '../../helpers/authFetch';
 
 // Enhanced main component for displaying student profile
 const StudentProfile: React.FC = (): ReactElement => {
@@ -50,28 +50,35 @@ const StudentProfile: React.FC = (): ReactElement => {
     const students = useSelector(searchstudent());
     const { t } = useTranslation('student-profile');
 
-    // Function to fetch student data from the server
-    const getStudentData = async () => {
-        try {
-            console.log("student", studentLoggedIn);
-            // Fetching student data based on the logged-in user's email
-            const response = await fetch(`http://localhost:3001/students/${studentLoggedIn[0].email}`, {
+    // Hydrate Redux/localStorage with student profile on mount
+    React.useEffect(() => {
+        const fetchStudentProfile = async () => {
+            let email = studentLoggedIn[0]?.email;
+            if (!email) {
+                // Try to get from localStorage
+                const storedUser = localStorage.getItem('user');
+                if (storedUser) {
+                    try {
+                        const parsedUser = JSON.parse(storedUser);
+                        email = parsedUser.email;
+                    } catch {}
+                }
+            }
+            if (!email) return;
+            const token = window.localStorage.getItem('token');
+            const response = await authFetch(`http://localhost:3001/students/${email}`, {
                 method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            }).then(res => res.json())
-                .then(data => {
-                    console.log(data, "data");
-                    dispatch(loadStudent(data[0]))
-                })
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    }
-
-    // Fetch student data when the component mounts
-    useEffect(() => {
-        getStudentData();
-    }, []);
+                headers: { 'Content-Type': 'application/json', ...(token ? { 'Authorization': `Bearer ${token}` } : {}) },
+            });
+            const data = await response.json();
+            const studentData = Array.isArray(data) ? data[0] : data;
+            if (studentData) {
+                dispatch(loadStudent(studentData));
+                window.localStorage.setItem('studentProfile', JSON.stringify(studentData));
+            }
+        };
+        fetchStudentProfile();
+    }, [dispatch, studentLoggedIn]);
 
     // Enhanced ShortlistCard component
     const EnhancedShortlistCard = ({ logo, college, index }: { logo: string, college: string, index: number }) => (

@@ -34,6 +34,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import BusinessIcon from '@mui/icons-material/Business';
+import { authFetch } from '../../helpers/authFetch';
 
 // Define the structure of form values
 type FormValues = {
@@ -101,8 +102,6 @@ const StudentForm: React.FC = () => {
     }
     
     setCurrentUser(user);
-    console.log('Current User ID:', user._id);
-    console.log('Current User:', user);
   }, [reduxUser, dispatch, navigate]);
   
   // State hook to manage form values
@@ -144,20 +143,37 @@ const StudentForm: React.FC = () => {
     };
 
     try {
-      // Use currentUser._id instead of currentStudent._id
-      const response = await fetch(`http://localhost:3001/students/${currentUser._id}`, {
+      // Use studentId from localStorage for PATCH
+      const studentId = window.localStorage.getItem('studentId');
+      if (!studentId) throw new Error('No studentId found in localStorage');
+      const response = await authFetch(`http://localhost:3001/students/${studentId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updateFields),
       });
-      console.log( 'Update Fields:', updateFields);
       // Handle HTTP errors
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
       const updatedStudent = await response.json();
-      console.log('Student updated:', updatedStudent);
+
+      // Fetch the latest student data using email
+      const email = currentUser?.email;
+      if (!email) throw new Error('No email found for current user');
+      const studentResponse = await authFetch(`http://localhost:3001/students/${email}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (!studentResponse.ok) {
+        throw new Error(`HTTP error! Status: ${studentResponse.status}`);
+      }
+      const studentData = await studentResponse.json();
+      if (studentData) {
+        // Debug: show what is being dispatched to Redux
+        console.debug('Dispatching updated student to Redux:', studentData);
+        dispatch(loadStudent(studentData));
+      }
 
       // Navigate to the student details page  
       navigate('/studentdetails');
@@ -222,9 +238,6 @@ const StudentForm: React.FC = () => {
       </Box>
     );
   }
-
-  console.log('Current Student:', currentStudent);
-  console.log('Current User ID being used:', currentUser._id);
 
   // Render the enhanced student form
   return (

@@ -30,7 +30,7 @@ const LoginPage: React.FC = () => {
     },
     endpoints: {
       login: "http://localhost:3001/login",
-      signup: "http://localhost:3001/login"
+      signup: "http://localhost:3001/signup"
     },
     redirectAfterLogin: "/studentdetails",
     redirectAfterSignup: "/studentform",

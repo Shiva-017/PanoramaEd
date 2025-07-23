@@ -39,6 +39,7 @@ import { useTranslation } from 'react-i18next';
 import { AppDispatch } from '../../store';
 import { loadPosts, retrievePosts } from '../../store/slices/StudentPost-slice';
 import { loadStudent, searchstudent } from '../../store/slices/studentdetails-slice';
+import { authFetch } from '../../helpers/authFetch';
 
 interface Post {
   _id?: string;
@@ -99,7 +100,7 @@ const StudentPosts: React.FC = () => {
   const fetchPosts = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:3001/posts/?userId=${currentUserId}`, {
+      const response = await authFetch(`http://localhost:3001/posts/?userId=${currentUserId}`, {
         method: 'GET',
         headers: { 
           'Content-Type': 'application/json',
@@ -165,7 +166,7 @@ const StudentPosts: React.FC = () => {
         )
       );
 
-      const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
+      const response = await authFetch(`http://localhost:3001/posts/${postId}/like`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -243,7 +244,7 @@ const StudentPosts: React.FC = () => {
     if (!postId) return;
     
     try {
-      await fetch(`http://localhost:3001/posts/${postId}/view`, {
+      await authFetch(`http://localhost:3001/posts/${postId}/view`, {
         method: 'PATCH',
         headers: { 
           'Content-Type': 'application/json',
@@ -276,7 +277,7 @@ const StudentPosts: React.FC = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:3001/posts/', {
+      const response = await authFetch('http://localhost:3001/posts/', {
         method: 'POST',
         body: JSON.stringify(newPostData),
         headers: { 
@@ -317,7 +318,7 @@ const StudentPosts: React.FC = () => {
     if (!postId) return;
     
     try {
-      const response = await fetch(`http://localhost:3001/posts/${postId}?userId=${currentUserId}`, {
+      const response = await authFetch(`http://localhost:3001/posts/${postId}?userId=${currentUserId}`, {
         method: 'DELETE',
         headers: { 
           'Content-Type': 'application/json',

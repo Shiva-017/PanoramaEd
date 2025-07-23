@@ -39,6 +39,7 @@ import WorkIcon from '@mui/icons-material/Work';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import SearchIcon from '@mui/icons-material/Search';
 import StarIcon from '@mui/icons-material/Star';
+import { authFetch } from '../../helpers/authFetch';
 
 const StudentMetricsForm: React.FC = (): ReactElement => {
     const [country, setCountry] = React.useState<string>("Select Country");
@@ -85,7 +86,7 @@ const StudentMetricsForm: React.FC = (): ReactElement => {
         }
 
         try {
-            const response = await fetch(`http://localhost:3001/programs/suggest`, {
+            const response = await authFetch(`http://localhost:3001/programs/suggest`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

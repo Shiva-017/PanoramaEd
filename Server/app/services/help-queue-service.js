@@ -34,10 +34,18 @@ export const acceptHelpRequest = async (requestId, mentorData) => {
 
 // Get student's current help request
 export const getStudentRequest = async (studentId) => {
-    return await HelpQueue.findOne({ 
-        studentId: studentId, 
-        status: { $in: ['waiting', 'accepted'] }
-    }).exec();
+    try {
+        console.log('Searching for student request with ID:', studentId);
+        const result = await HelpQueue.findOne({ 
+            studentId: studentId, 
+            status: { $in: ['waiting', 'accepted'] }
+        }).exec();
+        console.log('Found result:', result);
+        return result;
+    } catch (error) {
+        console.error('Error in getStudentRequest:', error);
+        throw error;
+    }
 };
 
 // Complete help request
@@ -46,5 +54,16 @@ export const completeHelpRequest = async (requestId) => {
         requestId,
         { status: 'completed' },
         { new: true }
+    ).exec();
+};
+
+// Clear old requests for a student (mark as completed)
+export const clearOldRequests = async (studentId) => {
+    return await HelpQueue.updateMany(
+        { 
+            studentId: studentId, 
+            status: { $in: ['waiting', 'accepted'] } 
+        },
+        { status: 'completed' }
     ).exec();
 };

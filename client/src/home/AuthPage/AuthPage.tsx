@@ -58,6 +58,9 @@ interface AuthConfig {
   // Storage key for localStorage
   storageKey: string;
   userTypeKey?: string;
+
+  // Callback for handling signup response
+  handleSignupResponse?: (data: any) => Promise<void>;
 }
 
 interface AuthPageProps {
@@ -107,17 +110,26 @@ const AuthPage: React.FC<AuthPageProps> = ({ config }) => {
 
       const data = await response.json();
       
-      if (data && (data._id || data[0])) {
-        const userData = data._id ? data : data[0];
-        console.log("Login successful:", userData);
-        
-        dispatch(config.loadUser(data));
+      // Mentor login success case
+      if (data.mentor && data.token) {
+        window.localStorage.setItem('token', data.token);
+        window.localStorage.setItem('mentor', JSON.stringify(data.mentor));
+        window.localStorage.setItem('userType', 'MENTOR');
+        if (config.loadUser) {
+          dispatch(config.loadUser([data.mentor]));
+        }
+        navigate(config.redirectAfterLogin);
+        return;
+      }
+      if (data && data.user && data.token) {
+        window.localStorage.setItem('token', data.token);
+        const userData = data.user;
         window.localStorage.setItem(config.storageKey, JSON.stringify(userData));
-        
         if (config.userTypeKey) {
           window.localStorage.setItem('userType', config.userTypeKey);
         }
-        
+        // Fetch and store student _id after login
+        await fetchAndStoreStudent(userData.email, config.storageKey, dispatch);
         navigate(config.redirectAfterLogin);
       } else {
         alert("Given email or password is incorrect.");
@@ -149,21 +161,21 @@ const AuthPage: React.FC<AuthPageProps> = ({ config }) => {
 
       const data = await response.json();
       
-      if (data && (data.name || data._id)) {
-        console.log("Signup successful:", data);
-        
-        // For students, create chat
-        if (config.storageKey === 'user' && data._id) {
-          createChat(data._id);
-        }
-        
-        dispatch(config.loadUser([data]));
-        window.localStorage.setItem(config.storageKey, JSON.stringify(data));
-        
+      // Mentor signup success case
+      if (config.handleSignupResponse && data.mentor && data.token) {
+        await config.handleSignupResponse(data);
+        navigate(config.redirectAfterSignup);
+        return;
+      }
+      if (data && (data.user && data.token)) {
+        window.localStorage.setItem('token', data.token);
+        const userData = data.user;
+        window.localStorage.setItem(config.storageKey, JSON.stringify(userData));
         if (config.userTypeKey) {
           window.localStorage.setItem('userType', config.userTypeKey);
         }
-        
+        // Fetch and store student _id after signup
+        await fetchAndStoreStudent(userData.email, config.storageKey, dispatch);
         navigate(config.redirectAfterSignup);
       } else {
         alert("An account with this email-id already exists.");
@@ -177,18 +189,27 @@ const AuthPage: React.FC<AuthPageProps> = ({ config }) => {
     }
   };
 
-  // Student-specific chat creation
-  const createChat = (studentId: string) => {
-    fetch(`http://localhost:3001/chats`, {
-      method: 'POST',
-      body: JSON.stringify({ 
-        studentId: studentId, 
-        consultantId: "6578ff2aef06bbc1e93d928b" 
-      }),
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then(res => res.json())
-      .then(data => localStorage.setItem('chatId', data._id));
+
+
+  const fetchAndStoreStudent = async (email: string, storageKey: string, dispatchFn: any) => {
+    try {
+      const token = window.localStorage.getItem('token');
+      const response = await fetch(`http://localhost:3001/students/${email}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+        },
+      });
+      const data = await response.json();
+      const studentData = Array.isArray(data) ? data[0] : data;
+      if (studentData && studentData._id) {
+        window.localStorage.setItem('studentId', studentData._id);
+        dispatchFn([studentData]);
+      }
+    } catch (error) {
+      console.error('Failed to fetch student profile after login/signup:', error);
+    }
   };
 
   return (

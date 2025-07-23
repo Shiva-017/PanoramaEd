@@ -25,6 +25,7 @@ interface MentorChatProps {
     studentName: string;
     studentId: string;
     helpMessage: string;
+    requestId: string;
   } | null;
   onCloseChat: () => void;
 }
@@ -132,11 +133,22 @@ const MentorChat: React.FC<MentorChatProps> = ({ socket, activeChat, onCloseChat
     }
   };
 
-  const endChat = () => {
-    // Optionally mark the help request as completed
-    if (activeChat) {
-      // You can add an API call here to mark as completed
-      console.log(`Ending chat with ${activeChat.studentName}`);
+  const endChat = async () => {
+    // Mark the help request as completed
+    if (activeChat && activeChat.requestId) {
+      try {
+        const token = window.localStorage.getItem('token');
+        await fetch(`http://localhost:3001/help-queue/complete/${activeChat.requestId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+          },
+        });
+        console.log(`Completed help request for ${activeChat.studentName}`);
+      } catch (error) {
+        console.error('Error completing help request:', error);
+      }
     }
     onCloseChat();
   };

@@ -121,7 +121,6 @@ const CollegeDetails: React.FC = (): ReactElement => {
   const [showAlert, setShowAlert] = useState(0);
   const student = useSelector(searchstudent());
 
-  // API functions remain the same
   const shortlistCollege = async () => {
     console.log(collegeData, "collegedata")
     try {
@@ -137,7 +136,6 @@ const CollegeDetails: React.FC = (): ReactElement => {
       }
 
       const data = await response.json();
-      console.log("🚀 ~ file: CollegePage.tsx:43 ~ shortlistCollege ~ data:", data)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -185,8 +183,7 @@ const CollegeDetails: React.FC = (): ReactElement => {
   }, [college])
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 32, pb: 6 }}>
-      {/* Alert Messages */}
+    <Container maxWidth="lg" sx={{ mt: 132, pb: 6 }}>
       <Fade in={showAlert !== 0}>
         <Box sx={{ position: 'fixed', top: 100, left: '50%', transform: 'translateX(-50%)', zIndex: 1400 }}>
           {showAlert === 1 && (
@@ -217,7 +214,6 @@ const CollegeDetails: React.FC = (): ReactElement => {
         </Box>
       </Fade>
 
-      {/* Hero Section */}
       <HeroSection>
         <CardMedia 
           image={collegeData?.background} 

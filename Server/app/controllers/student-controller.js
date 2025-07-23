@@ -40,8 +40,13 @@ export const remove = async (req, res) => {
 export const findByEmail = async (req, res) => {
     try {
         const studentEmail = req.params.id;
-        const student = await studentService.findByStudentEmail(studentEmail);
-        setResponse(student, res);
+        const students = await studentService.findByStudentEmail(studentEmail);
+        console.debug('findByEmail:', studentEmail, students);
+        if (students.length === 1) {
+            setResponse(students[0], res);
+        } else {
+            setResponse(students, res);
+        }
     } catch (e) {
         setErrorResponse(e, res);
     }
@@ -54,7 +59,11 @@ export const update = async (request, response) => {
 
         const id = request.params.id;
         const updateFields = request.body;
-        const student = await studentService.update(id,updateFields);
+        console.log('PATCH updateFields:', updateFields);
+        const before = await studentService.update(id, {}); // fetch current doc
+        console.log('PATCH student before update:', before);
+        const student = await studentService.update(id, updateFields);
+        console.log('PATCH student after update:', student);
         setResponse(student,response);
 
     } catch (err){

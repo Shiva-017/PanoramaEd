@@ -35,11 +35,36 @@ export const acceptHelp = async (request, response) => {
 };
 
 // Get student's current request status
-export const getStudentStatus = async (request, response) => {
+export const getStudentStatus = async (req, response) => {
     try {
-        const { studentId } = request.params;
-        const request = await helpQueueService.getStudentRequest(studentId);
-        setResponse(request, response);
+        const { studentId } = req.params;
+        console.log('Controller received studentId:', studentId);
+        const helpRequest = await helpQueueService.getStudentRequest(studentId);
+        console.log('Controller got helpRequest:', helpRequest);
+        setResponse(helpRequest, response);
+    } catch (err) {
+        console.error('Controller error:', err);
+        setErrorResponse(err, response);
+    }
+};
+
+// Complete help request
+export const completeHelpRequest = async (req, response) => {
+    try {
+        const { requestId } = req.params;
+        const completedRequest = await helpQueueService.completeHelpRequest(requestId);
+        setResponse(completedRequest, response);
+    } catch (err) {
+        setErrorResponse(err, response);
+    }
+};
+
+// Clear old requests for a student
+export const clearOldRequests = async (req, response) => {
+    try {
+        const { studentId } = req.params;
+        const result = await helpQueueService.clearOldRequests(studentId);
+        setResponse(result, response);
     } catch (err) {
         setErrorResponse(err, response);
     }

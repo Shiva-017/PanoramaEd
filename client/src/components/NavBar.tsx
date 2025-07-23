@@ -25,8 +25,9 @@ import CollegeSearch from '../home/StudentSearch/StudentSearch';
 import Translate from './Translate';
 import Chat from '../home/Chat/Chat';
 import * as io from "socket.io-client";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { retrieveUsers } from '../store/slices/login-slice';
+import { loadStudent, searchstudent } from '../store/slices/studentdetails-slice';
 import User from '../models/user';
 import BraintreeDropIn from './BraintreeDropin';
 import PersonIcon from '@mui/icons-material/Person';
@@ -45,6 +46,8 @@ interface NavBarProps {}
 
 const NavBar: React.FC<NavBarProps> = ({}) => {
   const studentLoggedIn: User = useSelector(retrieveUsers())[0];
+  const dispatch = useDispatch();
+  const studentProfile = useSelector(searchstudent());
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -75,6 +78,36 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
       setSocket(io.connect("http://localhost:4000"));
     }
   }, []);
+
+  // Hydrate Redux/localStorage with student profile on mount
+  React.useEffect(() => {
+    const fetchStudentProfile = async () => {
+      let email = studentLoggedIn?.email;
+      if (!email) {
+        // Try to get from localStorage
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          try {
+            const parsedUser = JSON.parse(storedUser);
+            email = parsedUser.email;
+          } catch {}
+        }
+      }
+      if (!email) return;
+      const token = window.localStorage.getItem('token');
+      const response = await fetch(`http://localhost:3001/students/${email}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', ...(token ? { 'Authorization': `Bearer ${token}` } : {}) },
+      });
+      const data = await response.json();
+      const studentData = Array.isArray(data) ? data[0] : data;
+      if (studentData) {
+        dispatch(loadStudent(studentData));
+        window.localStorage.setItem('studentProfile', JSON.stringify(studentData));
+      }
+    };
+    fetchStudentProfile();
+  }, [dispatch, studentLoggedIn]);
 
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);
@@ -258,7 +291,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                 transform: 'scale(1.02)'
               }
             }}
-            onClick={homeRoute}
+            // onClick={homeRoute}
           >
             <Box
               sx={{
@@ -484,7 +517,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                     fontWeight: 600
                   }}
                 >
-                  {studentLoggedIn?.name?.charAt(0) || 'S'}
+                  {(studentProfile?.name || studentLoggedIn?.name || 'S').charAt(0)}
                 </Avatar>
               </Badge>
             </IconButton>
@@ -537,10 +570,10 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
                   </Avatar>
                   <Box>
                     <Typography variant="subtitle1" fontWeight={700} color="#667eea">
-                      {studentLoggedIn?.name || 'Student'}
+                      {studentProfile?.name || studentLoggedIn?.name || 'Student'}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
-                      {studentLoggedIn?.email}
+                      {studentProfile?.email || studentLoggedIn?.email}
                     </Typography>
                   </Box>
                 </Stack>

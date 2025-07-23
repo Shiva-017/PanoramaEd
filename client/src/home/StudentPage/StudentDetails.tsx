@@ -38,6 +38,7 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import WorkIcon from '@mui/icons-material/Work';
 import College from '../../models/college';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import NavBar from '../../components/NavBar';
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../store'
@@ -50,6 +51,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import EditIcon from '@mui/icons-material/Edit';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import { authFetch } from '../../helpers/authFetch';
 
 // Enhanced functional component definition for StudentDetails
 const StudentDetails: React.FC = (): ReactElement => {
@@ -59,30 +61,37 @@ const StudentDetails: React.FC = (): ReactElement => {
   const students = useSelector(searchstudent());
   const { t } = useTranslation('student-details');
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // Function to fetch student data from the server
-  const getStudents = async () => {
-    try {
-      const response = await fetch(`http://localhost:3001/students/${studentLoggedIn[0].email}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+  // Hydrate Redux/localStorage with student profile on mount
+  React.useEffect(() => {
+    const fetchStudentProfile = async () => {
+      let email = studentLoggedIn[0]?.email;
+      if (!email) {
+        // Try to get from localStorage
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          try {
+            const parsedUser = JSON.parse(storedUser);
+            email = parsedUser.email;
+          } catch {}
+        }
       }
-
+      if (!email) return;
+      const token = window.localStorage.getItem('token');
+      const response = await authFetch(`http://localhost:3001/students/${email}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', ...(token ? { 'Authorization': `Bearer ${token}` } : {}) },
+      });
       const data = await response.json();
-      dispatch(loadStudent(data[0]));
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  // Fetch student data on component mount
-  useEffect(() => {
-    getStudents();
-  }, [])
+      const studentData = Array.isArray(data) ? data[0] : data;
+      if (studentData) {
+        dispatch(loadStudent(studentData));
+        window.localStorage.setItem('studentProfile', JSON.stringify(studentData));
+      }
+    };
+    fetchStudentProfile();
+  }, [dispatch, studentLoggedIn]);
 
   // Enhanced StudentCard component with modern styling
   const EnhancedStudentCard = ({ 

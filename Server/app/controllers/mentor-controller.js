@@ -1,5 +1,6 @@
 import * as mentorService from '../services/mentor-service.js';
 import {setResponse, setErrorResponse} from './response-handler.js';
+import jwt from 'jsonwebtoken';
 
 // controller for mentor login
 export const login = async (request, response) => {
@@ -19,7 +20,9 @@ export const login = async (request, response) => {
         // Update status to online when logging in
         await mentorService.updateStatus(mentor._id, 'online');
         
-        setResponse(mentor, response);
+        // Issue JWT token
+        const token = jwt.sign({ id: mentor._id, email: mentor.email, userType: 'CONSULTANT' }, 'panoramaed_secret', { expiresIn: '2h' });
+        setResponse({ mentor, token }, response);
     } catch(err) {
         setErrorResponse(err, response);
     }
@@ -41,7 +44,12 @@ export const post = async (request, response) => {
     try {
         const newMentor = {...request.body};
         const mentor = await mentorService.save(newMentor);
-        setResponse(mentor, response);
+        // Find the user for this mentor
+        const user = await (await import('../models/user.js')).default.findOne({ email: mentor.email });
+        // Issue JWT token
+        const payload = { id: user._id, email: user.email, userType: user.userType };
+        const token = jwt.sign(payload, 'panoramaed_secret', { expiresIn: '2h' });
+        response.status(200).json({ mentor, token });
     } catch(err) {
         setErrorResponse(err, response);
     }

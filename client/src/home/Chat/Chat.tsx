@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { retrieveUsers } from "../../store/slices/login-slice";
+import { loadUsers } from "../../store/slices/login-slice";
 import User from "../../models/user";
 import {
   Box,
@@ -86,6 +87,7 @@ const MessageContainer = styled(ScrollToBottom)(({ theme }) => ({
 
 const Chat: React.FC<HelpChatProps> = ({ socket }) => {
   const studentLoggedIn: User = useSelector(retrieveUsers())[0];
+  const dispatch = useDispatch();
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messageList, setMessageList] = useState<MessageData[]>([]);
   const [helpRequest, setHelpRequest] = useState<HelpRequest | null>(null);
@@ -94,10 +96,43 @@ const Chat: React.FC<HelpChatProps> = ({ socket }) => {
 
   const username = studentLoggedIn?.name || 'Student';
 
+  // Hydrate Redux from localStorage on mount if needed
+  useEffect(() => {
+    if (!studentLoggedIn || !studentLoggedIn._id) {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          dispatch(loadUsers([parsedUser]));
+        } catch {}
+      }
+    }
+  }, [dispatch, studentLoggedIn]);
+
   // Check for existing help request on mount
   useEffect(() => {
-    checkHelpRequestStatus();
-  }, []);
+    if (studentLoggedIn && studentLoggedIn._id) {
+      // Clear any old requests first
+      const clearOldRequests = async () => {
+        try {
+          const token = window.localStorage.getItem('token');
+          await fetch(`http://localhost:3001/help-queue/clear/${studentLoggedIn._id}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+            },
+          });
+        } catch (error) {
+          console.error('Error clearing old requests:', error);
+        }
+      };
+      
+      clearOldRequests().then(() => {
+        checkHelpRequestStatus();
+      });
+    }
+  }, [studentLoggedIn]);
 
   // Socket listeners
   useEffect(() => {
@@ -121,9 +156,28 @@ const Chat: React.FC<HelpChatProps> = ({ socket }) => {
   }, [socket]);
 
   const checkHelpRequestStatus = async () => {
+    if (!studentLoggedIn || !studentLoggedIn._id) return;
     try {
-      const response = await fetch(`http://localhost:3001/help-queue/status/${studentLoggedIn._id}`);
+      const token = window.localStorage.getItem('token');
+      console.log('Checking help status for student:', studentLoggedIn._id);
+      
+      const response = await fetch(`http://localhost:3001/help-queue/status/${studentLoggedIn._id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+        },
+      });
+      
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Server error response:', errorText);
+        throw new Error(`Server error: ${response.status} - ${errorText}`);
+      }
+      
       const data = await response.json();
+      console.log('Response data:', data);
       
       if (data && data._id) {
         setHelpRequest(data);
@@ -140,12 +194,27 @@ const Chat: React.FC<HelpChatProps> = ({ socket }) => {
   };
 
   const requestHelp = async () => {
-    if (!currentMessage.trim()) return;
+    if (!studentLoggedIn || !studentLoggedIn._id || !currentMessage.trim()) return;
 
     try {
+      const token = window.localStorage.getItem('token');
+      
+      // First, clear any old requests for this student
+      await fetch(`http://localhost:3001/help-queue/clear/${studentLoggedIn._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+        },
+      });
+      
+      // Then create a new help request
       const response = await fetch('http://localhost:3001/help-queue/request', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({
           studentId: studentLoggedIn._id,
           studentName: studentLoggedIn.name,
@@ -192,6 +261,31 @@ const Chat: React.FC<HelpChatProps> = ({ socket }) => {
         sendMessage();
       } else if (!isWaiting) {
         requestHelp();
+      }
+    }
+  };
+
+  const startNewChat = async () => {
+    // Clear current chat state
+    setHelpRequest(null);
+    setIsWaiting(false);
+    setIsInChat(false);
+    setMessageList([]);
+    setCurrentMessage("");
+    
+    // Clear old requests from server
+    if (studentLoggedIn && studentLoggedIn._id) {
+      try {
+        const token = window.localStorage.getItem('token');
+        await fetch(`http://localhost:3001/help-queue/clear/${studentLoggedIn._id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+          },
+        });
+      } catch (error) {
+        console.error('Error clearing old requests:', error);
       }
     }
   };
@@ -316,6 +410,23 @@ const Chat: React.FC<HelpChatProps> = ({ socket }) => {
             </Typography>
           </Box>
         </Box>
+        {isInChat && (
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={startNewChat}
+            sx={{
+              borderColor: 'rgba(255,255,255,0.3)',
+              color: 'rgba(255,255,255,0.9)',
+              '&:hover': {
+                borderColor: 'rgba(255,255,255,0.5)',
+                backgroundColor: 'rgba(255,255,255,0.1)'
+              }
+            }}
+          >
+            New Chat
+          </Button>
+        )}
       </ChatHeader>
 
       {renderContent()}

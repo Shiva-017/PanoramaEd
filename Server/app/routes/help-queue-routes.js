@@ -19,4 +19,12 @@ router.route('/accept/:requestId')
 router.route('/status/:studentId')
     .get(helpQueueController.getStudentStatus);
 
+// Complete help request
+router.route('/complete/:requestId')
+    .post(helpQueueController.completeHelpRequest);
+
+// Clear old requests for a student
+router.route('/clear/:studentId')
+    .post(helpQueueController.clearOldRequests);
+
 export default router;

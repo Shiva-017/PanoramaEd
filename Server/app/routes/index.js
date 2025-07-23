@@ -15,7 +15,7 @@ export default (app) => {
     app.use('/posts',postRouter);
     app.use('/students', studentRouter);
     app.use('/chats', chatRouter);
-    app.use('/login', loginRouter);
+    app.use('/', loginRouter);
     app.use('/mentors', mentorRouter);
     app.use('/help-queue', helpQueueRouter);
     // app.use('/process-payment', paymentRouter);

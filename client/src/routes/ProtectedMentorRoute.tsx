@@ -10,7 +10,7 @@ const ProtectedMentorRoute: React.FC<ProtectedMentorRouteProps> = ({ element }) 
   const userType = localStorage.getItem('userType');
   
   if (!mentor || userType !== 'MENTOR') {
-    return <Navigate to="/mentor-login" replace />;
+    return <Navigate to="/mentor-auth" replace />;
   }
   
   return element;

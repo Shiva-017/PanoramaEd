@@ -1,5 +1,6 @@
 import User from '../models/user.js';
 import Mentor from '../models/mentor.js';
+import bcrypt from 'bcrypt';
 
 // function to fetch mentors
 export const fetch = async (params = {}) => {
@@ -12,14 +13,13 @@ export const fetchByCredentials = async (email, password) => {
     // First find user with CONSULTANT type
     const user = await User.findOne({ 
         email: email, 
-        password: password, 
         userType: "CONSULTANT" 
     }).exec();
-    
     if (!user) {
         return null;
     }
-    
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) return null;
     // Then find corresponding mentor profile
     const mentor = await Mentor.findOne({ userId: user._id }).populate('userId').exec();
     return mentor;
@@ -28,15 +28,18 @@ export const fetchByCredentials = async (email, password) => {
 // function to save a new mentor
 export const save = async (newMentorData) => {
     // Create user first
+    let hashedPassword = newMentorData.password;
+    if (hashedPassword) {
+        const saltRounds = 10;
+        hashedPassword = await bcrypt.hash(hashedPassword, saltRounds);
+    }
     const user = new User({
         name: newMentorData.name,
         email: newMentorData.email,
-        password: newMentorData.password,
+        password: hashedPassword,
         userType: "CONSULTANT"
     });
-    
     const savedUser = await user.save();
-    
     // Create mentor profile
     const mentor = new Mentor({
         userId: savedUser._id,
@@ -47,7 +50,6 @@ export const save = async (newMentorData) => {
         experience: newMentorData.experience || "",
         languages: newMentorData.languages || ["English"]
     });
-    
     return await mentor.save();
 }
 

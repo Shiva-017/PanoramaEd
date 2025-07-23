@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "../Server/app/services/insert.js"  ]
 }

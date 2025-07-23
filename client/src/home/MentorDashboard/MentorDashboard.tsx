@@ -1,29 +1,63 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { retrieveMentors, updateMentorStatus, clearMentors } from "../../store/slices/mentor-slice";
+import { retrieveMentors, updateMentorStatus, clearMentors, loadMentors } from "../../store/slices/mentor-slice";
 import Mentor from "../../models/mentor";
 import './MentorDashboard.scss';
 import * as io from "socket.io-client";
 import MentorChat from "../MentorChat/MentorChat";
+import { authFetch } from '../../helpers/authFetch';
 
 const MentorDashboard: React.FC = () => {
-    const mentorLoggedIn: Mentor = useSelector(retrieveMentors())[0];
+    const mentorLoggedIn = useSelector(retrieveMentors())[0];
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [socket, setSocket] = useState<any>(null);
+    
+    console.log('MentorDashboard - mentorLoggedIn:', mentorLoggedIn);
+    console.log('MentorDashboard - localStorage mentor:', localStorage.getItem('mentor'));
+    console.log('MentorDashboard - localStorage userType:', localStorage.getItem('userType'));
 
     const [helpQueue, setHelpQueue] = useState<any[]>([]);
     const [activeChat, setActiveChat] = useState<any>(null);
     const [activeChatList, setActiveChatList] = useState<any[]>([]);
 
+    // Hydrate Redux/localStorage with mentor profile on mount
+    React.useEffect(() => {
+        const fetchMentorProfile = async () => {
+            let email = mentorLoggedIn?.email;
+            if (!email) {
+                // Try to get from localStorage
+                const storedMentor = localStorage.getItem('mentor');
+                if (storedMentor) {
+                    try {
+                        const parsedMentor = JSON.parse(storedMentor);
+                        email = parsedMentor.email;
+                    } catch {}
+                }
+            }
+            if (!email) return;
+            const token = window.localStorage.getItem('token');
+            const response = await fetch(`http://localhost:3001/mentors?email=${encodeURIComponent(email)}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json', ...(token ? { 'Authorization': `Bearer ${token}` } : {}) },
+            });
+            const data = await response.json();
+            const mentorData = Array.isArray(data) ? data[0] : data;
+            if (mentorData) {
+                dispatch(loadMentors([mentorData]));
+                window.localStorage.setItem('mentor', JSON.stringify(mentorData));
+            }
+        };
+        fetchMentorProfile();
+    }, [dispatch, mentorLoggedIn?.email]);
+
     useEffect(() => {
         // Check if mentor is logged in
         if (!mentorLoggedIn) {
             const storedMentor = localStorage.getItem('mentor');
-            if (storedMentor) {
-                navigate('/mentor-auth');
-            } else {
+            const userType = localStorage.getItem('userType');
+            if (!storedMentor || userType !== 'MENTOR') {
                 navigate('/mentor-auth');
             }
         }
@@ -50,7 +84,7 @@ const MentorDashboard: React.FC = () => {
 
     const handleStatusChange = async (newStatus: 'online' | 'busy' | 'offline') => {
         try {
-            const response = await fetch(`http://localhost:3001/mentors/${mentorLoggedIn._id}/status`, {
+            const response = await authFetch(`http://localhost:3001/mentors/${mentorLoggedIn._id}/status`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: newStatus })
@@ -78,7 +112,7 @@ const MentorDashboard: React.FC = () => {
 
     const loadHelpQueue = async () => {
         try {
-            const response = await fetch('http://localhost:3001/help-queue/waiting');
+            const response = await authFetch('http://localhost:3001/help-queue/waiting');
             const data = await response.json();
             setHelpQueue(data || []);
         } catch (error) {
@@ -89,7 +123,7 @@ const MentorDashboard: React.FC = () => {
 
     const acceptHelpRequest = async (requestId: string, request: any) => {
         try {
-            const response = await fetch(`http://localhost:3001/help-queue/accept/${requestId}`, {
+            const response = await authFetch(`http://localhost:3001/help-queue/accept/${requestId}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
