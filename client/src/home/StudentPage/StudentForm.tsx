@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
     TextField, 
     Button, 
@@ -19,8 +19,8 @@ import {
     InputAdornment,
     Chip
 } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { retrieveUsers } from '../../store/slices/login-slice';
+import { useSelector, useDispatch } from 'react-redux';
+import { retrieveUsers, loadUsers } from '../../store/slices/login-slice';
 import User from '../../models/user';
 import { loadStudent, searchstudent } from '../../store/slices/studentdetails-slice';
 import Student from '../../models/student';
@@ -65,28 +65,69 @@ const initialFormValues: FormValues = {
 
 // Enhanced functional component for the student form
 const StudentForm: React.FC = () => {
-  // Retrieve the current student from Redux state
-  const currentStudent: Student = useSelector(searchstudent());
-  // Initialize navigation hook
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+  // Get user from Redux first, fallback to localStorage
+  const reduxUser: User = useSelector(retrieveUsers())[0];
+  const currentStudent: Student = useSelector(searchstudent());
+  
+  // State for current user
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  
+  // Load user data on component mount
+  useEffect(() => {
+    let user = reduxUser;
+    
+    // If no user in Redux, try to get from localStorage
+    if (!user) {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          user = parsedUser;
+          // Update Redux with stored user
+          dispatch(loadUsers([parsedUser]));
+        } catch (error) {
+          console.error('Error parsing stored user:', error);
+          navigate('/login');
+          return;
+        }
+      } else {
+        // No user found, redirect to login
+        navigate('/login');
+        return;
+      }
+    }
+    
+    setCurrentUser(user);
+    console.log('Current User ID:', user._id);
+    console.log('Current User:', user);
+  }, [reduxUser, dispatch, navigate]);
   
   // State hook to manage form values
   const [formValues, setFormValues] = useState<FormValues>({
-    degreeseeking: currentStudent.degreeseeking || '',
-    intake: currentStudent.intake || '',
-    undergradgrade: currentStudent.undergradgrade || '',
-    undergradcollege: currentStudent.undergradcollege || '',
-    undergradcourse: currentStudent.undergradcourse || '',
-    gre: currentStudent.gre ? (currentStudent.gre.replace('GRE', '').trim()) : '',
-    ielts: currentStudent.ielts ? (currentStudent.ielts.replace('IELTS', '').trim()) : '',
-    experiencecompany: currentStudent.experiencecompany || '',
-    experiencedesignation: currentStudent.experiencedesignation || '',
-    experienceduration: currentStudent.experienceduration || '',
+    degreeseeking: currentStudent?.degreeseeking || '',
+    intake: currentStudent?.intake || '',
+    undergradgrade: currentStudent?.undergradgrade || '',
+    undergradcollege: currentStudent?.undergradcollege || '',
+    undergradcourse: currentStudent?.undergradcourse || '',
+    gre: currentStudent?.gre ? (currentStudent.gre.replace('GRE', '').trim()) : '',
+    ielts: currentStudent?.ielts ? (currentStudent.ielts.replace('IELTS', '').trim()) : '',
+    experiencecompany: currentStudent?.experiencecompany || '',
+    experiencedesignation: currentStudent?.experiencedesignation || '',
+    experienceduration: currentStudent?.experienceduration || '',
   });
 
   // Handle form submission
   const HandleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    if (!currentUser || !currentUser._id) {
+      alert('User not found. Please login again.');
+      navigate('/login');
+      return;
+    }
     
     // Prepare the updated fields for the PATCH request
     const updateFields = {
@@ -102,27 +143,27 @@ const StudentForm: React.FC = () => {
       experienceduration: formValues.experienceduration,
     };
 
-    // Send a PATCH request to update student data
-    const response = await fetch(`http://localhost:3001/students/${currentStudent._id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updateFields),
-    });
-
-    // Handle HTTP errors
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
     try {
+      // Use currentUser._id instead of currentStudent._id
+      const response = await fetch(`http://localhost:3001/students/${currentUser._id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updateFields),
+      });
+      console.log( 'Update Fields:', updateFields);
+      // Handle HTTP errors
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       const updatedStudent = await response.json();
       console.log('Student updated:', updatedStudent);
 
-      // Reset form values and navigate to the student details page  
-      setFormValues(initialFormValues);
+      // Navigate to the student details page  
       navigate('/studentdetails');
     } catch (error) {
       console.error('Error updating student:', error);
+      alert('Failed to update profile. Please try again.');
     }
   };
 
@@ -163,6 +204,28 @@ const StudentForm: React.FC = () => {
     </Paper>
   );
 
+  // Show loading while user data is being loaded
+  if (!currentUser) {
+    return (
+      <Box sx={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+      }}>
+        <Paper sx={{ p: 4, borderRadius: 3 }}>
+          <Typography variant="h6" textAlign="center">
+            Loading user data...
+          </Typography>
+        </Paper>
+      </Box>
+    );
+  }
+
+  console.log('Current Student:', currentStudent);
+  console.log('Current User ID being used:', currentUser._id);
+
   // Render the enhanced student form
   return (
     <Box
@@ -170,7 +233,7 @@ const StudentForm: React.FC = () => {
         minHeight: '100vh',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         py: 4,
-        mt: 23,
+        mt: 73,
         ml: 10
       }}
     >
@@ -207,7 +270,10 @@ const StudentForm: React.FC = () => {
               <AssignmentIcon sx={{ fontSize: 40, color: '#764ba2' }} />
             </Stack>
             <Typography variant="h6" sx={{ color: 'text.secondary', fontWeight: 400 }}>
-              Please enter your details to complete your profile
+              Welcome {currentUser.name}! Please complete your profile details
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
+              User ID: {currentUser._id}
             </Typography>
           </Paper>
         </Fade>

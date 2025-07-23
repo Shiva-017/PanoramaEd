@@ -70,36 +70,17 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
 
   const activeTab = getActiveTab();
 
-  // Socket and chat initialization
-  // if (chatId === '') {
-  //   if (socket === '') {
-  //     setSocket(io.connect("http://localhost:4000"));
-  //   }
-  //   fetch(`${chatURL}/?userId=${studentLoggedIn?._id}`, {
-  //     method: 'GET',
-  //     headers: { 'Content-Type': 'application/json' },
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setChatId(data[0]?._id);
-  //     });
-  // }
-  if (chatId === '') {
-  if (socket === '') {
-    setSocket(io.connect("http://localhost:4000"));
-  }
-  // Fixed room for demo - all users join same room
-  setChatId('demo-global-chat');
-}
+   React.useEffect(() => {
+    if (socket === '') {
+      setSocket(io.connect("http://localhost:4000"));
+    }
+  }, []);
 
   const toggleChat = () => {
-    if (!isChatEmitted) {
-      setIsChatEmitted(true);
-      socket.emit("join_room", chatId);
-    }
     setIsChatOpen(!isChatOpen);
   };
 
+  
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -602,7 +583,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
       </MuiAppBar>
 
       {/* Enhanced Chat Component */}
-      {isChatOpen && <Chat socket={socket} room={chatId || ''} />}
+      {isChatOpen && <Chat socket={socket} />}
 
       {/* Braintree Payment Component */}
       <BraintreeDropIn

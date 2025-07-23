@@ -13,6 +13,9 @@ import StudentForm from '../home/StudentPage/StudentForm';
 import StudentDetails from '../home/StudentPage/StudentDetails';
 import ProtectedRoute from './ProtectedRoute';
 import PaymentGateWay from '../home/PaymentGateway/PaymentPortal';
+import MentorAuth from '../home/LoginPage/MentorLogin';
+import MentorDashboard from '../home/MentorDashboard/MentorDashboard';
+import ProtectedMentorRoute from './ProtectedMentorRoute';
 
 export default createBrowserRouter([
   {
@@ -31,6 +34,14 @@ export default createBrowserRouter([
       {
         path: '/colleges/:collegeName',
         element: <CollegeDetails />,
+      },
+      {
+        path: '/mentor-auth',
+        element: <MentorAuth />,
+      },
+      {
+        path: '/mentor-dashboard',
+        element: <ProtectedMentorRoute element={<MentorDashboard />} />,
       },
       {
         path: '/college-compare',
